@@ -1,0 +1,52 @@
+.model-content {
+    z-index: 999;
+}
+
+.modal-body {
+    background-color: white;
+}
+
+.modal-body input {
+    background-color: transparent;
+    border: none;
+    height: 100%;
+    width: 100%;
+}
+
+.md-form {
+    display: flex;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 0px 0px 8px #ddd;
+    padding-right: 10px;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.md-form i {
+    padding-top: 5px;
+    padding-right: 15px;
+}
+
+.modal-footer button {
+    width: 400px;
+    border-color: #ddd;
+}
+
+.modal-footer button:hover {
+    border-color: #111;
+}
+
+.under-text {
+    padding-top: 10px;
+}
+
+.under-text a{
+    text-decoration: none;
+    color: #222;
+    font-size: .8rem;
+}
+
+.under-text a:hover {
+    color: purple;
+}
