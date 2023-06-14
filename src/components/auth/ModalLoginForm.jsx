@@ -4,7 +4,7 @@ import { doLogin } from "../../functions/authRequest";
 import './ModalForm.css';
 
 
-const ModalLoginForm = ({ showModal, onClose }) => {
+const ModalLoginForm = ({ showModal, onClose, showSignUpModal }) => {
   const [login, setLogin] = useState(''); // or Login
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -22,7 +22,7 @@ const ModalLoginForm = ({ showModal, onClose }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     doLogin({ login, password })
-            .then(() => navigate('/'))
+            .then(() => {navigate('/');window.location.reload();})
             .catch((error) => setErrorMsg(error.response.data.message));
 
         setLogin('');
@@ -30,6 +30,11 @@ const ModalLoginForm = ({ showModal, onClose }) => {
         setErrorMsg('');
         onClose();
   };
+
+  const handleShowSignUpModal = () => {
+    showSignUpModal();
+    onClose();
+  }
 
   if (!showModal) {
     return null;
@@ -81,7 +86,7 @@ const ModalLoginForm = ({ showModal, onClose }) => {
               </div>
             </form>
             <div className="under-text">
-                <a href='#'><p>Don't have an account? Sign Up!</p></a>
+                <a href='#' onClick={handleShowSignUpModal}><p>Don't have an account? Sign Up!</p></a>
                 <a><p>I forgot password</p></a>
             </div>
           </div>

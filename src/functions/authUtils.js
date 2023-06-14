@@ -20,3 +20,7 @@ export const getToken = () => {
 export const useAuth = () => {
     return !!localStorage.getItem('jwt-token');
 };
+
+export const getName = () => {
+    return jwt_decode(localStorage.getItem('jwt-token')).sub;
+}

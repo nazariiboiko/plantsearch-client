@@ -2,10 +2,12 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import { getRandomPlants } from '../../functions/plantRequests';
 import { Link } from 'react-router-dom';
+import { useAuth, getRoles, getToken } from '../../functions/authUtils';
 
 const Home = () => {
 
     const [plants, setPlants] = useState([]);
+    const token = getToken();
 
     useEffect(()  => {
     getRandomPlants(9).then((res) => setPlants([...res]));
@@ -31,6 +33,7 @@ const Home = () => {
                 );
             })
         }
+        <p>Hello {token}</p>
         </div>
         </div>
 

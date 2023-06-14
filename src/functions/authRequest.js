@@ -5,10 +5,10 @@ export const doLogin = (userData) => {
     return axios
         .post(API_AUTHENTICATION + '/login', userData)
         .then((response) => {
-            if (response.data.accessToken) {
+            if (response.data.token) {
                 localStorage.setItem(
                     'jwt-token',
-                    JSON.stringify(response.data.accessToken)
+                    JSON.stringify(response.data.token)
                 );
             }
             return response.data;
@@ -19,14 +19,14 @@ export const logout = () => {
     localStorage.removeItem('jwt-token');
 };
 
-export const signup = (userData) => {
+export const doSignup = (userData) => {
     return axios
-        .post(API_AUTHENTICATION + '/signup', userData)
+        .post(API_AUTHENTICATION + '/register', userData)
         .then((response) => {
-            if (response.data.accessToken) {
+            if (response.data.token) {
                 localStorage.setItem(
                     'jwt-token',
-                    JSON.stringify(response.data.accessToken)
+                    JSON.stringify(response.data.token)
                 );
             }
             return response.data;
