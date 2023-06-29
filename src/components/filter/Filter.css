@@ -1,15 +1,60 @@
-.invisible {
-    display: none;
-}
-
 .filter-container {
     margin-top: 30px;
     padding-top: 15px;
     padding-bottom: 15px;
     padding-left: 15px;
-    font-size: 1.5rem;
-    color: black;
+    background-color: #fff;
+    box-shadow: 0px 0px 8px #ccc;
+    border-radius: 10px;
+}
+
+.filter-header {
+    display: flex;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px #ddd;
+}
+
+.filter-title {
+    margin-left: 10px;
+}
+
+.dropdown button {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    margin-left: 2px;
+    margin-right: 2px;
+    width: 190px;
+    background-color: #fff;
     box-shadow: 0px 0px 8px #ddd;
+    color: black;
+    border-color: #ddd;
+}
+
+.dropdown button:hover {
+    border-color: #ddd;
+    background-color: #ddd;
+}
+
+.dropdown button:focus {
+    border-color: #ddd;
+    background-color: #ddd;
+}
+
+.dropdown button:visited {
+    background-color: #000;
+}
+
+.dropdown-menu {
+    width: 200px;
+}
+
+.form-check {
+    margin-left: 10px;
+}
+
+.invisible {
+    display: none;
 }
 
 .filter-criteria {
@@ -17,10 +62,64 @@
     padding-top: 15px;
 }
 
-.filter-criteria input {
-    background-color: transparent;
-    border: none;
+.filter-input {
+    width: 190px;
+    height: 37.6px;
+    margin-top: 5px;
+    margin-left: 2px;
+    background-color: #fff;
     font-size: 1.25rem;
     box-shadow: 0px 0px 8px #ddd;
-    border-radius: 10px 10px 10px 10px;
+    border: 1px solid;
+    border-radius: 10px;
+    border-color: #ddd;
+    text-align: center;
 }
+
+.filter-input:hover {
+    border-color: #ddd;
+    background-color: #ddd;
+}
+
+.filter-footer {
+    margin:auto;
+    margin-bottom: 10px;
+    width: 200px !important;
+}
+
+.filter-menu-leftbutton {
+   border-radius: 10px 0px 0px 10px !important;
+   background-color: #ddd;
+}
+
+.filter-menu-rightbutton {
+    border-radius: 0px 10px 10px 0px !important;
+    background-color: #ddd;
+ }
+
+ .plant-card a {
+    text-decoration: none;
+    color: #222;
+ }
+
+ .plant-card a:hover {
+    color: purple;
+    cursor: pointer;
+ }
+
+ .filter-controller {
+    display: flex;
+ }
+
+ .up-text {
+    padding-top: 1px;
+ }
+
+ .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+
+

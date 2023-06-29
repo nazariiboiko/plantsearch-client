@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getPlantByName } from '../../functions/plantRequests';
 import { Link } from 'react-router-dom';
-import './Header.css';
+import './SearchBar.css';
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -82,12 +82,13 @@ const SearchBar = () => {
       </div>
       
       {showDropdown && (
-        <div className="dropdown-search">
+        <div className={`dropdown-search `}>
           <div className='dropdown-subtext'>
-            <Link to={`/filter`}>
-            <i class="fa-solid fa-filter"></i>
-            filter
-            </Link>
+            <a href='#'>
+              <Link to={`/filter`} onClick={handleBlur}>
+              <p><i class="fa-solid fa-filter"></i>filter</p>
+              </Link> 
+            </a>
           </div>
           {searchResults?.map((plant) => (
             <div className="dropdown-item" key={plant.id}>

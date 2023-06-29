@@ -1,17 +1,20 @@
-import React from 'react';
-import {useState} from 'react';
-import { Link } from 'react-router-dom';
-import SearchBar from './SearchBar';
-import ModalLoginForm from '../auth/ModalLoginForm'
-import { useAuth, getRoles, getToken,  } from '../../functions/authUtils';
+import {React, useState, Fragment} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import SearchBar from '../SearchBar/SearchBar';
+import ModalLoginForm from '../Auth/ModalLoginForm';
+import ModalSignUpForm from '../Auth/ModalSignUpForm';
+import { useAuth, getRole, getToken,  } from '../../functions/authUtils';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import { logout } from '../../functions/authRequest'
-import { useNavigate } from 'react-router-dom';
-import './Header.css'
-import ModalSignUpForm from '../auth/ModalSignUpForm';
+import './Header.css';
 
 const HeaderMenu = () => {
 
     const isLogged = useAuth();
+    const role = getRole();
     const navigate = useNavigate();
 
 
@@ -52,8 +55,26 @@ const HeaderMenu = () => {
             </Link>
             </a>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <SearchBar/>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                <li>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <SearchBar/>
+                </div>
+                </li>
+                <li>
+                <Link to="/filter" className='nav-link'>
+                    <div className='text-nav'>Пошук</div> 
+                </Link>
+                </li>
+                {isLogged && role == "ADMIN" && (
+                <li>
+                <Link to="/admin" className='nav-link'>
+                <div className='text-nav'>Панель</div> 
+                </Link>
+                </li>
+                )}
+                </ul>
             </div>
 
             {!isLogged && (
@@ -69,20 +90,26 @@ const HeaderMenu = () => {
             </div>
             )}
             {isLogged && (
-                <div>
-                <button
-                className="btn dropown-toggle"
-                type="button"
-                id="navbarDropdown"
-                data-bs-toggle="dropdown"
-                aria-expanded="false" 
-               ><i class="fas fa-bars"></i></button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-user"></i> Profile</a></li>
-                    <li><div class="dropdown-divider"></div></li>
-                    <li><button class="dropdown-item" href="#" onClick={handleLogout}><i class="fas fa-sign-out-alt"></i> Logout</button></li>
-                    </ul>
-                </div>
+            <PopupState variant="popover" popupId="demo-popup-menu">
+            {(popupState) => (
+                <Fragment>
+                <Button variant="contained" {...bindTrigger(popupState)}>
+                <i class="fas fa-bars"></i>
+                </Button>
+                <Menu {...bindMenu(popupState)} className='menu-item'>
+                    <Link to="/profile">
+                        <MenuItem onClick={popupState.close}> <i class="fa-solid fa-user menu-icon"></i>Профіль</MenuItem>
+                    </Link>
+                    <Link to="/favourite">
+                        <MenuItem onClick={popupState.close}><i class="fa-sharp fa-solid fa-heart menu-icon"> </i>Улюблене</MenuItem>
+                    </Link>
+                    <Link to="/">
+                        <MenuItem onClick={() => handleLogout()}> <i class="fa-sharp fa-solid fa-right-from-bracket menu-icon"></i>Вихід</MenuItem>
+                    </Link>
+                </Menu>
+                </Fragment>
+            )}
+            </PopupState>
             )}
         </div>
         </nav>

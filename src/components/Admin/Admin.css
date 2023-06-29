@@ -1,0 +1,68 @@
+.admin-button {
+    width: 300px;
+    margin-top: 5px;
+}
+
+.admin-shadow {
+    box-shadow: 0px 0px 20px 5px #ddd;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.center-box {
+    justify-content: center;
+    align-items: center;
+    height: 600px;
+    padding-bottom: 200px;
+}
+
+.admin-plant-button {
+    width: 200px;
+    height: 60px;
+    border-radius: 0px !important;
+}
+
+.admin-controll-button {
+    border-width: 2px;
+    border-color: #333;
+    border-right: none;
+    height: 40px; 
+}
+
+.right-border {
+    border-right: solid;
+    border-width: 2px;
+    border-color: #333;
+}
+
+.admin-controll-button:hover{
+    background-color: #9999;
+}
+
+.admin-user-blocked {
+    background-color: red;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+.admin-table th,
+.admin-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+.admin-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+.admin-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  
