@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import ModalLoginForm from '../Auth/ModalLoginForm';
 import ModalSignUpForm from '../Auth/ModalSignUpForm';
-import { useAuth, getRole, getToken,  } from '../../functions/authUtils';
+import { useAuth, getRole,  } from '../../functions/authUtils';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -49,28 +49,24 @@ const HeaderMenu = () => {
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
 
-            <a class="navbar-brand" href="#">
-            <Link to="/">
+            <Link to="/" class="navbar-brand">
             <img src={process.env.PUBLIC_URL + '/logo.jpg'} alt="" width="271" height="45"/>
             </Link>
-            </a>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                 <li>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <SearchBar/>
-                </div>
                 </li>
                 <li>
                 <Link to="/filter" className='nav-link'>
                     <div className='text-nav'>Пошук</div> 
                 </Link>
                 </li>
-                {isLogged && role == "ADMIN" && (
+                {isLogged && role === "ADMIN" && (
                 <li>
                 <Link to="/admin" className='nav-link'>
-                <div className='text-nav'>Панель</div> 
+                    <div className='text-nav'>Панель</div> 
                 </Link>
                 </li>
                 )}

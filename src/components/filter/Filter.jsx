@@ -12,24 +12,24 @@ const Filter = () => {
   const [response, setResponse] = useState();
   const [inputValue, setInputValue] = useState('');
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(102);
+  const [pageSize] = useState(102);
 
   useEffect(()  => {
-    const storedCriteriaString = sessionStorage.getItem('selectedCriteria');
-    let selectedCriteria = {};
-    if(storedCriteriaString != null) {
-      selectedCriteria = JSON.parse(storedCriteriaString);
-      console.info(selectedCriteria);
-      getPlantsByCriterias(selectedCriteria, page, pageSize).then((res) => setResponse(res));
-    } else {
-      criteria.allCriterias().forEach((criterion) => {
-        const selectedItems = criterion.value.filter((item) =>
-          selectedValues.includes(item.value)
-        );
-        selectedCriteria[criterion.id] = selectedItems.map((item) => item.value);
+      const storedCriteriaString = sessionStorage.getItem('selectedCriteria');
+      let selectedCriteria = {};
+      if(storedCriteriaString != null) {
+        selectedCriteria = JSON.parse(storedCriteriaString);
+        console.info(selectedCriteria);
         getPlantsByCriterias(selectedCriteria, page, pageSize).then((res) => setResponse(res));
-      });
-    }
+      } else {
+        criteria.allCriterias().forEach((criterion) => {
+          const selectedItems = criterion.value.filter((item) =>
+            selectedValues.includes(item.value)
+          );
+          selectedCriteria[criterion.id] = selectedItems.map((item) => item.value);
+          getPlantsByCriterias(selectedCriteria, page, pageSize).then((res) => setResponse(res));
+        });
+      }
   },[]);
 
   const handleCheckboxChange = (value) => {
@@ -70,7 +70,7 @@ const Filter = () => {
   };
 
   const handlePageChange = (page) => {
-    if(page != 0) {
+    if(page !== 0) {
       console.log('Page changed:', String(page));
       setPage(page);
       const newPage = page;

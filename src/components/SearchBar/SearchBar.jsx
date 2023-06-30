@@ -1,113 +1,82 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { getPlantByName } from '../../functions/plantRequests';
 import { Link } from 'react-router-dom';
 import './SearchBar.css';
 
-const SearchBar = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [showDropdown, setShowDropdown] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
-  let searchTimeout;
-  const searchContainerRef = useRef(null);
+const SearchBarEx = () => {
+
+    let searchTimeout;
+    const[query, setQuery] = useState('');
+    const searchBarRef = useRef(null);
+    const[result, setResult] = useState([]);
+    const[showResult, setShowResult] = useState(false);
+
+    useEffect(() => {
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+          document.removeEventListener('click', handleClickOutside);
+        };
+      }, []);
+
+    const handleClickOutside = (event) => {
+    if (searchBarRef.current && !searchBarRef.current.contains(event.target)) {
+      setShowResult(false);
+    } else {
+        setShowResult(true);
+    }
+  };
 
   const handleInputChange = (e) => {
-    const query = e.target.value;
-    setSearchQuery(query);
-  };
-
-  const handleFocus = () => {
-    setShowDropdown(true);
-  };
-
-  const handleBlur = () => {
-    setTimeout(() => {
-      setShowDropdown(false);
-    }, 30); // Delay in milliseconds before hiding the dropdown
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const results = await getPlantByName(searchQuery);
-        setSearchResults([...results]);
-      } catch (error) {
-        console.log('Error:', error);
-      }
-    };
-
-    // Clear the previous timeout to avoid unnecessary requests
+    setQuery(e.target.value);
+    
+  
     clearTimeout(searchTimeout);
-
-    // Set a new timeout to delay the request
-    if (searchQuery.length > 2) {
-      searchTimeout = setTimeout(fetchData, 400);
+  
+    if (query.length > 2) {
+      searchTimeout = setTimeout(() => {
+        getPlantByName(query)
+          .then((res) => setResult([...res]))
+          .catch((error) => {
+            setResult([]);
+          });
+      }, 400);
     } else {
-      setSearchResults([]);
-    }
-
-    // Clean up the timeout when the component unmounts
-    return () => clearTimeout(searchTimeout);
-  }, [searchQuery]);
-
-  const handleClickOutside = (e) => {
-    if (searchContainerRef.current && !searchContainerRef.current.contains(e.target)) {
-      handleBlur();
+      setResult([]);
     }
   };
 
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
-
-  const handleLinkClick = () => {
-    handleBlur();
-  };
-
-  return (
-    <div className="search-container" ref={searchContainerRef}>
-      <div className='search-bar'>
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={handleInputChange}
-        onFocus={handleFocus}
-        placeholder="Search plant..."
-      />
-       <Link to={`/filter?keyword=${searchQuery}`}>
-      <i className='fa-solid fa-search'></i>
-      </Link>
-      </div>
-      
-      {showDropdown && (
-        <div className={`dropdown-search `}>
-          <div className='dropdown-subtext'>
-            <a href='#'>
-              <Link to={`/filter`} onClick={handleBlur}>
-              <p><i class="fa-solid fa-filter"></i>filter</p>
-              </Link> 
-            </a>
-          </div>
-          {searchResults?.map((plant) => (
-            <div className="dropdown-item" key={plant.id}>
-              <Link to={`/plant/${plant.id}`} onClick={handleLinkClick}>
-                <div className="dropdown-text">
-                  <img
-                    src={`https://plantsearch.s3.eu-north-1.amazonaws.com/images/${plant.image}`}
-                    style={{ width: '10%', height: '10%' }}
-                    alt="Lights"
-                  />
-                  {plant.name}
-                </div>
-              </Link>
+    return (
+        <div className={`${showResult === false ? 'search-bar-body' : 'search-bar-body-active'}`}>
+            <div className='search-bar-input d-flex' ref={searchBarRef}>
+                <input
+                    placeholder='Пошук...'
+                    onChange={handleInputChange}
+                />
+                <Link to={`/filter?keyword=${query}`}>
+                <i className='fa-solid fa-search'></i>
+                </Link>
             </div>
-          ))}
+            <div className={`search-bar-content ${showResult === false ? 'hidden' : 'enabled'}`}>
+              <div className='filter-wrapper'>
+                <Link to={`/filter`} className="filter-icon">
+                    <i class="fa-solid fa-filter"></i> filter
+                </Link> 
+              </div>
+                    {
+                        result?.map((plant) => {
+                            return (
+                            <div className='search-bar-item' key={plant.id}>
+                                <Link to={`/plant/${plant.id}`}>
+                                {plant.name}
+                                </Link>
+                            </div>
+                            )
+                        })
+                    }
+                    
+            </div>
         </div>
-      )}
-    </div>
-  );
-};
+    );
+}
 
-export default SearchBar;
+export default SearchBarEx;
