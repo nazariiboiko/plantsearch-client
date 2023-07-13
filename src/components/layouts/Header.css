@@ -118,3 +118,9 @@ input:focus {
     color: #222;
     font-size: .82rem;
 }
+
+.footer {
+    width: 100%;
+position: fixed;
+bottom: 0;
+}

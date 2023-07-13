@@ -4,7 +4,7 @@ import { getRandomPlants } from '../../functions/plantRequests';
 import PlantList from '../Plant/PlantList';
 import './Home.css';
 import Debug from '../Debug/Debug';
-import TextBlock from '../TextBlock/TextBlock';
+import TextBlock from '../ui/TextBlock/TextBlock';
 import * as text from '../../utils/text';
 
 const Home = () => {

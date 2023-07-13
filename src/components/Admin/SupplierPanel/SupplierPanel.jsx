@@ -9,7 +9,8 @@ const UserPanel = () => {
     const [suppliers, setSuppliers] = useState();
 
     useEffect(() => {
-        request.getAllSuppliers().then((res) => setSuppliers(res));
+        request.getAllSuppliers().then((res) => setSuppliers(res))
+        .then(console.info(suppliers));
     },[]);
 
     return (
@@ -23,16 +24,14 @@ const UserPanel = () => {
               </tr>
             </thead>
             <tbody>
-              {suppliers?.map((supplier) => (
+              {suppliers?.data?.map((supplier) => (
                 <tr key={supplier.id}>
                     <td>{supplier.id}</td>
                     <td>{supplier.name}</td>
                     <td>
-                        <Link to={`${supplier.id}`}>
-                        <button className="admin-controll-button">Детальніше</button>
-                        </Link>
-                        
-                        <button className="admin-controll-button right-border">Видалити</button>
+                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                          <button className="btn btn-secondary" onClick={x => window.location.href = `supplier/${supplier.id}`}>Детальніше</button>
+                        </div>
                     </td>
                 </tr>
               ))}

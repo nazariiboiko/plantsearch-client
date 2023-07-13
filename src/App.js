@@ -16,6 +16,8 @@ import SupplierPanel from './components/Admin/SupplierPanel/SupplierPanel';
 import AuthVerify from './access/AuthVerify';
 import Profile from './components/Profile/Profile';
 import FavouriteList from './components/FavouriteList/FavouriteList';
+import Supplier from './components/Admin/SupplierPanel/Supplier';
+import SupplierCatalog from './components/Supplier/SupplierCatalog';
 
 function App() {
 
@@ -27,6 +29,8 @@ function App() {
           <Route path="/" element={<Home/>} ></Route>
           <Route path="/plant/:id" element={<Plant/>} ></Route>
           <Route path="/filter" element={<Filter/>} ></Route>
+          <Route path="/filter/:keyword" element={<Filter/>} ></Route>
+          <Route path="/supplier" element={<SupplierCatalog/>} ></Route>
           
           <Route element={<ProtectedRoutes/>}>
             <Route path='/profile' element={<Profile/>}/>
@@ -62,6 +66,11 @@ function App() {
             <Route path="supplier" 
                         element={<AccessRoute role={ROLE_ADMIN}
                                         to={<SupplierPanel/>}
+                                        redirect={<Navigate to={"/"}/>}/>}/>
+            
+            <Route path="supplier/:id" 
+                        element={<AccessRoute role={ROLE_ADMIN}
+                                        to={<Supplier/>}
                                         redirect={<Navigate to={"/"}/>}/>}/>
 
           </Route>

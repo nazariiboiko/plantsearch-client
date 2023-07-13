@@ -40,17 +40,18 @@ const UserPanel = () => {
                     <td>{user.email}</td>
                     <td className={user.status === 'NOT_ACTIVE' || user.status === 'DELETED'  ? 'admin-user-blocked' : ''}>{user.status} </td>
                     <td>
-                        <Link to={`${user.id}`}>
-                        <button className="admin-controll-button">Детальніше</button>
-                        </Link>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                          <button className="btn btn-secondary" onClick={x => window.location.href = `user/${user.id}`}> Детальніше</button>
                         {user.status === 'ACTIVE' && (
-                            <button className="admin-controll-button" onClick={ x => handleStatus(user, "NOT_ACTIVE")}>Заблокувати</button>
+                            <button className="btn btn-secondary" onClick={ x => handleStatus(user, "NOT_ACTIVE")}>Заблокувати</button>
                         )}
                         {user.status === 'NOT_ACTIVE' && (
-                            <button className="admin-controll-button" onClick={ x => handleStatus(user, 'ACTIVE')}>Розблокувати</button>
+                            <button className="btn btn-secondary" onClick={ x => handleStatus(user, 'ACTIVE')}>Розблокувати</button>
                         )}
-                        
-                        <button className="admin-controll-button right-border">Видалити</button>
+                        {user.status !== 'DELETED' && (
+                        <button className="btn btn-secondary" onClick={ x => handleStatus(user, 'DELETED')}>Видалити</button>
+                        )}
+                        </div>
                     </td>
                 </tr>
               ))}

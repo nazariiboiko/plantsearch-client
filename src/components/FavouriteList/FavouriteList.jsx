@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getFavourites } from "../../functions/userRequests";
+import { getFavourites } from "../../functions/favouriteRequests";
 import PlantList from "../Plant/PlantList";
 
 const FavouriteList = () => {
@@ -11,7 +11,7 @@ const FavouriteList = () => {
     },[]);
 
     return (
-        <div>
+        <div className="container">
             <PlantList response={{data:favourites}} title="Улюблені"></PlantList>
         </div>
     );

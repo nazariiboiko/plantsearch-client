@@ -63,10 +63,15 @@ const HeaderMenu = () => {
                     <div className='text-nav'>Пошук</div> 
                 </Link>
                 </li>
+                <li>
+                <Link to="/supplier" className='nav-link'>
+                    <div className='text-nav'>Постачальники</div> 
+                </Link>
+                </li>
                 {isLogged && role === "ADMIN" && (
                 <li>
                 <Link to="/admin" className='nav-link'>
-                    <div className='text-nav'>Панель</div> 
+                    <div className='text-nav'>Керування</div> 
                 </Link>
                 </li>
                 )}

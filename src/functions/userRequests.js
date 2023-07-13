@@ -3,14 +3,24 @@ import {API_USERS, API_USERS_UPDATE } from '../utils/constants';
 import { getToken } from './authUtils';
 
 export const getAllUsers = async () => {
+  const token = getToken();
     return await api
-    .get(`${API_USERS}`)
+    .get(`${API_USERS}`, {
+      headers: {
+          Authorization: token,
+        }
+      })
     .then((response) => response.data);
 }
 
 export const getUserById = async (id) => {
+  const token = getToken();
     return await api
-    .get(`${API_USERS}/${id}`)
+    .get(`${API_USERS}/id/${id}`, {
+      headers: {
+          Authorization: token,
+        },
+  })
     .then((res) => res.data);
 }
 
@@ -22,27 +32,6 @@ export const updateUser = async (user) => {
             Authorization: token,
           },
     });
-}
-
-export const getFavourites = async () => {
-  const token = getToken();
-  return await api
-    .get(`${API_USERS}/favourite`, {
-        headers: {
-            Authorization: token,
-          }
-        })
-    .then((res) => res.data);
-}
-
-export const doLike = async (id) => {
-  const token = getToken();
-  return await api
-    .post(`${API_USERS}/like?id=${id}`, {}, {
-        headers: {
-            Authorization: token,
-          }
-        });
 }
 
 export const blockUser = async (id, status) => {

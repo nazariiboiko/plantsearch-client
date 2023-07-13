@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { getPlantByName } from '../../functions/plantRequests';
+import { getPageablePlantByName } from '../../functions/plantRequests';
 import { Link } from 'react-router-dom';
 import './SearchBar.css';
 
@@ -28,13 +28,14 @@ const SearchBarEx = () => {
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
+    const q = e.target.value;
     
   
     clearTimeout(searchTimeout);
   
-    if (query.length > 2) {
+    if (q.length > 2) {
       searchTimeout = setTimeout(() => {
-        getPlantByName(query)
+        getPageablePlantByName(q)
           .then((res) => setResult([...res]))
           .catch((error) => {
             setResult([]);
@@ -52,7 +53,7 @@ const SearchBarEx = () => {
                     placeholder='Пошук...'
                     onChange={handleInputChange}
                 />
-                <Link to={`/filter?keyword=${query}`}>
+                <Link to={`/filter/${query}`}>
                 <i className='fa-solid fa-search'></i>
                 </Link>
             </div>

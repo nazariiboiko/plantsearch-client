@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getPlantById } from "../../functions/plantRequests";
 import './Plant.css';
 import { useAuth } from "../../functions/authUtils";
-import { getFavourites, doLike } from "../../functions/userRequests";
+import { getFavourites, doLike } from "../../functions/favouriteRequests";
 
 
 const Plant = () => {

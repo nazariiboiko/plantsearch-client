@@ -43,6 +43,11 @@
     background-color: red;
 }
 
+.admin-user-deleted {
+    background-color: purple;
+}
+
+
 .admin-table {
     width: 100%;
     border-collapse: collapse;

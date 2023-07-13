@@ -1,21 +1,27 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getPlantById, updatePlant } from "../../../functions/plantRequests";
+import { createPlant, deletePlant, getPlantById, updatePlant } from "../../../functions/plantRequests";
 import './PlantPanel.css';
 
 const Plant = () => {
 
     const {id} = useParams();
     const [plant, setPlant] = useState({});
+    const navigate = useNavigate();
     
 
     useEffect(()  => {
+      if(id > 0) {
         getPlantById(id).then((res) => setPlant(res));
-        },[id]);
+        }
+      },[id]);
+      
 
     const handleRequest = () => {
+      if(id > 0) {
       getPlantById(id).then((res) => setPlant(res));
+      }
     }
 
     const handleChange = (event) => {
@@ -31,13 +37,25 @@ const Plant = () => {
     }
 
     const handleSubmit = () => {
-      updatePlant(plant);
+      if(id > 0) {
+        updatePlant(plant);
+      } else {
+        createPlant(plant)
+        .then((id) => navigate(`/admin/plant/${id}`));
+      }
+    }
+
+    const handleDelete = () => {
+      if(id > 0) {
+        deletePlant(id);
+        navigate(`/admin/plant`);
+      }
     }
 
     return (
         <div className="container">
           <form>
-            <table className="table table-striped">
+            <table className="table table-bordered">
             <tbody>
               <tr>
                 <th>Name/Назва</th>
@@ -230,8 +248,10 @@ const Plant = () => {
             </tbody>
           </table>
           </form>
-          <button className="btn btn-danger admin-plant-button" onClick={handleSubmit}>Зберегти</button>
+          <button className="btn btn-success admin-plant-button" onClick={handleSubmit}>Зберегти</button>
           <button className="btn btn-warning admin-plant-button" onClick={handleCancel}>Скасувати</button>
+
+          <button className="btn btn-danger admin-plant-button" onClick={handleDelete}>Видалити</button>
         </div>
     );
 }

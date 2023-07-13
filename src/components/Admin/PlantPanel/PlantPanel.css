@@ -1,3 +1,11 @@
 .ml-15 {
     margin-left: 15px;
 }
+
+.admin-input {
+    margin-left: 10px;
+    border-radius: 10px;
+    border: solid 2px;
+    border-color: black;
+    
+}
