@@ -12,7 +12,7 @@ const AdminPanel = () => {
                         <li>
                         <Link to={`plant`}>
                             <button className="btn btn-primary admin-button" >   
-                            Керування рослинами
+                            Керування розсадами
                             </button>
                         </Link>
                         </li>
@@ -26,7 +26,7 @@ const AdminPanel = () => {
                         <li>
                         <Link to={`supplier`}>
                         <button className="btn btn-primary admin-button" >
-                            Керування поставщиками
+                            Керування розсадниками
                         </button>
                         </Link>
                         </li>

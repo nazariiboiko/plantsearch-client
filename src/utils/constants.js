@@ -1,4 +1,5 @@
 export const API = 'http://localhost:8085/api/v1';
+export const image_store = 'https://plantsearch.s3.eu-north-1.amazonaws.com'
 
 export const ROLE_USER = 'USER';
 export const ROLE_MANAGER = 'MANAGER';

@@ -59,3 +59,12 @@
    padding-bottom: 15px;
 }
 
+.border-right {
+   border: solid;
+   border-width: 1px;
+   border-color: #ddd;
+   border-left: #222;
+   border-bottom: #222;
+   border-top: #222;
+}
+

@@ -22,7 +22,7 @@ export const getPlantById = async (id) => {
     .then((response) => response.data);
 };
 
-export const getPageablePlantByName = async (name, page = 0, size = 4, sort='id') => {
+export const getPageablePlantByName = async (name, page = 1, size = 4, sort='id') => {
     return await api
     .get(`${API_PLANTS_SEARCH}?keyword=${name}&page=${page}&size=${size}&sort=${sort}`)
     .then((response) => response.data);
@@ -45,12 +45,18 @@ export const getPlantsByCriterias = async (selectedValues, inputValue, page, siz
       .then((response) =>response.data);
 };
 
-export const createPlant = async (plant) => {
+export const createPlant = async (plant, image = null, sketch = null) => {
   try {
     const token = getToken();
-    const response = await api.post(`${API_PLANTS}/create`, plant, {
+    const formData = new FormData();
+
+    formData.append('plantDto', new Blob([JSON.stringify(plant)] , { type: 'application/json' }));
+    formData.append('image', image);
+    formData.append('sketch', sketch);
+    const response = await api.post(`${API_PLANTS}/create`, formData, {
       headers: {
         Authorization: token,
+        'Content-Type': 'multipart/form-data',
       },
     });
     return response.data;
@@ -59,19 +65,24 @@ export const createPlant = async (plant) => {
   }
 }
 
-export const updatePlant = async (plant) => {
-    try {
-      const token = getToken();
-      const response = await api.post(`${API_PLANTS}/update`, plant, {
-        headers: {
-          Authorization: token,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Error updating plant:', error);
-      throw error; 
-    }
+export const updatePlant = async (plant, image = null, sketch = null) => {
+  try {
+    const token = getToken();
+    const formData = new FormData();
+
+    formData.append('plantDto', new Blob([JSON.stringify(plant)] , { type: 'application/json' }));
+    formData.append('image', image);
+    formData.append('sketch', sketch);
+    const response = await api.post(`${API_PLANTS}/update`, formData, {
+      headers: {
+        Authorization: token,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error; 
+  }
 };
 
 export const deletePlant = async (id) => {

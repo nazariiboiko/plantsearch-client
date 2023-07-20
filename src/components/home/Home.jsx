@@ -10,11 +10,11 @@ import * as text from '../../utils/text';
 const Home = () => {
 
     const [plants, setPlants] = useState([]);
-    const wrapper = {data : plants};
+    const wrapper = { data: plants };
 
-    useEffect(()  => {
-    getRandomPlants(12).then((res) => setPlants([...res]));
-    },[]);
+    useEffect(() => {
+        getRandomPlants(12).then((res) => setPlants([...res]));
+    }, []);
 
     return (
         <div className='container'>
@@ -22,7 +22,6 @@ const Home = () => {
             <PlantList response={wrapper} title='Випадкові рослини' />
             <TextBlock text={text.advantages()} />
         </div>
-
     )
 };
 

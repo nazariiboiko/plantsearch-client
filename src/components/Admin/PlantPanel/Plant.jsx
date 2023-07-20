@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { createPlant, deletePlant, getPlantById, updatePlant } from "../../../functions/plantRequests";
 import './PlantPanel.css';
@@ -8,8 +8,9 @@ const Plant = () => {
 
     const {id} = useParams();
     const [plant, setPlant] = useState({});
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedSketch, setSelectedSketch] = useState(null);
     const navigate = useNavigate();
-    
 
     useEffect(()  => {
       if(id > 0) {
@@ -17,44 +18,53 @@ const Plant = () => {
         }
       },[id]);
       
-
-    const handleRequest = () => {
-      if(id > 0) {
-      getPlantById(id).then((res) => setPlant(res));
-      }
-    }
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setPlant((prevPlant) => ({
-          ...prevPlant,
-          [name]: value,
-        }));
+    const handleChange = ({ target: { name, value } }) => {
+      setPlant((prevPlant) => ({
+        ...prevPlant,
+        [name]: value,
+      }));
+      console.info(name, value);
     };
 
     const handleCancel = () => {
-      handleRequest();
+      if(id > 0) {
+        getPlantById(id).then((res) => setPlant(res));
+        }
     }
 
     const handleSubmit = () => {
       if(id > 0) {
-        updatePlant(plant);
+        updatePlant(plant, selectedImage, selectedSketch);
       } else {
-        createPlant(plant)
+        createPlant(plant, selectedImage, selectedSketch)
         .then((id) => navigate(`/admin/plant/${id}`));
       }
     }
 
     const handleDelete = () => {
       if(id > 0) {
-        deletePlant(id);
-        navigate(`/admin/plant`);
+        const confirmed = window.confirm('Ви впевнені що хочете видалити?');
+        if (confirmed) {
+            deletePlant(id);
+            navigate(`/admin/plant`);
+        }
       }
+    }
+
+    const handleImageChange = (file) => {
+      setSelectedImage(file);
+      handleChange({target: {name: 'image', value: file.name}})
+    }
+
+    const handleSketchChange = (file) => {
+      setSelectedSketch(file);
+      handleChange({target: {name: 'sketch', value: file.name}})
     }
 
     return (
         <div className="container">
           <form>
+          <h1>Редагування розсадника</h1>
             <table className="table table-bordered">
             <tbody>
               <tr>
@@ -148,14 +158,6 @@ const Plant = () => {
                       onChange={handleChange}/></td>
               </tr>
               <tr>
-                <th>Sketch/Ескіз</th>
-                <td><img src={`https://plantsearch.s3.eu-north-1.amazonaws.com/sketches/${plant.sketch}`} alt="sketch" style={{ width: '20%', height: '20%' }}></img></td>
-              </tr>
-              <tr>
-                <th>Image/Фото</th>
-                <td><img src={`https://plantsearch.s3.eu-north-1.amazonaws.com/images/${plant.image}`} alt="img" style={{ width: '20%', height: '20%' }}></img></td>
-              </tr>
-              <tr>
                 <th>Recommendation/Рекомендації для посадки</th>
                 <td><input 
                       type="text"
@@ -244,6 +246,26 @@ const Plant = () => {
                       name="nutrition"
                       value={plant.nutrition || ''}
                       onChange={handleChange}/></td>
+              </tr>
+              <tr>
+                <th>Sketch/Ескіз</th>
+                <td>
+                <input type="file" required 
+                onChange={(e) => handleSketchChange(e.target.files[0])}   />
+                {id > 0 && (<img src={`https://plantsearch.s3.eu-north-1.amazonaws.com/sketches/${plant.sketch}`} 
+                              alt="sketch" 
+                              style={{ width: '20%', height: '20%' }}></img>)}
+                </td>
+              </tr>
+              <tr>
+                <th>Image/Фото</th>
+                <td>
+                <input type="file" required
+                 onChange={(e) => handleImageChange(e.target.files[0])}   />
+                {id > 0 && (<img src={`https://plantsearch.s3.eu-north-1.amazonaws.com/images/${plant.image}`} 
+                            alt="img" 
+                            style={{ width: '20%', height: '20%' }}></img>)}
+                </td>
               </tr>
             </tbody>
           </table>

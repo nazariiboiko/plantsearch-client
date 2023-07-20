@@ -1,7 +1,7 @@
 .search-bar-body {
     margin-left: 10px;
     background-color: #fff;
-    border-radius: 20px ;
+    border-radius: 20px;
     box-shadow: 0 0 8px #ddd;
     width: 400px;
     position: relative;
@@ -11,7 +11,7 @@
 .search-bar-body-active {
     margin-left: 10px;
     background-color: #fff;
-    border-radius: 20px 20px 0 0 ;
+    border-radius: 20px 20px 0 0;
     box-shadow: 0 0 8px #ddd;
     width: 400px;
     position: relative;
@@ -24,7 +24,7 @@
 }
 
 .search-bar-input i {
-    padding-top: 12px; 
+    padding-top: 12px;
     padding-right: 8px;
     color: green;
 }
@@ -43,30 +43,27 @@
     text-decoration: none;
     color: #222;
     font-size: 1rem;
-    text-align: right;
 }
 
 .search-bar-content a:hover {
     text-decoration: none;
     color: purple;
     font-size: 1rem;
-    text-align: right;
 }
 
 .search-bar-item {
     padding-top: 2px;
     padding-bottom: 2px;
-    text-align: center;
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .search-bar-item:hover {
-    text-align: center;
     background-color: #ddd;
 }
 
 .filter-icon {
-
     margin-right: 7px;
 }
 
@@ -84,27 +81,46 @@
     animation: swipeDown 0.32s ease-in-out forwards;
 }
 
+.image-card-container {
+    flex: 0 0 20%;
+    display: flex;
+    width: 100%;
+    height: 50px;
+    overflow: hidden;
+}
+
+.image-card {
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: 50%;
+}
+
+.text-container {
+    flex: 1;
+}
+
 @keyframes swipeDown {
     0% {
         opacity: 0;
         transform: translateY(-10%);
-      }
+    }
 
-      100% {
+    100% {
         opacity: 1;
         transform: translateY(0);
-      }
+    }
 }
 
 @keyframes swipeUp {
     0% {
         opacity: 1;
         transform: translateY(0);
-      }
+    }
 
-      100% {
+    100% {
         opacity: 0;
         transform: translateY(-10%);
-      }
+    }
 }
-  
