@@ -14,7 +14,7 @@ const PlantList = ( {response, title, text} ) => {
         {
             response?.data?.map((plant) => {
                 return (
-                    <div className="col-md-2 plant-card">
+                    <div className="col-md-2 plant-card" key={plant.id}>
                       <a>
                       <Link to={`/plant/${plant.id}`}>
                         <img className='d-block show-image' src={`https://plantsearch.s3.eu-north-1.amazonaws.com/images/${plant.image}`} alt="plant"/>

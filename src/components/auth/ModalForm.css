@@ -6,13 +6,6 @@
     background-color: white;
 }
 
-.modal-body input {
-    background-color: transparent;
-    border: none;
-    height: 100%;
-    width: 100%;
-}
-
 .md-form {
     display: flex;
     border-radius: 10px 10px 10px 10px;
@@ -41,7 +34,7 @@
     padding-top: 10px;
 }
 
-.under-text a{
+.under-text a {
     text-decoration: none;
     color: #222;
     font-size: .8rem;
@@ -49,4 +42,24 @@
 
 .under-text a:hover {
     color: purple;
+}
+
+.confirmation-code-input {
+    display: flex;
+}
+
+.digit-box {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    text-align: center;
+    border: 1px solid #111;
+    border-radius: 4px;
+    margin: 0 5px;
+    padding: 5px;
+}
+
+.digit-box:focus {
+    outline: none;
+    border-color: blue;
 }

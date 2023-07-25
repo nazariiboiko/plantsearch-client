@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { doSignup } from "../../functions/authRequest";
+import { activateAccount, doSignup } from "../../functions/authRequest";
 import Modal from '../ui/Modal/Modal';
 import './ModalForm.css';
+import { Alert } from '@mui/material';
+import { useSnackbar } from '../../context/SnackbarContext';
 
 const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
   const { activeSignUp, setActiveSignUp } = activeObj;
@@ -10,7 +12,48 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
+  const [infoMsg, setInfoMsg] = useState('');
+  const [showConfirmCode, setShowConfirmCode] = useState(false);
+  const [confirmationCode, setConfirmationCode] = useState(Array(6).fill(''));
+  const { handleClick } = useSnackbar();
   const navigate = useNavigate();
+
+
+  const handleChange = (index, value) => {
+    const regex = /^\d*$/;
+    if (regex.test(value)) {
+      const newCode = [...confirmationCode];
+      newCode[index] = value;
+      setConfirmationCode(newCode);
+
+      if (value === '' && index > 0) {
+        const prevInput = document.getElementById(`digit-${index - 1}`);
+        if (prevInput) {
+          prevInput.focus();
+        }
+      } else if (value.length === 1 && index < 5) {
+        const nextInput = document.getElementById(`digit-${index + 1}`);
+        if (nextInput) {
+          nextInput.focus();
+        }
+      }
+    }
+  };
+
+  const handleFirstInputBackspace = (index, event) => {
+    const firstInput = confirmationCode[0];
+    console.info(event);
+    if (event.code === 'Backspace' && firstInput === '') {
+      event.preventDefault();
+
+      console.info(index, event);
+
+      const lastInput = document.getElementById(`digit-${index-1}`);
+      if (lastInput) {
+        lastInput.focus();
+      }
+    }
+  };
 
   const onClose = () => {
     setActiveSignUp(false);
@@ -31,22 +74,35 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
     event.preventDefault();
 
     if (!email || !login || !password) {
-      setErrorMsg('Please fill in all fields.');
+      setErrorMsg('Необхідно заповнити всі поля!');
       return;
     }
 
-    doSignup({ email, login, password })
-      .then(() => {
-        navigate('/');
-        onClose();
+    doSignup({ email, login, password }, 'uk')
+      .then((message) => {
+        setShowConfirmCode(true);
+        console.info(message);
+        setInfoMsg(message);
+        setErrorMsg('');
       })
-      .catch((error) => setErrorMsg(error.response.data.message))
-      .finally(() => {
-        setLogin('');
-        setPassword('');
-        setEmail('');
-      });
+      .catch((error) => setErrorMsg(error.response.data))
   };
+
+  const handleSumbitCode = (event) => {
+    event.preventDefault();
+    console.info({email, login, password}, confirmationCode.join(''));
+
+    activateAccount({email, login, password}, confirmationCode.join(''), 'uk')
+    .then(() => {
+      setActiveSignUp(false);
+      handleClick('success', 'Успішний вхід');
+      setLogin('');
+      setPassword('');
+      setEmail('');
+    })
+    .catch((error) => setErrorMsg(error.response.data))
+
+  }
 
   if (!activeSignUp) {
     return null;
@@ -54,7 +110,7 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
 
   return (
     <Modal activeObj={{ active: activeSignUp, setActive: setActiveSignUp }} title={"Реєстрація"}>
-      <form onSubmit={handleSubmit}>
+      {!showConfirmCode && <form onSubmit={handleSubmit}>
         <div className="md-form mb-5">
           <i className="fa-solid fa-envelope"></i>
           <input
@@ -64,7 +120,7 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
             name="email"
             value={email}
             onChange={handleInputChange}
-            placeholder="Email"
+            placeholder="Пошта..."
           />
         </div>
 
@@ -77,7 +133,7 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
             name="login"
             value={login}
             onChange={handleInputChange}
-            placeholder="Username"
+            placeholder="Логін..."
           />
         </div>
 
@@ -90,18 +146,38 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
             name="password"
             value={password}
             onChange={handleInputChange}
-            placeholder="Password"
+            placeholder="Пароль..."
           />
         </div>
 
-        {errorMsg && <p className="error-msg">{errorMsg}</p>}
-
         <div className="modal-footer d-flex justify-content-center">
           <button className="btn btn-default" type="submit">
-            Sign up
+            Зареєструватись
           </button>
         </div>
-      </form>
+      </form>}
+
+      {showConfirmCode && <form onSubmit={handleSumbitCode}>
+        <div class="confirmation-code-input">
+          {confirmationCode.map((value, index) => (
+            <input
+              key={index}
+              id={`digit-${index}`}
+              type="text"
+              maxLength="1"
+              className="digit-box"
+              value={value}
+              onChange={(e) => handleChange(index, e.target.value)}
+              onKeyDown={(e) => handleFirstInputBackspace(index, e) }
+            />
+          ))}
+        </div>
+        <button className="btn btn-default" type="submit">
+          Відправити
+        </button>
+      </form>}
+      {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
+      {infoMsg && <Alert severity="info">{infoMsg}</Alert>}
     </Modal>
   );
 };

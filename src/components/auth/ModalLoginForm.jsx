@@ -3,6 +3,9 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { doLogin } from "../../functions/authRequest";
 import Modal from '../ui/Modal/Modal';
 import './ModalForm.css';
+import { Alert } from '@mui/material';
+import { useSnackbar } from "../../context/SnackbarContext";
+import { useAuth, getRole, getToken, getName, isToken } from '../../functions/authUtils';
 
 
 const ModalLoginForm = ({ activeObj, showSignUpModal }) => {
@@ -10,7 +13,8 @@ const ModalLoginForm = ({ activeObj, showSignUpModal }) => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const navigate = useNavigate();
+  const auth = useAuth();
+  const { handleClick } = useSnackbar();
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -23,14 +27,22 @@ const ModalLoginForm = ({ activeObj, showSignUpModal }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    doLogin({ login, password })
-      .then(() => { navigate('/'); window.location.reload(); })
-      .catch((error) => setErrorMsg(error.response.data.message));
+    if (!login || !password) {
+      setErrorMsg('Відсутний логін чи пароль!');
+      return;
+    }
+
+    event.preventDefault();
+    doLogin({ login, password }, 'uk')
+      .then(() => {
+        handleClick('success', 'Успішний вхід');
+        setActiveSignIn(false);
+        setErrorMsg('');
+      })
+      .catch((error) => setErrorMsg(error.response.data));
 
     setLogin('');
     setPassword('');
-    setErrorMsg('');
-    setActiveSignIn(false);
   };
 
   const handleShowSignUpModal = () => {
@@ -39,6 +51,7 @@ const ModalLoginForm = ({ activeObj, showSignUpModal }) => {
   }
 
   if (!activeSignIn) {
+
     return null;
   }
 
@@ -77,10 +90,12 @@ const ModalLoginForm = ({ activeObj, showSignUpModal }) => {
             Login
           </button>
         </div>
+
+        {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
       </form>
       <div className="under-text">
-        <a href='#' onClick={handleShowSignUpModal}><p>Don't have an account? Sign Up!</p></a>
-        <a><p>I forgot password</p></a>
+        <a href='#' onClick={handleShowSignUpModal}><p>Відсутній акаунт? Зареєструйтесь!</p></a>
+        <a><p>Я забув пароль</p></a>
       </div>
     </Modal>
   );

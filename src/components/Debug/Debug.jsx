@@ -28,7 +28,6 @@ const Debug = () => {
             <button onClick={() => handleClick('error')}>Show Error Snackbar</button>
             <button onClick={() => handleClick('warning')}>Show Warning Snackbar</button>
             <button onClick={() => handleClick('custom')}>Show Custom Snackbar</button>
-
         </div>
     );
 };
