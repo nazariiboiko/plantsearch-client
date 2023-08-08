@@ -17,9 +17,9 @@ const Home = () => {
     }, []);
 
     return (
-        <div className='container'>
+        <div className='container box-shadow '>
             <TextBlock text={text.informationText()} />
-            <PlantList response={wrapper} title='Випадкові рослини' />
+            <PlantList response={wrapper} title='Каталог:' showOrder={'grid'} />
             <TextBlock text={text.advantages()} />
         </div>
     )

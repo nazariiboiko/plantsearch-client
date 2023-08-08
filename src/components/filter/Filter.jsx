@@ -6,9 +6,8 @@ import Pagination from '@mui/material/Pagination';
 import * as criteria from '../../utils/filter_criterias';
 import { getPlantsByCriterias } from '../../functions/plantRequests';
 import './Filter.css';
-import { Stack } from "@mui/material";
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Button from '@mui/material/Button';
+import { Button, Stack } from "@mui/material";
+import { Reorder, ViewModule } from "@mui/icons-material";
 
 const Filter = () => {
 
@@ -18,14 +17,12 @@ const Filter = () => {
   const [response, setResponse] = useState();
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(48);
+  const [showOrder, setShowOrder] = useState('list');
 
   useEffect(() => {
     if (keyword === undefined) {
       const storedValuesString = sessionStorage.getItem('selectedValues');
       const storedInputString = sessionStorage.getItem('inputValue');
-
-      console.info(storedValuesString);
-      console.info(storedInputString);
 
       if (storedValuesString !== undefined && storedValuesString !== null)
         setSelectedValues(storedValuesString);
@@ -62,14 +59,19 @@ const Filter = () => {
 
     getPlantsByCriterias([], '', 1, pageSize)
       .then((res) => setResponse(res));
-  }
+  };
 
   const handleCheckboxChange = (value) => {
-    if (selectedValues.includes(value)) {
-      setSelectedValues(selectedValues.filter((val) => val !== value));
+    if (Array.isArray(selectedValues)) {
+      if (selectedValues.includes(value)) {
+        setSelectedValues((prevValues) => prevValues.filter((item) => item !== value));
+      } else {
+        setSelectedValues((prevValues) => [...prevValues, value]);
+      }
     } else {
-      setSelectedValues([...selectedValues, value]);
+      setSelectedValues([value]);
     }
+    console.info(selectedValues);
   };
 
   const handleSubmit = () => {
@@ -144,18 +146,27 @@ const Filter = () => {
           </Stack>
         </div>
         <div className="col-md-4 d-flex justify-content-end">
-          <div className="mr-5 icon-type">
-            <i class="fa fa-th" aria-hidden="true"></i>
-          </div>
-          <div className="icon-type">
-            <i class="fa fa-list" aria-hidden="true"></i>
-          </div>
+          <Button
+            disableRipple
+            className={`mr-5 icon-type ${showOrder == 'grid' ? 'active' : ''}`}
+            onClick={() => setShowOrder('grid')}
+          >
+            <ViewModule fontSize="large" />
+          </Button>
+          <Button
+            disableRipple
+            className={`icon-type ${showOrder == 'list' ? 'active' : ''}`}
+            onClick={() => setShowOrder('list')}
+          >
+            <Reorder fontSize="large" />
+          </Button>
         </div>
+
         <hr></hr>
       </div>
 
-      <PlantList response={response} title={'Результат:'} />
-    </div>
+      <PlantList response={response} showOrder={showOrder} />
+    </div >
   );
 }
 

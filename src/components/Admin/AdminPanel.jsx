@@ -1,39 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Admin.css';
-import { Link } from "react-router-dom";
+import { Box, Grid } from '@mui/material';
+import { ApartmentOutlined, GrassOutlined, GroupOutlined } from '@mui/icons-material';
+import PlantPanel from './PlantPanel/PlantPanel';
+import SupplierPanel from './SupplierPanel/SupplierPanel';
+import UserPanel from './UserPanel/UserPanel';
+
 
 const AdminPanel = () => {
 
+    const [currentWindow, setCurrentWindow] = useState('1');
+
     return (
-        <div className="container">
-            <div className="rows">
-                <div className="">
-                    <ul className="navbar-nav center-box">
-                        <li>
-                        <Link to={`plant`}>
-                            <button className="btn btn-primary admin-button" >   
-                            Керування розсадами
-                            </button>
-                        </Link>
+        <Box>
+            <Grid container spacing={2}>
+                <Grid item xs={2}>
+                    <ul className='ul-admin'>
+                        <li
+                            className={`li-admin ${currentWindow === '1' ? 'active-div' : ''}`}
+                            onClick={() => setCurrentWindow('1')}
+                        >
+                            <GrassOutlined /> Розсада
                         </li>
-                        <li>
-                        <Link to={`user`}>
-                        <button className="btn btn-primary admin-button" >
-                            Керування користувачами
-                        </button>
-                        </Link>
+                        <li
+                            className={`li-admin ${currentWindow === '2' ? 'active-div' : ''}`}
+                            onClick={() => setCurrentWindow('2')}
+                        >
+                            <ApartmentOutlined /> Розсадники
                         </li>
-                        <li>
-                        <Link to={`supplier`}>
-                        <button className="btn btn-primary admin-button" >
-                            Керування розсадниками
-                        </button>
-                        </Link>
+                        <li
+                            className={`li-admin ${currentWindow === '3' ? 'active-div' : ''}`}
+                            onClick={() => setCurrentWindow('3')}
+                        >
+                            <GroupOutlined /> Користувачі
                         </li>
-                    </ul> 
-                </div>
-            </div>
-        </div>
+                    </ul>
+                </Grid>
+                <Grid item xs={10}>
+                    {currentWindow === '1' && (<PlantPanel></PlantPanel>)}
+                    {currentWindow === '2' && (<SupplierPanel></SupplierPanel>)}
+                    {currentWindow === '3' && (<UserPanel></UserPanel>)}
+                </Grid>
+            </Grid>
+        </Box>
     );
 }
 

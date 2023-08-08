@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getFavourites } from "../../functions/favouriteRequests";
 import PlantList from "../Plant/PlantList";
+import { Paper } from "@mui/material";
 
 const FavouriteList = () => {
 
@@ -12,7 +13,9 @@ const FavouriteList = () => {
 
     return (
         <div className="container">
-            <PlantList response={{data:favourites}} title="Улюблені"></PlantList>
+            <Paper>
+            <PlantList response={{data:favourites}} title="Улюблені" showOrder={'list'}></PlantList>
+            </Paper>
         </div>
     );
 }

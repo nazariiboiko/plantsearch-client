@@ -1,11 +1,12 @@
 import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, json } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getPlantById } from "../../functions/plantRequests";
 import './Plant.css';
 import { useAuth, getRole } from "../../functions/authUtils";
 import { getFavourites, doLike } from "../../functions/favouriteRequests";
-
+import * as request from "../../functions/supplierRequests";
+import { Check, Close } from "@mui/icons-material";
 
 const Plant = () => {
 
@@ -15,18 +16,32 @@ const Plant = () => {
   const [like, setLike] = useState(false);
   const navigate = useNavigate();
 
+  const [suppliers, setSuppliers] = useState([]);
+  const [availableSuppliers, setAvailableSuppliers] = useState([]);
+
   useEffect(() => {
-    setLike(false);
-    getPlantById(id).then((res) => setPlant(res));
-    if (isAuth) {
-      getFavourites().then((res) => {
-        res.map((item) => {
-          if (item.id === id) {
-            setLike(true);
-          }
+    getPlantById(id).then((res) => {
+      setPlant(res);
+      if (isAuth) {
+        getFavourites().then((res) => {
+          res.map((item) => {
+            if (id == item.id) {
+              setLike(true);
+            }
+          });
         });
+      };
+    });
+    request.getAllSuppliers().then((res) => setSuppliers(res));
+    request.getSupplierByPlant(id)
+      .then(res => {
+        const data = res.map(supplier => supplier.id);
+        setAvailableSuppliers(data);
+      })
+      .catch(error => {
+        console.error('Error fetching available suppliers:', error);
       });
-    }
+
   }, [id, isAuth]);
 
 
@@ -69,18 +84,25 @@ const Plant = () => {
             <table className="table">
               <tbody>
                 <tr><th></th><td></td></tr>
-                <tr>
-                  <th>Висота:</th>
-                  <td>{plant.height}м</td>
-                </tr>
-                <tr>
-                  <th>Габітус:</th>
-                  <td>{plant.habitus}</td>
-                </tr>
-                <tr>
-                  <th>Темп росту:</th>
-                  <td>{plant.growthRate}</td>
-                </tr>
+                {plant.height && (
+                  <tr>
+                    <th>Висота:</th>
+                    <td>{plant.height}м</td>
+                  </tr>
+                )}
+                {plant.habitus && (
+                  <tr>
+                    <th>Габітус:</th>
+                    <td>{plant.habitus}</td>
+                  </tr>
+                )}
+
+                {plant.growthRate && (
+                  <tr>
+                    <th>Темп росту:</th>
+                    <td>{plant.growthRate}</td>
+                  </tr>
+                )}
                 {plant.color && (
                   <tr>
                     <th>Забарвлення:</th>
@@ -111,52 +133,85 @@ const Plant = () => {
                     <th>Місце для посадки:</th>
                     <td>{plant.recommendation}</td>
                   </tr>)}
-                <tr>
-                  <th>Освітлення:</th>
-                  <td>{plant.lighting}</td>
-                </tr>
-                <tr>
-                  <th>Вічнозелене:</th>
-                  <td>{plant.evergreen}</td>
-                </tr>
+                {plant.lighting && (
+                  <tr>
+                    <th>Освітлення:</th>
+                    <td>{plant.lighting}</td>
+                  </tr>
+                )}
+
+                {plant.evergreen && (
+                  <tr>
+                    <th>Вічнозелене:</th>
+                    <td>{plant.evergreen}</td>
+                  </tr>
+                )}
+
                 {plant.floweringPeriod && (
                   <tr>
                     <th>Період цвітіння:</th>
                     <td>{plant.floweringPeriod}</td>
                   </tr>)}
-                <tr>
-                  <th>Тип сажанця:</th>
-                  <td>{plant.plantType}</td>
-                </tr>
-                <tr>
-                  <th>Зонування:</th>
-                  <td>{plant.zoning}</td>
-                </tr>
+                {plant.plantType && (
+                  <tr>
+                    <th>Тип сажанця:</th>
+                    <td>{plant.plantType}</td>
+                  </tr>
+                )}
+                {plant.zoning && (
+                  <tr>
+                    <th>Зонування:</th>
+                    <td>{plant.zoning}</td>
+                  </tr>
+                )}
+
                 {plant.ph && (
                   <tr>
                     <th>Кислотність:</th>
                     <td>{plant.ph}</td>
                   </tr>)}
-                <tr>
-                  <th>Вологість грунту:</th>
-                  <td>{plant.soilMoisture}</td>
-                </tr>
+                {plant.soilMoisture && (
+                  <tr>
+                    <th>Вологість грунту:</th>
+                    <td>{plant.soilMoisture}</td>
+                  </tr>
+                )}
                 {plant.hardy && (
                   <tr>
                     <th>Стійкість:</th>
                     <td>{plant.hardy}</td>
                   </tr>)}
-                <tr>
-                  <th>Живлення:</th>
-                  <td>{plant.nutrition}</td>
-                </tr>
+                {plant.nutrition && (
+                  <tr>
+                    <th>Живлення:</th>
+                    <td>{plant.nutrition}</td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
           <div className="col-md-3">
             <div className="text-center fw-bold">Наявність</div>
+            <table className="table">
+              <tbody>
+                <tr><th></th><td></td></tr>
+                {suppliers?.data?.map((supplier) => (
+                  <tr key={supplier.id}>
+                    <th>{supplier.name}</th>
+                    <td>
+                      {availableSuppliers.includes(supplier.id) ? (
+                        <Check fontSize="small" />
+                      ) : (
+                        <Close fontSize="small" />
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
+        <hr />
       </div>
     </div>
   );

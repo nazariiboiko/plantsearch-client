@@ -1,26 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getAllPlants, getPlantById, getPageablePlantByName } from "../../../functions/plantRequests";
 import { getSupplierByid, deleteJunction, createJunction } from "../../../functions/supplierRequests";
 import Modal from "../../ui/Modal/Modal";
-import { Pagination } from "@mui/material";
+import { Fab, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, styled, tableCellClasses } from "@mui/material";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-const Supplier = () => {
-    const { id } = useParams();
+import { ArrowBack } from "@mui/icons-material";
+
+const Supplier = ({ id, back }) => {
     const [supplier, setSupplier] = useState([]);
     const [active, setActive] = useState(false);
     let searchTimeout;
     const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize, setPageSize] = useState(20);
+    const [pageSize, setPageSize] = useState(10);
     const [response, setResponse] = useState();
     const [keyword, setKeyword] = useState('');
+
 
     const style = {
         width: '100%',
         bgcolor: 'background.paper',
     };
+
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+            backgroundColor: theme.palette.common.black,
+            color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+            fontSize: 14,
+        },
+    }));
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }));
 
     useEffect(() => {
         getSupplierByid(id).then((res) => setSupplier(res));
@@ -114,7 +135,12 @@ const Supplier = () => {
         <div className="container">
             <div className="row">
                 <div className="col text-start">
-                    <h1 className="text-decoration-underline">{supplier?.name}</h1>
+                    <h1 className="text-decoration-underline">
+                        <Fab color="error" aria-label="back" size="small" onClick={() => back()} >
+                            <ArrowBack />
+                        </Fab>
+                        {supplier?.name}
+                    </h1>
                 </div>
                 <div className="col text-end">
                     <button className="btn btn-primary" onClick={openModal}>Добавити новий зв'язок</button>
@@ -149,41 +175,41 @@ const Supplier = () => {
                         />
                     </Modal>
                 )}
-                <table className="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>PLANT_ID</th>
-                            <th>Назва</th>
-                            <th>Латина</th>
-                            <th>Ескіз</th>
-                            <th>Дії</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {supplier?.avaliablePlants?.map((plant, index) => (
-                            <tr key={plant.id}>
-                                <td>
-                                    {plant.id}
-                                </td>
-                                <td>
-                                    {plant.name}
-                                </td>
-                                <td>
-                                    {plant.latinName}
-                                </td>
-                                <td>
-                                    <img src={`https://plantsearch.s3.eu-north-1.amazonaws.com/sketches/${plant.sketch}`} alt="sketch" style={{ width: '20%', height: '20%' }}></img>
-                                </td>
-                                <td>
-                                    <button
-                                        className="btn btn-primary"
-                                        onClick={x => handleDeleteJunction(plant.id, index)}
-                                    > Видалити</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+
+
+                <Paper>
+                    <TableContainer>
+                        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                            <TableHead>
+                                <TableRow>
+                                    <StyledTableCell align="center">ID</StyledTableCell>
+                                    <StyledTableCell align="center">Назва</StyledTableCell>
+                                    <StyledTableCell align="center">Латина</StyledTableCell>
+                                    <StyledTableCell align="center">Ескіз</StyledTableCell>
+                                    <StyledTableCell align="center">Дії</StyledTableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {supplier?.avaliablePlants?.map((plant, index) => (
+                                    <StyledTableRow key={index}>
+                                        <StyledTableCell component="th" scope="row" align="center">{plant.id}</StyledTableCell>
+                                        <StyledTableCell align="center">{plant.name}</StyledTableCell>
+                                        <StyledTableCell align="center">{plant.latinName}</StyledTableCell>
+                                        <StyledTableCell align="center">
+                                            <img src={`https://plantsearch.s3.eu-north-1.amazonaws.com/sketches/${plant.sketch}`} alt="sketch" style={{ width: '20%', height: '20%' }}></img>
+                                        </StyledTableCell>
+                                        <StyledTableCell align="center">
+                                            <button
+                                                className="btn btn-primary"
+                                                onClick={x => handleDeleteJunction(plant.id, index)}
+                                            > Видалити</button>
+                                        </StyledTableCell>
+                                    </StyledTableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Paper>
             </div>
         </div>
     );

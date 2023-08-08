@@ -14,6 +14,7 @@ const AuthVerify = (props) => {
             if (decodedJwt.exp * 1000 < Date.now()) {
                 logout();
                 navigate('/');
+                localStorage.removeItem('jwt-token');
             }
         }
     }, [location, navigate]);

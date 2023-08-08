@@ -56,7 +56,7 @@ const ModalLoginForm = ({ activeObj, showSignUpModal }) => {
   }
 
   return (
-    <Modal activeObj={{ active: activeSignIn, setActive: setActiveSignIn }} title={"Ввійти"}>
+    <Modal activeObj={{ active: activeSignIn, setActive: setActiveSignIn }} title={"Увійти"}>
       <form onSubmit={handleSubmit}>
         <div className="md-form mb-5">
           <i className="fa-solid fa-user"></i>

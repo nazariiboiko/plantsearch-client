@@ -69,5 +69,29 @@
 .admin-table tbody tr:nth-child(even) {
     background-color: #f9f9f9;
   }
+
+.ul-admin {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+}
+
+.li-admin {
+    text-decoration: none;
+    border-radius: 0 20px 20px 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+}
+
+.li-admin:hover {
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.active-div {
+    background-color: #ccc;
+}
   
   

@@ -41,7 +41,7 @@ const UserPanel = () => {
               <td className={user.status === 'NOT_ACTIVE' || user.status === 'DELETED' ? 'admin-user-blocked' : ''}>{user.status} </td>
               <td>
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <button className="btn btn-secondary" onClick={x => window.location.href = `user/${user.id}`}> Детальніше</button>
+                  <button className="btn btn-secondary" onClick={x => window.location.href = `admin/user/${user.id}`}> Детальніше</button>
                   {user.status === 'ACTIVE' && (
                     <button className="btn btn-secondary" onClick={x => handleStatus(user, "NOT_ACTIVE")}>Заблокувати</button>
                   )}

@@ -99,7 +99,7 @@ export const frost_resistance = () => {
   ];
 };
 
-export const flowering_color = () => { 
+export const flowering_color = () => {
   return [
     { label: 'Багряний', value: 'flo_багр' },
     { label: 'Бежевий', value: 'flo_беж' },
@@ -127,7 +127,7 @@ export const flowering_color = () => {
   ];
 };
 
-export const flowering_period = () => { 
+export const flowering_period = () => {
   return [
     { label: 'Січень', value: 'Січень' },
     { label: 'Лютий', value: 'Лютий' },
@@ -264,4 +264,22 @@ export const allCriterias = () => {
     { id: 'growthRate', label: 'Темп просту', value: growth_rate() },
   ];
 };
+
+export const customCriterias = () => {
+  return [
+    { id: 'plantType', label: 'Вид', value: type() },
+    { id: 'habitus', label: 'Габітус', value: habitus() },
+    { id: 'floweringPeriod', label: 'Період цвітіння', value: flowering_period() },
+    { id: 'lighting', label: 'Освітлення', value: lighting() },
+    { id: 'frostResistance', label: 'Морозостійкість', value: frost_resistance() },
+    { id: 'soilMoisture', label: 'Вологість грунту', value: soil_moisture() },
+    { id: 'nutrition', label: 'Живлення', value: nutrition() },
+    { id: 'ph', label: 'рН грунту', value: ph() },
+    { id: 'hardy', label: 'Витривалість', value: hardy() },
+    { id: 'recommendation', label: 'Місце посадки', value: place_recommendation() },
+    { id: 'zoning', label: 'Зонування', value: zoning() },
+    { id: 'evergreen', label: 'Вічнозелене листя', value: evergreen() },
+    { id: 'growthRate', label: 'Темп просту', value: growth_rate() },
+  ];
+}
 
