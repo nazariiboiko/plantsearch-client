@@ -1,6 +1,6 @@
 import './App.css';
-import {Navigate, Route, Routes} from 'react-router-dom'
-import Header from './components/Layouts/Header'
+import {Navigate, Route, Routes} from 'react-router-dom';
+import Header from './components/Layouts/Header';
 import Home from './components/Home/Home';
 import Plant from './components/Plant/Plant';
 import Filter from './components/Filter/Filter';
