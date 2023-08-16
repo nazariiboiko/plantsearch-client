@@ -2,10 +2,8 @@ import { useEffect } from "react";
 import * as request from "../../../functions/supplierRequests";
 import { useState } from "react";
 import './SupplierPanel.css';
-import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, styled, tableCellClasses } from "@mui/material";
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled, tableCellClasses } from "@mui/material";
 import Supplier from "./Supplier";
-import { Add, Create } from "@mui/icons-material";
-import { Link } from "react-router-dom";
 
 const UserPanel = () => {
 
