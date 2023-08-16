@@ -2,8 +2,10 @@ import { useEffect } from "react";
 import * as request from "../../../functions/supplierRequests";
 import { useState } from "react";
 import './SupplierPanel.css';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled, tableCellClasses } from "@mui/material";
+import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, styled, tableCellClasses } from "@mui/material";
 import Supplier from "./Supplier";
+import { Add, Create } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const UserPanel = () => {
 
@@ -43,7 +45,7 @@ const UserPanel = () => {
 
   const renderDetailsComponent = () => {
     if (selectedSupplierId) {
-      return <Supplier id = { selectedSupplierId} back = { handleBackClick } />
+      return <Supplier id={selectedSupplierId} back={handleBackClick} />
     }
     return null;
   };
@@ -52,6 +54,17 @@ const UserPanel = () => {
     <div>
       {selectedSupplierId === null && (
         <Paper>
+          {/* <hr />
+          <div className="d-flex justify-content-end mb-10">
+            <Tooltip title="Добавити" placement="top">
+              <Link to={`supplier/-1`} className="mr-5">
+                <Fab color="success" aria-label="add">
+                  <Add />
+                </Fab>
+              </Link>
+            </Tooltip>
+          </div>
+          <hr /> */}
           <TableContainer>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>

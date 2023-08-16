@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams, useNavigate, json } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { getPlantById } from "../../functions/plantRequests";
 import './Plant.css';
