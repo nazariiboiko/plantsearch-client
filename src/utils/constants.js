@@ -1,5 +1,5 @@
-export const API = 'http://localhost:8085/api/v1';
-export const image_store = 'https://plantsearch.s3.eu-north-1.amazonaws.com'
+export const API = process.env.REACT_APP_API;
+export const image_store = process.env.REACT_APP_IMAGE_STORE;
 
 export const ROLE_USER = 'USER';
 export const ROLE_MANAGER = 'MANAGER';
