@@ -37,7 +37,7 @@ const PlantPanel = ({ onInputChange }) => {
 
   useEffect(() => {
     getAllPlants(1, pageSize).then((res) => setResponse(res));
-  }, []);
+  });
 
   const handleInputChange = (e) => {
     const q = e.target.value;

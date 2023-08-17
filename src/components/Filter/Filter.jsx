@@ -36,7 +36,7 @@ const Filter = () => {
       getPlantsByCriterias(selectedValues, String(keyword), pageNumber, pageSize)
         .then((res) => setResponse(res));
     }
-  }, [keyword]);
+  });
 
   const handlePageChange = (event, value) => {
     setPageNumber(value);

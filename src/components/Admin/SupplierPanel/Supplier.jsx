@@ -45,7 +45,7 @@ const Supplier = ({ id, back }) => {
     useEffect(() => {
         getSupplierByid(id).then((res) => setSupplier(res));
         getAllPlants(1, pageSize).then((res) => setResponse(res));
-    }, []);
+    });
 
     const handleDeleteJunction = (plantId, indexToRemove) => {
         deleteJunction(id, plantId)
