@@ -1,0 +1,70 @@
+
+.plant-card a {
+    text-decoration: none;
+    color: #222;
+ }
+
+ .plant-card a:hover {
+    color: purple;
+    cursor: pointer;
+ }
+
+ .plant-image {
+   width: 200px;
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: 50% 50%;
+ }
+
+ .show-image {
+   width: 165px;
+   height: 205px;
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: 50% 50%;
+   margin-left: 20px;
+   margin-right: 20px;
+ }
+
+.ml-10 {
+   margin-left: 15px;
+   
+}
+
+.ml-20 {
+   margin-left: 20px;
+}
+
+.plant-shadow {
+   margin-top: 0px;
+   padding-top: 25px;
+}
+
+.plant-text-section {
+   margin-left: 20px;
+   margin-right: 20px;
+}
+
+.plant-title {
+   padding-bottom: 5px;
+   font-size: 24px;
+   font-weight: bold;
+   color: #333;
+}
+
+.plant-text {
+   font-size: 16px;
+   line-height: 1.5;
+   color: #666;
+   padding-bottom: 15px;
+}
+
+.border-right {
+   border: solid;
+   border-width: 1px;
+   border-color: #ddd;
+   border-left: #222;
+   border-bottom: #222;
+   border-top: #222;
+}
+
