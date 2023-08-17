@@ -27,13 +27,11 @@ const PlantList = ({ response, title, text, showOrder }) => {
         response?.data?.map((plant) => {
           return (
             <div className="col-md-2 plant-card" key={plant.id}>
-              <a>
                 <Link to={`/plant/${plant.id}`}>
                   <img className='d-block show-image' src={`${image_store}/images/${plant.image}`} alt="plant" />
                   <p className='text-center'>{plant?.name?.length > 21 ? plant.name.slice(0, 21) + '...' : plant.name}</p>
                   <div className="overlay"></div>
                 </Link>
-              </a>
             </div>
           )
         })

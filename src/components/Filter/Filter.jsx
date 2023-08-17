@@ -148,14 +148,14 @@ const Filter = () => {
         <div className="col-md-4 d-flex justify-content-end">
           <Button
             disableRipple
-            className={`mr-5 icon-type ${showOrder == 'grid' ? 'active' : ''}`}
+            className={`mr-5 icon-type ${showOrder === 'grid' ? 'active' : ''}`}
             onClick={() => setShowOrder('grid')}
           >
             <ViewModule fontSize="large" />
           </Button>
           <Button
             disableRipple
-            className={`icon-type ${showOrder == 'list' ? 'active' : ''}`}
+            className={`icon-type ${showOrder === 'list' ? 'active' : ''}`}
             onClick={() => setShowOrder('list')}
           >
             <Reorder fontSize="large" />

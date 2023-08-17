@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { activateAccount, doSignup } from "../../functions/authRequest";
 import Modal from '../ui/Modal/Modal';
 import './ModalForm.css';

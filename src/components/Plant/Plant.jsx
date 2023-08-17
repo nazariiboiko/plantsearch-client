@@ -24,7 +24,7 @@ const Plant = () => {
       setPlant(res);
       if (isAuth) {
         getFavourites().then((res) => {
-          const hasLiked = res.find(item => item.id == id);
+          const hasLiked = res.find(item => String(item.id) ===  String(id));
           if (hasLiked) {
             setLike(true);
           }
@@ -61,10 +61,10 @@ const Plant = () => {
           </div>
           {isAuth === true && (
             <div>
-              <a onClick={x => handleLike()}>
+              <button onClick={x => handleLike()} style={{border :'none', background: 'none'}}>
                 {like === true && (<i class="fa-solid fa-heart"></i>)}
                 {like === false && (<i className="fa-regular fa-heart"></i>)}
-              </a>
+              </button>
             </div>
           )}
         </div>

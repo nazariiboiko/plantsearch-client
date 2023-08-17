@@ -90,8 +90,8 @@ const ModalLoginForm = ({ activeObj, showSignUpModal }) => {
         {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
       </form>
       <div className="under-text">
-        <a href='#' onClick={handleShowSignUpModal}><p>Відсутній акаунт? Зареєструйтесь!</p></a>
-        <a><p>Я забув пароль</p></a>
+        <button onClick={handleShowSignUpModal} style={{background: 'none', border:'none'}}><p>Відсутній акаунт? Зареєструйтесь!</p></button>
+        <button style={{background: 'none', border:'none'}}><p>Я забув пароль</p></button>
       </div>
     </Modal>
   );
