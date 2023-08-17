@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { activateAccount, doSignup } from "../../functions/authRequest";
 import Modal from '../ui/Modal/Modal';
 import './ModalForm.css';
@@ -16,7 +16,6 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
   const [showConfirmCode, setShowConfirmCode] = useState(false);
   const [confirmationCode, setConfirmationCode] = useState(Array(6).fill(''));
   const { handleClick } = useSnackbar();
-  const navigate = useNavigate();
 
 
   const handleChange = (index, value) => {
@@ -54,10 +53,6 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
       }
     }
   };
-
-  const onClose = () => {
-    setActiveSignUp(false);
-  }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;

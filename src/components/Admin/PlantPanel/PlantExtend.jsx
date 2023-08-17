@@ -3,10 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { createPlant, deletePlant, getPlantById, updatePlant } from "../../../functions/plantRequests";
 import './PlantPanel.css';
-import { Box, Fab, InputLabel, MenuItem, Select, Tooltip } from "@mui/material";
+import { Box, Fab, Tooltip } from "@mui/material";
 import { Cancel, Delete, RemoveRedEye, Save } from "@mui/icons-material";
 import { useSnackbar } from "../../../context/SnackbarContext";
-import { FormControl } from "react-bootstrap";
 
 const PlantExtend = () => {
 

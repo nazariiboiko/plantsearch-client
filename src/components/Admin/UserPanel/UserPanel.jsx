@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { getAllUsers, blockUser } from "../../../functions/userRequests";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import './UserPanel.css';
 
 const UserPanel = () => {

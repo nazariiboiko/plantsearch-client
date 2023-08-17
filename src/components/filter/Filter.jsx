@@ -16,7 +16,7 @@ const Filter = () => {
   const [selectedValues, setSelectedValues] = useState([]);
   const [response, setResponse] = useState();
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(48);
+  const [pageSize] = useState(48);
   const [showOrder, setShowOrder] = useState('list');
 
   useEffect(() => {

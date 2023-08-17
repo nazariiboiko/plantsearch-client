@@ -16,17 +16,8 @@ const Plant = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedSketch, setSelectedSketch] = useState(null);
   const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
-  const [recommendationValue, setRecommendationValue] = useState('');
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [selectedValues, setSelectedValues] = useState([]);
   const [selectedCriteria, setSelectedCriteria] = useState({});
   const [showMore, setShowMore] = useState(false);
-
-  const actions = [
-    { icon: <Save />, name: 'Save' },
-  ];
 
   useEffect(() => {
     if (id > 0) {
@@ -49,7 +40,7 @@ const Plant = () => {
     if (id > 0) {
       getPlantById(id).then((res) => setSelectedCriteria(parseToObjectFormat(res)));
     } else {
-      setSelectedValues([]);
+      setSelectedCriteria([]);
     }
   }
 

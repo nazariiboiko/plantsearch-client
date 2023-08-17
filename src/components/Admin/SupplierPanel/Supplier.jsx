@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
 import { getAllPlants, getPlantById, getPageablePlantByName } from "../../../functions/plantRequests";
 import { getSupplierByid, deleteJunction, createJunction } from "../../../functions/supplierRequests";
 import Modal from "../../ui/Modal/Modal";
-import { Fab, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, styled, tableCellClasses } from "@mui/material";
+import { Fab, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled, tableCellClasses } from "@mui/material";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -14,7 +13,7 @@ const Supplier = ({ id, back }) => {
     const [active, setActive] = useState(false);
     let searchTimeout;
     const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize] = useState(10);
     const [response, setResponse] = useState();
     const [keyword, setKeyword] = useState('');
 

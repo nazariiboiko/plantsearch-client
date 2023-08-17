@@ -1,7 +1,6 @@
 import React from "react";
-import { useAuth, getRole, getToken, getName, isToken } from '../../functions/authUtils';
+import { useAuth, getRole, getToken, getName } from '../../functions/authUtils';
 import { useSnackbar } from "../../context/SnackbarContext";
-import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 

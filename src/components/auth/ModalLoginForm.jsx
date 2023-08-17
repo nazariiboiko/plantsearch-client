@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
 import { doLogin } from "../../functions/authRequest";
 import Modal from '../ui/Modal/Modal';
 import './ModalForm.css';
 import { Alert } from '@mui/material';
 import { useSnackbar } from "../../context/SnackbarContext";
-import { useAuth, getRole, getToken, getName, isToken } from '../../functions/authUtils';
-
 
 const ModalLoginForm = ({ activeObj, showSignUpModal }) => {
   const { activeSignIn, setActiveSignIn } = activeObj;
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
-  const auth = useAuth();
   const { handleClick } = useSnackbar();
 
   const handleInputChange = (event) => {

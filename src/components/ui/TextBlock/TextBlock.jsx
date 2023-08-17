@@ -1,12 +1,7 @@
 import React from "react";
 import './TextBlock.css';
-import { useEffect } from "react";
 
 const TextBlock = ({ text }) => {
-
-    useEffect(() => {
-        console.info(text);
-    }, []);
 
     return (
         <div className="row">

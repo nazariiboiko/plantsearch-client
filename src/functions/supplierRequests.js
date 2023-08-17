@@ -1,5 +1,5 @@
 import api from '../api/axiosConfig';
-import { API_SUPPLIER, API_SUPPLIER_UPDATE } from '../utils/constants';
+import { API_SUPPLIER } from '../utils/constants';
 import { getToken } from './authUtils';
 
 export const getAllSuppliers = async (page = 1, size = 20) => {

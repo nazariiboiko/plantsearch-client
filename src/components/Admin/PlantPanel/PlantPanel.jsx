@@ -12,7 +12,7 @@ const PlantPanel = ({ onInputChange }) => {
 
   let searchTimeout;
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize, setPageSize] = useState(50);
+  const [pageSize] = useState(50);
   const [response, setResponse] = useState();
   const [keyword, setKeyword] = useState('');
 

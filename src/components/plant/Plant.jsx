@@ -24,11 +24,10 @@ const Plant = () => {
       setPlant(res);
       if (isAuth) {
         getFavourites().then((res) => {
-          res.map((item) => {
-            if (id == item.id) {
-              setLike(true);
-            }
-          });
+          const hasLiked = res.find(item => item.id == id);
+          if (hasLiked) {
+            setLike(true);
+          }
         });
       };
     });
@@ -56,11 +55,11 @@ const Plant = () => {
       <div>
         <div className="h1 mt-3 text-center" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ textAlign: "center", flex: "1" }}>{plant.name}
-            {isAuth == true && getRole() === "ADMIN" && (
+            {isAuth === true && getRole() === "ADMIN" && (
               <button className="btn btn-primary ml-10" onClick={x => navigate(`/admin/plant/${id}`)}><i class="fas fa-edit"></i></button>
             )}
           </div>
-          {isAuth == true && (
+          {isAuth === true && (
             <div>
               <a onClick={x => handleLike()}>
                 {like === true && (<i class="fa-solid fa-heart"></i>)}

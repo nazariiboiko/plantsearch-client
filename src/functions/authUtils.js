@@ -1,5 +1,4 @@
 import jwt_decode from 'jwt-decode';
-import { ROLE_ADMIN, ROLE_MANAGER, ROLE_USER } from '../utils/constants';
 
 export const getRole = () => {
     if (localStorage.getItem('jwt-token')) {

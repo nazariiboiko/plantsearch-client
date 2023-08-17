@@ -2,7 +2,7 @@ import React from 'react';
 import './Modal.css';
 
 const Modal = ({ activeObj, title, children }) => {
-    const { active, setActive } = activeObj;
+    const { setActive } = activeObj;
 
     return (
         <div className="modal fade show" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{ display: 'block' }}>
