@@ -1,4 +1,4 @@
-export const API = 'https://plantsearch.up.railway.app/api/v1';
+export const API = process.env.REACT_APP_API;
 export const image_store = process.env.REACT_APP_IMAGE_STORE;
 
 export const ROLE_USER = 'USER';

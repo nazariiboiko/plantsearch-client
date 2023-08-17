@@ -36,8 +36,8 @@ const PlantPanel = ({ onInputChange }) => {
   }));
 
   useEffect(() => {
-    getAllPlants(1, pageSize).then((res) => setResponse(res));
-  });
+    getAllPlants(pageNumber, pageSize).then((res) => setResponse(res));
+  }, [pageNumber, pageSize]);
 
   const handleInputChange = (e) => {
     const q = e.target.value;
@@ -140,7 +140,7 @@ const PlantPanel = ({ onInputChange }) => {
                   <StyledTableCell align="center">{plant.plantType}</StyledTableCell>
                   <StyledTableCell align="center"><img src={`${image_store}/sketches/${plant.sketch}`} alt="sketch" style={{ width: '100px', height: '100px' }}></img></StyledTableCell>
                   <StyledTableCell align="center">
-                    <Link to={`plant/${plant.id}`}>
+                    <Link to={`${plant.id}`}>
                       <Button variant="contained" className="admin-controll-button right-border">Детальніше</Button>
                     </Link>
                   </StyledTableCell>
