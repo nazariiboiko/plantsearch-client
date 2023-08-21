@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { getAllPlants, getPlantById, getPageablePlantByName } from "../../../functions/plantRequests";
 import { getSupplierByid, deleteJunction, createJunction } from "../../../functions/supplierRequests";
 import Modal from "../../ui/Modal/Modal";
-import { Fab, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled, tableCellClasses } from "@mui/material";
+import { Fab, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, styled, tableCellClasses } from "@mui/material";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { ArrowBack } from "@mui/icons-material";
+import { ArrowBack, Delete, RemoveRedEye } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
-const Supplier = ({ id, back }) => {
+const Supplier = ({ id, back, deleteSup }) => {
     const [supplier, setSupplier] = useState([]);
     const [active, setActive] = useState(false);
     let searchTimeout;
@@ -16,6 +17,7 @@ const Supplier = ({ id, back }) => {
     const [pageSize] = useState(10);
     const [response, setResponse] = useState();
     const [keyword, setKeyword] = useState('');
+    const navigate = useNavigate();
 
 
     const style = {
@@ -45,7 +47,7 @@ const Supplier = ({ id, back }) => {
     useEffect(() => {
         getSupplierByid(id).then((res) => setSupplier(res));
         getAllPlants(1, pageSize).then((res) => setResponse(res));
-    });
+    }, []);
 
     const handleDeleteJunction = (plantId, indexToRemove) => {
         deleteJunction(id, plantId)
@@ -143,6 +145,8 @@ const Supplier = ({ id, back }) => {
                 </div>
                 <div className="col text-end">
                     <button className="btn btn-primary" onClick={openModal}>Добавити новий зв'язок</button>
+                    <button className="btn btn-primary" onClick={deleteSup}>Видалити розсадника</button>
+
                 </div>
             </div>
             <div>
@@ -198,10 +202,16 @@ const Supplier = ({ id, back }) => {
                                             <img src={`https://plantsearch.s3.eu-north-1.amazonaws.com/sketches/${plant.sketch}`} alt="sketch" style={{ width: '20%', height: '20%' }}></img>
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
-                                            <button
-                                                className="btn btn-primary"
-                                                onClick={x => handleDeleteJunction(plant.id, index)}
-                                            > Видалити</button>
+                                            <Tooltip title="Видалити" placement="top">
+                                                <Fab color="error" onClick={x => handleDeleteJunction(plant.id, index)}>
+                                                    <Delete />
+                                                </Fab>
+                                            </Tooltip>
+                                            <Tooltip title="Переглянути" placement="top">
+                                                <Fab color="warning" onClick={() => navigate(`/plant/${id}`)}>
+                                                    <RemoveRedEye />
+                                                </Fab>
+                                            </Tooltip>
                                         </StyledTableCell>
                                     </StyledTableRow>
                                 ))}

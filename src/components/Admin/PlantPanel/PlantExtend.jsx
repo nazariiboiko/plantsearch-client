@@ -54,7 +54,7 @@ const PlantExtend = () => {
       const confirmed = window.confirm('Ви впевнені що хочете видалити?');
       if (confirmed) {
         deletePlant(id);
-        navigate(`/admin/plant`);
+        navigate(`/admin#plants`);
         handleClick('success', 'Успішно видалено!')
       }
     }

@@ -46,7 +46,7 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
 
       console.info(index, event);
 
-      const lastInput = document.getElementById(`digit-${index-1}`);
+      const lastInput = document.getElementById(`digit-${index - 1}`);
       if (lastInput) {
         lastInput.focus();
       }
@@ -58,7 +58,9 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
     if (name === 'email') {
       setEmail(value);
     } else if (name === 'login') {
-      setLogin(value);
+      if (value === '' || (value.length <= 15 && /^[a-zA-Z0-9]+$/.test(value))) {
+        setLogin(value);
+      }
     } else if (name === 'password') {
       setPassword(value);
     }
@@ -84,17 +86,17 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
 
   const handleSumbitCode = (event) => {
     event.preventDefault();
-    console.info({email, login, password}, confirmationCode.join(''));
+    console.info({ email, login, password }, confirmationCode.join(''));
 
-    activateAccount({email, login, password}, confirmationCode.join(''), 'uk')
-    .then(() => {
-      setActiveSignUp(false);
-      handleClick('success', 'Успішний вхід');
-      setLogin('');
-      setPassword('');
-      setEmail('');
-    })
-    .catch((error) => setErrorMsg(error.response.data))
+    activateAccount({ email, login, password }, confirmationCode.join(''), 'uk')
+      .then(() => {
+        setActiveSignUp(false);
+        handleClick('success', 'Успішний вхід');
+        setLogin('');
+        setPassword('');
+        setEmail('');
+      })
+      .catch((error) => setErrorMsg(error.response.data))
 
   }
 
@@ -162,7 +164,7 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
               className="digit-box"
               value={value}
               onChange={(e) => handleChange(index, e.target.value)}
-              onKeyDown={(e) => handleFirstInputBackspace(index, e) }
+              onKeyDown={(e) => handleFirstInputBackspace(index, e)}
             />
           ))}
         </div>

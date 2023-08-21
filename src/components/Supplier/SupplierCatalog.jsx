@@ -7,13 +7,17 @@ const SupplierCatalog = () => {
 
     useEffect(() => {
         request.getAllSuppliers().then((res) => setSuppliers(res))
-      }, []);
+    }, []);
 
     return (
-        <div className="container h1">
+        <div className="container filter-container">
+            <div className='filter-header'>
+                <h4 className="w-100 font-weight-bold filter-title d-flex">Розсадники</h4>
+                <hr></hr>
+            </div>
             {suppliers?.data?.map((supplier) => (
                 <p>
-                {supplier.name}
+                    {supplier.name}
                 </p>
             ))}
         </div>

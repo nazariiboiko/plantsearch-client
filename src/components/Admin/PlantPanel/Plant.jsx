@@ -58,7 +58,7 @@ const Plant = () => {
       const confirmed = window.confirm('Ви впевнені що хочете видалити?');
       if (confirmed) {
         deletePlant(id);
-        navigate(`/admin/plant`);
+        navigate(`/admin#plants`);
       }
     }
   }

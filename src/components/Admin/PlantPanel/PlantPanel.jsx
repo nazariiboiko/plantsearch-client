@@ -91,31 +91,33 @@ const PlantPanel = ({ onInputChange }) => {
 
   return (
     <div className="container">
-      <hr />
-      <div className="d-flex justify-content-between">
-        <TextField id="outlined-basic"
-          label="Знайти назва, латинь, ID"
-          variant="outlined"
-          onChange={handleInputChange} />
-        <div class="d-flex">
-          <Pagination
+      <div>
+        <hr />
+        <div className="d-flex justify-content-between">
+          <TextField id="outlined-basic"
+            label="Знайти назва, латинь, ID"
             variant="outlined"
-            shape="rounded"
-            count={Math.ceil(response?.totalSize / response?.pageSize)}
-            page={pageNumber}
-            onChange={handlePageChange}
-          />
-        </div>
+            onChange={handleInputChange} />
+          <div class="d-flex">
+            <Pagination
+              variant="outlined"
+              shape="rounded"
+              count={Math.ceil(response?.totalSize / response?.pageSize)}
+              page={pageNumber}
+              onChange={handlePageChange}
+            />
+          </div>
 
-        <Tooltip title="Добавити" placement="top">
-          <Link to={`plant/-1`} className="mr-5">
-            <Fab color="success" aria-label="add">
-              <AddIcon />
-            </Fab>
-          </Link>
-        </Tooltip>
+          <Tooltip title="Добавити" placement="top">
+            <Link to={`plant/-1`} className="mr-5">
+              <Fab color="success" aria-label="add">
+                <AddIcon />
+              </Fab>
+            </Link>
+          </Tooltip>
+        </div>
+        <hr />
       </div>
-      <hr />
       <Paper>
         <TableContainer>
           <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -140,7 +142,7 @@ const PlantPanel = ({ onInputChange }) => {
                   <StyledTableCell align="center">{plant.plantType}</StyledTableCell>
                   <StyledTableCell align="center"><img src={`${image_store}/sketches/${plant.sketch}`} alt="sketch" style={{ width: '100px', height: '100px' }}></img></StyledTableCell>
                   <StyledTableCell align="center">
-                    <Link to={`${plant.id}`}>
+                    <Link to={`plant/${plant.id}`}>
                       <Button variant="contained" className="admin-controll-button right-border">Детальніше</Button>
                     </Link>
                   </StyledTableCell>

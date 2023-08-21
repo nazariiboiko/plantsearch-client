@@ -5,11 +5,35 @@ import { ApartmentOutlined, GrassOutlined, GroupOutlined } from '@mui/icons-mate
 import PlantPanel from './PlantPanel/PlantPanel';
 import SupplierPanel from './SupplierPanel/SupplierPanel';
 import UserPanel from './UserPanel/UserPanel';
+import { useEffect } from 'react';
 
 
 const AdminPanel = () => {
 
-    const [currentWindow, setCurrentWindow] = useState('1');
+    const [currentWindow, setCurrentWindow] = useState(window.location.hash);
+
+    useEffect(() => {
+        const handleHashChange = () => {
+            setCurrentWindow(window.location.hash);
+        };
+
+        const handlePopState = () => {
+            setCurrentWindow(window.location.hash);
+        };
+
+        window.addEventListener('hashchange', handleHashChange);
+        window.addEventListener('popstate', handlePopState);
+
+        return () => {
+            window.removeEventListener('hashchange', handleHashChange);
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, []);
+
+    const handleCurrentWindow = (value) => {
+        setCurrentWindow(value);
+        window.location.hash = value;
+    };
 
     return (
         <Box>
@@ -17,29 +41,29 @@ const AdminPanel = () => {
                 <Grid item xs={2}>
                     <ul className='ul-admin'>
                         <li
-                            className={`li-admin ${currentWindow === '1' ? 'active-div' : ''}`}
-                            onClick={() => setCurrentWindow('1')}
+                            className={`li-admin ${currentWindow === '#plants' ? 'active-div' : ''}`}
+                            onClick={() => handleCurrentWindow('#plants')}
                         >
                             <GrassOutlined /> Розсада
                         </li>
                         <li
-                            className={`li-admin ${currentWindow === '2' ? 'active-div' : ''}`}
-                            onClick={() => setCurrentWindow('2')}
+                            className={`li-admin ${currentWindow === '#suppliers' ? 'active-div' : ''}`}
+                            onClick={() => handleCurrentWindow('#suppliers')}
                         >
                             <ApartmentOutlined /> Розсадники
                         </li>
                         <li
-                            className={`li-admin ${currentWindow === '3' ? 'active-div' : ''}`}
-                            onClick={() => setCurrentWindow('3')}
+                            className={`li-admin ${currentWindow === '#users' ? 'active-div' : ''}`}
+                            onClick={() => handleCurrentWindow('#users')}
                         >
                             <GroupOutlined /> Користувачі
                         </li>
                     </ul>
                 </Grid>
                 <Grid item xs={10}>
-                    {currentWindow === '1' && (<PlantPanel></PlantPanel>)}
-                    {currentWindow === '2' && (<SupplierPanel></SupplierPanel>)}
-                    {currentWindow === '3' && (<UserPanel></UserPanel>)}
+                    {currentWindow === '#plants' && (<PlantPanel></PlantPanel>)}
+                    {currentWindow === '#suppliers' && (<SupplierPanel></SupplierPanel>)}
+                    {currentWindow === '#users' && (<UserPanel></UserPanel>)}
                 </Grid>
             </Grid>
         </Box>

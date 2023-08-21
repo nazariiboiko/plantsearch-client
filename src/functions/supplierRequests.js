@@ -14,6 +14,30 @@ export const getSupplierByid = async (id) => {
         .then((response) => response.data);
 };
 
+export const createSupplier = async (name) => {
+    const token = getToken();
+    return await api
+        .post(`${API_SUPPLIER}`, { name: name }, {
+            headers: {
+                Authorization: token,
+            }
+        })
+        .then((response) => response.data);
+}
+
+
+export const deleteSupplier = async (id) => {
+    const token = getToken();
+    return await api
+        .post(`${API_SUPPLIER}/delete?id=${id}`, {}, {
+            headers: {
+                Authorization: token,
+            }
+        })
+        .then((response) => response.data);
+
+}
+
 export const getSupplierByPlant = async (plantId) => {
     return await api
         .get(`${API_SUPPLIER}/find/?plantId=${plantId}`, {})

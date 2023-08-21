@@ -20,7 +20,7 @@ import ModalSignUpForm from '../Auth/ModalSignUpForm';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import { Fragment } from 'react';
 import ViewHeadlineSharpIcon from '@mui/icons-material/ViewHeadlineSharp';
-import PersonSharpIcon from '@mui/icons-material/PersonSharp';
+// import PersonSharpIcon from '@mui/icons-material/PersonSharp';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExitToAppSharpIcon from '@mui/icons-material/ExitToAppSharp';
 
@@ -94,7 +94,7 @@ const HeaderMenuEx = () => {
                                             </li>
                                             {isLogged && role === "ADMIN" && (
                                                 <li>
-                                                    <Link to="/admin" className='nav-link'>
+                                                    <Link to="/admin#plants" className='nav-link'>
                                                         <div className='text-nav'>Керування</div>
                                                     </Link>
                                                 </li>
@@ -125,9 +125,9 @@ const HeaderMenuEx = () => {
                                                 <ViewHeadlineSharpIcon />
                                             </Button>
                                             <Menu {...bindMenu(popupState)} className='menu-item'>
-                                                <Link to="/profile">
+                                                {/* <Link to="/profile">
                                                     <MenuItem onClick={popupState.close}> <PersonSharpIcon />Профіль</MenuItem>
-                                                </Link>
+                                                </Link> */}
                                                 <Link to="/favourite">
                                                     <MenuItem onClick={popupState.close}><FavoriteIcon />Улюблене</MenuItem>
                                                 </Link>

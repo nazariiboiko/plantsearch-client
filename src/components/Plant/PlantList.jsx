@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import './Plant.css';
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled } from '@mui/material';
+import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, styled } from '@mui/material';
 import { image_store } from '../../utils/constants';
+import { QuestionMark } from '@mui/icons-material';
 
 const PlantList = ({ response, title, text, showOrder }) => {
 
@@ -15,7 +16,6 @@ const PlantList = ({ response, title, text, showOrder }) => {
     },
   }));
 
-
   return (
     <div className='row plant-shadow'>
       <div className='plant-text-section'>
@@ -27,11 +27,11 @@ const PlantList = ({ response, title, text, showOrder }) => {
         response?.data?.map((plant) => {
           return (
             <div className="col-md-2 plant-card" key={plant.id}>
-                <Link to={`/plant/${plant.id}`}>
-                  <img className='d-block show-image' src={`${image_store}/images/${plant.image}`} alt="plant" />
-                  <p className='text-center'>{plant?.name?.length > 21 ? plant.name.slice(0, 21) + '...' : plant.name}</p>
-                  <div className="overlay"></div>
-                </Link>
+              <Link to={`/plant/${plant.id}`}>
+                <img className='d-block show-image' src={`${image_store}/images/${plant.image}`} alt="plant" />
+                <p className='text-center'>{plant?.name?.length > 21 ? plant.name.slice(0, 21) + '...' : plant.name}</p>
+                <div className="overlay"></div>
+              </Link>
             </div>
           )
         })
@@ -49,9 +49,11 @@ const PlantList = ({ response, title, text, showOrder }) => {
                     <TableCell align="center">{plant.latinName}</TableCell>
                     <TableCell align="center"><img src={`${image_store}/sketches/${plant.sketch}`} alt="sketch" style={{ width: '100px', height: '100px' }}></img></TableCell>
                     <TableCell align='center'>
-                    {/* <Link to={`/plant/${plant.id}`}>
-                        <Fab color="success"><QuestionMark /></Fab>
-                      </Link> */}
+                      <Tooltip title="Переглянути" placement="top">
+                        <Link to={`/plant/${plant.id}`}>
+                          <Fab color="success"><QuestionMark /></Fab>
+                        </Link>
+                      </Tooltip>
                     </TableCell>
                   </StyledTableRow>
                 ))}

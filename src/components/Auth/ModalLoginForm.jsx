@@ -63,7 +63,7 @@ const ModalLoginForm = ({ activeObj, showSignUpModal }) => {
             name="login"
             value={login}
             onChange={handleInputChange}
-            placeholder="Username or email"
+            placeholder="Ім'я користувача чи пошта"
           />
         </div>
 
@@ -76,7 +76,7 @@ const ModalLoginForm = ({ activeObj, showSignUpModal }) => {
             name="password"
             value={password}
             onChange={handleInputChange}
-            placeholder="Password"
+            placeholder="Пароль"
           />
         </div>
 
