@@ -1,5 +1,8 @@
 export const API = process.env.REACT_APP_API;
+//export const API ='http://localhost:8085/api/v1';
 export const image_store = process.env.REACT_APP_IMAGE_STORE;
+//export const site_key = '6LcIeMYnAAAAANaubBwRBLiq-p8k9NL8j4dBxHdd'; dev-key
+export const site_key = process.env.REACT_APP_SITE_KEY;
 
 export const ROLE_USER = 'USER';
 export const ROLE_MANAGER = 'MANAGER';

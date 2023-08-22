@@ -18,6 +18,7 @@ import Profile from './components/Profile/Profile';
 import FavouriteList from './components/FavouriteList/FavouriteList';
 import Supplier from './components/Admin/SupplierPanel/Supplier';
 import SupplierCatalog from './components/Supplier/SupplierCatalog';
+import ChangeLog from './components/ChangeLog/ChangeLog';
 
 function App() {
 
@@ -36,6 +37,11 @@ function App() {
             <Route path='/profile' element={<Profile/>}/>
             <Route path='/favourite' element={<FavouriteList/>}/>
           </Route>
+
+          <Route path="changelog"
+                        element={<AccessRoute role={ROLE_ADMIN}
+                                        to={<ChangeLog />}
+                                        redirect={<Navigate to={"/"} />}/>}/>
           
           <Route path="/admin" element={<ProtectedRoutes/>}>
             <Route path='/admin'

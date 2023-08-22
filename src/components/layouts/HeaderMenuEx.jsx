@@ -23,12 +23,15 @@ import ViewHeadlineSharpIcon from '@mui/icons-material/ViewHeadlineSharp';
 // import PersonSharpIcon from '@mui/icons-material/PersonSharp';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExitToAppSharpIcon from '@mui/icons-material/ExitToAppSharp';
+import { Badge } from '@mui/material';
+import { getUpdateNumber } from '../../utils/changelog';
 
 const HeaderMenuEx = () => {
     const isLogged = useAuth();
     const role = getRole();
     const navigate = useNavigate();
-
+    const updateNumber = getUpdateNumber();
+    const badgeClicked = localStorage.getItem('badgeClicked');
 
     const [activeSignIn, setActiveSignIn] = useState(false);
     const [activeSignUp, setActiveSignUp] = useState(false);
@@ -50,6 +53,10 @@ const HeaderMenuEx = () => {
             },
         },
     });
+
+    const handleBadgeClick = () => {
+        localStorage.setItem('badgeClicked', String(updateNumber));
+    }
 
     return (
         <ThemeProvider theme={darkTheme}>
@@ -96,6 +103,17 @@ const HeaderMenuEx = () => {
                                                 <li>
                                                     <Link to="/admin#plants" className='nav-link'>
                                                         <div className='text-nav'>Керування</div>
+                                                    </Link>
+                                                </li>
+                                            )}
+                                            {isLogged && role === "ADMIN" && (
+                                                <li>
+                                                    <Link to="/changelog" className='nav-link' onClick={handleBadgeClick}>
+                                                        {String(badgeClicked) === String(updateNumber) ? <div className='text-nav'>Changelog</div> : (
+                                                            <Badge badgeContent="new" color='success'>
+                                                                <div className='text-nav'>Changelog</div>
+                                                            </Badge>
+                                                        )}
                                                     </Link>
                                                 </li>
                                             )}

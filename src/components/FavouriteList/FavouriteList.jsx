@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getFavourites } from "../../functions/favouriteRequests";
 import PlantList from "../Plant/PlantList";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const FavouriteList = () => {
 

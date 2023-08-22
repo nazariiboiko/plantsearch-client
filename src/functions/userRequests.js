@@ -2,10 +2,10 @@ import api from '../api/axiosConfig';
 import {API_USERS, API_USERS_UPDATE } from '../utils/constants';
 import { getToken } from './authUtils';
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (page = 1, size = 20) => {
   const token = getToken();
     return await api
-    .get(`${API_USERS}`, {
+    .get(`${API_USERS}?page=${page}&size=${size}`, {
       headers: {
           Authorization: token,
         }

@@ -4,6 +4,12 @@ import Modal from '../ui/Modal/Modal';
 import './ModalForm.css';
 import { Alert } from '@mui/material';
 import { useSnackbar } from '../../context/SnackbarContext';
+import PasswordStrength from './PasswordStrength';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { useRef } from 'react';
+import { site_key } from '../../utils/constants';
+import { PinInput } from 'react-input-pin-code'
 
 const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
   const { activeSignUp, setActiveSignUp } = activeObj;
@@ -15,6 +21,12 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
   const [showConfirmCode, setShowConfirmCode] = useState(false);
   const [confirmationCode, setConfirmationCode] = useState(Array(6).fill(''));
   const { handleClick } = useSnackbar();
+  const [visibility, setVisibility] = useState(false);
+  const [visibility2, setVisibility2] = useState(false);
+  const [password2, setPassword2] = useState('');
+  const captchaRef = useRef(null);
+  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
+  const [strengthValue, setStrengthValue] = useState(0);
 
 
   const handleChange = (index, value) => {
@@ -63,6 +75,8 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
       }
     } else if (name === 'password') {
       setPassword(value);
+    } else if (name === 'password2') {
+      setPassword2(value);
     }
   };
 
@@ -73,6 +87,27 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
       setErrorMsg('Необхідно заповнити всі поля!');
       return;
     }
+
+    if (login.length < 4) {
+      setErrorMsg('Логін користувача має бути довшим ніж 4 символа.');
+      return;
+    }
+
+    if (password !== password2) {
+      setErrorMsg('Паролі не співпадають.');
+      return;
+    }
+
+    if (!isCaptchaVerified) {
+      setErrorMsg('Підтвердіть, що ви не робот.');
+      return;
+    }
+
+    if (strengthValue <= 2) {
+      setErrorMsg('Пароль занадто слабкий.');
+      return;
+    }
+
 
     doSignup({ email, login, password }, 'uk')
       .then((message) => {
@@ -86,7 +121,6 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
 
   const handleSumbitCode = (event) => {
     event.preventDefault();
-    console.info({ email, login, password }, confirmationCode.join(''));
 
     activateAccount({ email, login, password }, confirmationCode.join(''), 'uk')
       .then(() => {
@@ -100,6 +134,22 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
 
   }
 
+  const handleCaptchaChange = (value) => {
+    setIsCaptchaVerified(true);
+  };
+
+  const handleVisibility = () => {
+    setVisibility(!visibility);
+  }
+
+  const handleVisibility2 = () => {
+    setVisibility2(!visibility2);
+  }
+
+  const handleStrengthChange = (newValue) => {
+    setStrengthValue(newValue);
+  };
+
   if (!activeSignUp) {
     return null;
   }
@@ -107,7 +157,7 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
   return (
     <Modal activeObj={{ active: activeSignUp, setActive: setActiveSignUp }} title={"Реєстрація"}>
       {!showConfirmCode && <form onSubmit={handleSubmit}>
-        <div className="md-form mb-5">
+        <div className="md-form mb-2-auth">
           <i className="fa-solid fa-envelope"></i>
           <input
             type="email"
@@ -120,7 +170,7 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
           />
         </div>
 
-        <div className="md-form mb-5">
+        <div className="md-form mb-2-auth">
           <i className="fa-solid fa-user"></i>
           <input
             type="text"
@@ -133,10 +183,10 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
           />
         </div>
 
-        <div className="md-form mb-4">
+        <div className="md-form mb-2-auth">
           <i className="fas fa-lock prefix grey-text"></i>
           <input
-            type="password"
+            type={visibility ? '' : 'password'}
             id="password"
             className="validate"
             name="password"
@@ -144,8 +194,28 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
             onChange={handleInputChange}
             placeholder="Пароль..."
           />
+          {visibility && <button className='empty-button' onClick={handleVisibility}><Visibility /></button>}
+          {!visibility && <button className='empty-button' onClick={handleVisibility}><VisibilityOff /></button>}
         </div>
+        <div className="md-form mb-2-auth">
+          <i className="fas fa-lock prefix grey-text"></i>
+          <input
+            type={visibility2 ? '' : 'password'}
+            id="password2"
+            className="validate"
+            name="password2"
+            value={password2}
+            onChange={handleInputChange}
+            placeholder="Підтвердіть пароль..."
+          />
+          {visibility2 && <button className='empty-button' onClick={handleVisibility2}><Visibility /></button>}
+          {!visibility2 && <button className='empty-button' onClick={handleVisibility2}><VisibilityOff /></button>}
+        </div>
+        <PasswordStrength password={password} strengthValue={handleStrengthChange} />
 
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <ReCAPTCHA sitekey={site_key} ref={captchaRef} onChange={handleCaptchaChange} />
+        </div>
         <div className="modal-footer d-flex justify-content-center">
           <button className="btn btn-default" type="submit">
             Зареєструватись
@@ -154,23 +224,19 @@ const ModalSignUpForm = ({ activeObj, showSignInModal }) => {
       </form>}
 
       {showConfirmCode && <form onSubmit={handleSumbitCode}>
-        <div class="confirmation-code-input">
-          {confirmationCode.map((value, index) => (
-            <input
-              key={index}
-              id={`digit-${index}`}
-              type="text"
-              maxLength="1"
-              className="digit-box"
-              value={value}
-              onChange={(e) => handleChange(index, e.target.value)}
-              onKeyDown={(e) => handleFirstInputBackspace(index, e)}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px' }}>
+          <div class="confirmation-code-input">
+            <PinInput
+              values={confirmationCode}
+              onChange={(value, index, confirmationCode) => setConfirmationCode(confirmationCode)}
             />
-          ))}
+          </div>
         </div>
-        <button className="btn btn-default" type="submit">
-          Відправити
-        </button>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '10px' }}>
+          <button className="btn btn-primary" type="submit">
+            Відправити
+          </button>
+        </div>
       </form>}
       {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
       {infoMsg && <Alert severity="info">{infoMsg}</Alert>}

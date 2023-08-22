@@ -22,6 +22,7 @@ const ModalLoginForm = ({ activeObj, showSignUpModal }) => {
   };
 
   const handleSubmit = (event) => {
+    setErrorMsg('');
     event.preventDefault();
     if (!login || !password) {
       setErrorMsg('Відсутний логін чи пароль!');
@@ -83,7 +84,7 @@ const ModalLoginForm = ({ activeObj, showSignUpModal }) => {
 
         <div className="modal-footer d-flex justify-content-center">
           <button className="btn btn-default" type="submit">
-            Login
+            Увійти
           </button>
         </div>
 
@@ -91,7 +92,7 @@ const ModalLoginForm = ({ activeObj, showSignUpModal }) => {
       </form>
       <div className="under-text">
         <button onClick={handleShowSignUpModal} style={{background: 'none', border:'none'}}><p>Відсутній акаунт? Зареєструйтесь!</p></button>
-        <button style={{background: 'none', border:'none'}}><p>Я забув пароль</p></button>
+        {/* <button style={{background: 'none', border:'none'}}><p>Я забув пароль</p></button> */}
       </div>
     </Modal>
   );

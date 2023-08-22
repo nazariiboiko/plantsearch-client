@@ -7,9 +7,10 @@ const TextBlock = ({ text }) => {
         <div className="row">
             {text?.map((item) => (
                 <div>
-                    {item.title && <div className="info-text-title">{item.title}</div>}
-                    {item.subtitle && <div className="info-text-subtitle">{item.subtitle}</div>}
-                    {item.text && <div className="info-text-body">{item.text}</div>}
+                    <div className="info-text-title">{item.title}</div>
+                    <div className="info-text-time">{item.time}</div>
+                    <div className="info-text-subtitle">{item.subtitle}</div>
+                    <div className="info-text-body">{item.text}</div>
                 </div>
             ))}
         </div>
