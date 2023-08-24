@@ -9,3 +9,64 @@
     border-color: #eee;
     border-width: 1px;
 }
+
+/* HomePage.css */
+.homepage {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .header {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+  
+  .plant-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .plant-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .plant-card:hover {
+    transform: translateY(-15px);
+    cursor: pointer;
+  }
+  
+  .plant-image {
+    max-width: 100%;
+    height: 300px; /* Set the desired fixed height */
+    object-fit: cover; /* Maintain aspect ratio and cover the entire container */
+    border-radius: 5px;
+  }
+  
+  .plant-name {
+    font-size: 24px;
+    margin-top: 10px;
+  }
+  
+  .latin-name {
+    color: #666;
+  }
+  
+  .sketches {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .sketch {
+    max-width: 100px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  

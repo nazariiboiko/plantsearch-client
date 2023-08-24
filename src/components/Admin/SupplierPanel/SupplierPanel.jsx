@@ -163,9 +163,9 @@ const SupplierPanel = () => {
                         <CircularProgress
                           size={68}
                           sx={{
-                            position: 'absolute', // Set position to absolute
-                            top: 74, // Adjust top to position the CircularProgress correctly
-                            left: 10, // Adjust left to position the CircularProgress correctly
+                            position: 'absolute', 
+                            top: 74, 
+                            left: 10, 
                             color: green[500],
                           }}
                         />

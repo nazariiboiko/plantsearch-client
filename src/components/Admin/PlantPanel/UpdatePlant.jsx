@@ -77,6 +77,10 @@ const PlantExtend = () => {
         <table className="table table-bordered">
           <tbody>
             <tr>
+              <th>ID</th>
+              <td>{plant.id}</td>
+            </tr>
+            <tr>
               <th>Name/Назва</th>
               <td><input
                 type="text"
@@ -84,7 +88,7 @@ const PlantExtend = () => {
                 name="name"
                 value={plant.name || ''}
                 onChange={handleChange} />
-                </td>
+              </td>
             </tr>
             <tr>
               <th>Latin Name/Латинь</th>

@@ -1,12 +1,14 @@
 import { useEffect } from "react";
-import { getAllPlants, getPlantById, getPageablePlantByName } from "../../../functions/plantRequests";
+import { getAllPlants, getPlantById, getPageablePlantByName, deletePlant } from "../../../functions/plantRequests";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Pagination from '@mui/material/Pagination';
 import { styled } from '@mui/material/styles';
 import { Button, Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, tableCellClasses } from "@mui/material";
 import { image_store } from "../../../utils/constants";
 import AddIcon from '@mui/icons-material/Add';
+import { Delete, LocationSearching, MoreHoriz } from "@mui/icons-material";
+import { useSnackbar } from "../../../context/SnackbarContext";
 
 const PlantPanel = ({ onInputChange }) => {
 
@@ -15,6 +17,8 @@ const PlantPanel = ({ onInputChange }) => {
   const [pageSize] = useState(50);
   const [response, setResponse] = useState();
   const [keyword, setKeyword] = useState('');
+  const { handleClick } = useSnackbar();
+  const navigate = useNavigate();
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -89,6 +93,24 @@ const PlantPanel = ({ onInputChange }) => {
     }
   };
 
+  const handleDelete = (id) => {
+    const confirmed = window.confirm('Ви впевнені що хочете видалити?');
+    if (confirmed) {
+      deletePlant(id).then(() => {
+        handleClick('success', 'Успішно видалено!');
+        const filteredPlants = response?.data?.filter((plant) => String(plant.id) !== String(id));
+        setResponse((prev) =>
+        ({
+          ...prev,
+          data: filteredPlants,
+        }));
+
+      })
+        .catch(() => {
+          handleClick('error', 'Сталася помилка, будь ласка оновіть сторінку');
+        })
+    }
+  }
   return (
     <div className="container">
       <div>
@@ -109,7 +131,7 @@ const PlantPanel = ({ onInputChange }) => {
           </div>
 
           <Tooltip title="Добавити" placement="top">
-            <Link to={`plant/-1`} className="mr-5">
+            <Link to={`plant/new`} className="mr-5">
               <Fab color="success" aria-label="add">
                 <AddIcon />
               </Fab>
@@ -128,7 +150,7 @@ const PlantPanel = ({ onInputChange }) => {
                 <StyledTableCell align="center">Латина</StyledTableCell>
                 <StyledTableCell align="center">Тип</StyledTableCell>
                 <StyledTableCell align="center">Ескіз</StyledTableCell>
-                <StyledTableCell align="center">Дії</StyledTableCell>
+                <StyledTableCell align="center" style={{ width: '200px' }}>Дії</StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -142,9 +164,15 @@ const PlantPanel = ({ onInputChange }) => {
                   <StyledTableCell align="center">{plant.plantType}</StyledTableCell>
                   <StyledTableCell align="center"><img src={`${image_store}/sketches/${plant.sketch}`} alt="sketch" style={{ width: '100px', height: '100px' }}></img></StyledTableCell>
                   <StyledTableCell align="center">
-                    <Link to={`plant/${plant.id}`}>
+                    {/* <Link to={`plant/${plant.id}`}>
                       <Button variant="contained" className="admin-controll-button right-border">Детальніше</Button>
-                    </Link>
+                    </Link> */}
+                    <Tooltip title="Детальніше" placement="right">
+                      <Fab color="primary" style={{ boxShadow: 'none' }} onClick={() => navigate(`plant/${plant.id}`)}> <MoreHoriz /> </Fab>
+                    </Tooltip>
+                    <Tooltip title="Видалити" placement="right">
+                      <Fab color="error" style={{ boxShadow: 'none' }} onClick={() => handleDelete(plant.id)}> <Delete /> </Fab>
+                    </Tooltip>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

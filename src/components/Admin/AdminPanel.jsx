@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import './Admin.css';
-import { Box, Grid } from '@mui/material';
-import { ApartmentOutlined, GrassOutlined, GroupOutlined } from '@mui/icons-material';
+import { Badge, Box, Grid } from '@mui/material';
+import { ApartmentOutlined, GrassOutlined, GroupOutlined, Restore } from '@mui/icons-material';
 import PlantPanel from './PlantPanel/PlantPanel';
 import SupplierPanel from './SupplierPanel/SupplierPanel';
 import UserPanel from './UserPanel/UserPanel';
 import { useEffect } from 'react';
+import ChangeLog from '../ChangeLog/ChangeLog';
+import { getUpdateNumber } from '../../utils/changelog';
 
 
 const AdminPanel = () => {
 
     const [currentWindow, setCurrentWindow] = useState(window.location.hash);
+    const updateNumber = getUpdateNumber();
+    const badgeClicked = localStorage.getItem('badgeClicked');
 
     useEffect(() => {
         const handleHashChange = () => {
@@ -35,6 +39,10 @@ const AdminPanel = () => {
         window.location.hash = value;
     };
 
+    const handleBadgeClick = () => {
+        localStorage.setItem('badgeClicked', String(updateNumber));
+    }
+
     return (
         <Box>
             <Grid container spacing={2}>
@@ -58,12 +66,24 @@ const AdminPanel = () => {
                         >
                             <GroupOutlined /> Користувачі
                         </li>
+                        <li
+                            className={`li-admin ${currentWindow === '#changelog' ? 'active-div' : ''}`}
+                            onClick={() => {handleCurrentWindow('#changelog'); handleBadgeClick() }}
+                        >
+                            <Restore />
+                            {String(badgeClicked) === String(updateNumber) ?
+                                ('Список змін') :
+                                (
+                                        <>Список змін <div className="badge badge-green">new</div></>
+                                )}
+                        </li>
                     </ul>
                 </Grid>
                 <Grid item xs={10}>
                     {currentWindow === '#plants' && (<PlantPanel></PlantPanel>)}
                     {currentWindow === '#suppliers' && (<SupplierPanel></SupplierPanel>)}
                     {currentWindow === '#users' && (<UserPanel></UserPanel>)}
+                    {currentWindow === '#changelog' && (<ChangeLog />)}
                 </Grid>
             </Grid>
         </Box>
