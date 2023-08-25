@@ -6,7 +6,9 @@ import './Plant.css';
 import { useAuth, getRole } from "../../functions/authUtils";
 import { getFavourites, doLike } from "../../functions/favouriteRequests";
 import * as request from "../../functions/supplierRequests";
-import { Check, Close } from "@mui/icons-material";
+import { Check, Close, Favorite, FavoriteBorder } from "@mui/icons-material";
+import { Box, Checkbox, CircularProgress, Tooltip } from "@mui/material";
+import { image_store } from "../../utils/constants";
 
 const Plant = () => {
 
@@ -18,13 +20,14 @@ const Plant = () => {
 
   const [suppliers, setSuppliers] = useState([]);
   const [availableSuppliers, setAvailableSuppliers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getPlantById(id).then((res) => {
       setPlant(res);
       if (isAuth) {
         getFavourites().then((res) => {
-          const hasLiked = res.find(item => String(item.id) ===  String(id));
+          const hasLiked = res.find(item => String(item.id) === String(id));
           if (hasLiked) {
             setLike(true);
           }
@@ -39,6 +42,9 @@ const Plant = () => {
       })
       .catch(error => {
         console.error('Error fetching available suppliers:', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
 
   }, [id, isAuth]);
@@ -50,33 +56,55 @@ const Plant = () => {
     setLike(!like);
   }
 
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+
+    );
+  }
+
   return (
     <div className="container pb-5 plant-shadow">
       <div>
         <div className="h1 mt-3 text-center" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ textAlign: "center", flex: "1" }}>{plant.name}
-            {isAuth === true && getRole() === "ADMIN" && (
-              <button className="btn btn-primary ml-10" onClick={x => navigate(`/admin/plant/${id}`)}><i class="fas fa-edit"></i></button>
-            )}
           </div>
           {isAuth === true && (
             <div>
-              <button onClick={x => handleLike()} style={{border :'none', background: 'none'}}>
-                {like === true && (<i class="fa-solid fa-heart"></i>)}
-                {like === false && (<i className="fa-regular fa-heart"></i>)}
-              </button>
+              <Checkbox
+                icon={<FavoriteBorder style={{ fontSize: '45px', color: '#f25268' }} />}
+                checkedIcon={<Favorite style={{ fontSize: '45px', color: '#f25268' }} />}
+                checked={like}
+                onChange={handleLike}
+              />
+              {getRole() === "ADMIN" && (
+                <Tooltip title="Редугавати" placement="top">
+                  <button className="btn btn-primary ml-10" onClick={x => navigate(`/admin/plant/${id}`)}><i class="fas fa-edit"></i></button>
+                </Tooltip>
+              )}
             </div>
           )}
         </div>
-        <div className='h5 text-center '>({plant.latinName})</div>
+        {plant.latinName && (<div className='h5 text-center '>{plant.latinName}</div>)}
       </div>
       <hr />
       <div>
         <div className="row ml-20">
           <div className="col-md-3 border-right">
             <div className="text-center fw-bold">Зображення</div>
-            <img className="plant-image mt-5" src={`https://plantsearch.s3.eu-north-1.amazonaws.com/sketches/${plant.sketch}`} alt="sketch"></img>
-            <img className="plant-image mt-5" src={`https://plantsearch.s3.eu-north-1.amazonaws.com/images/${plant.image}`} alt="img" ></img>
+            {plant.sketch && (<img className="plant-image mt-5" src={`${image_store}/sketches/${plant.sketch}`} alt="sketch"></img>)}
+            {plant.image && (<img className="plant-image mt-5" src={`${image_store}/images/${plant.image}`} alt="img" ></img>)}
+            {!plant.sketch && (<img className="plant-image mt-5" src={`${image_store}/sketches/no_image.png`} alt="sketch" />)}
+            {!plant.image && (<img className="plant-image mt-5" src={`${image_store}/images/no_image.png`} alt="img" />)}
           </div>
           <div className="col-md-6 border-right">
             <div className="text-center fw-bold ">Характеристика</div>

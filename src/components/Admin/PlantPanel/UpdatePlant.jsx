@@ -3,9 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { createPlant, deletePlant, getPlantById, updatePlant } from "../../../functions/plantRequests";
 import './PlantPanel.css';
-import { Box, Fab, Tooltip } from "@mui/material";
+import { Box, CircularProgress, Fab, FormControlLabel, MenuItem, Tooltip } from "@mui/material";
 import { Cancel, Delete, RemoveRedEye, Save } from "@mui/icons-material";
 import { useSnackbar } from "../../../context/SnackbarContext";
+import * as criterias from "../../../utils/filter_criterias";
+import Popup from "../../ui/Popup/Popup";
+import Checkbox from '@mui/material/Checkbox';
 
 const PlantExtend = () => {
 
@@ -15,10 +18,15 @@ const PlantExtend = () => {
   const [selectedSketch, setSelectedSketch] = useState(null);
   const navigate = useNavigate();
   const { handleClick } = useSnackbar();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (id > 0) {
-      getPlantById(id).then((res) => setPlant(res));
+      getPlantById(id)
+        .then((res) => setPlant(res))
+        .finally(() => {
+          setIsLoading(false);
+        });;
     }
   }, [id]);
 
@@ -63,31 +71,66 @@ const PlantExtend = () => {
   const handleImageChange = (file) => {
     setSelectedImage(file);
     handleChange({ target: { name: 'image', value: file.name } })
-  }
+  };
 
   const handleSketchChange = (file) => {
     setSelectedSketch(file);
     handleChange({ target: { name: 'sketch', value: file.name } })
-  }
+  };
+
+  const handleCheckboxChange = (name, itemValue) => {
+    const values = plant[name]?.split(";"); // Split the string into an array
+    if (!values) {
+      setPlant(prevPlant => ({
+        ...prevPlant,
+        [name]: itemValue 
+      }));
+    } else {
+      const index = values.indexOf(itemValue);
+
+      if (index !== -1) {
+        values.splice(index, 1); // Remove the item from the array
+      } else {
+        values.push(itemValue); // Add the item to the array
+      }
+
+      setPlant(prevPlant => ({
+        ...prevPlant,
+        [name]: values.join(';') // Join the array back into a string
+      }));
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  };
 
   return (
     <div className="container">
       <form>
-        <h1>Редагування розсади</h1>
+        <h1>Редагування розсади | ID: {plant.id}</h1>
         <table className="table table-bordered">
           <tbody>
             <tr>
-              <th>ID</th>
-              <td>{plant.id}</td>
-            </tr>
-            <tr>
               <th>Name/Назва</th>
-              <td><input
-                type="text"
-                id="name"
-                name="name"
-                value={plant.name || ''}
-                onChange={handleChange} />
+              <td>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={plant.name || ''}
+                  onChange={handleChange} />
               </td>
             </tr>
             <tr>
@@ -106,24 +149,6 @@ const PlantExtend = () => {
                 id="height"
                 name="height"
                 value={plant.height || ''}
-                onChange={handleChange} /></td>
-            </tr>
-            <tr>
-              <th>Habitus/Габітус</th>
-              <td><input
-                type="text"
-                id="habitus"
-                name="habitus"
-                value={plant.habitus || ''}
-                onChange={handleChange} /></td>
-            </tr>
-            <tr>
-              <th>Growth Rate/Темп росту</th>
-              <td><input
-                type="text"
-                id="growthRate"
-                name="growthRate"
-                value={plant.growthRate || ''}
                 onChange={handleChange} /></td>
             </tr>
             <tr>
@@ -162,104 +187,211 @@ const PlantExtend = () => {
                 value={plant.floweringColor || ''}
                 onChange={handleChange} /></td>
             </tr>
+
+            <tr>
+              <th>Habitus/Габітус</th>
+              <td className="d-flex justify-content-between">
+                <div>{plant.habitus}</div>
+
+                <Popup>
+                  {criterias.habitus().map((item, index) => (
+                    <MenuItem key={index} onClick={() => handleChange({ target: { name: 'habitus', value: item.value } })}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Popup>
+              </td>
+            </tr>
+            <tr>
+              <th>Growth Rate/Темп росту</th>
+              <td className="d-flex justify-content-between">
+                <div>{plant.growthRate}</div>
+
+                <Popup>
+                  {criterias.growth_rate().map((item, index) => (
+                    <MenuItem key={index} onClick={() => handleChange({ target: { name: 'growthRate', value: item.value } })}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Popup>
+              </td>
+            </tr>
             <tr>
               <th>Frost Resistance/Морозостійкість</th>
-              <td><input
-                type="text"
-                id="frostResistance"
-                name="frostResistance"
-                value={plant.frostResistance || ''}
-                onChange={handleChange} /></td>
+              <td className="d-flex justify-content-between">
+                <div>{plant.frostResistance}</div>
+                <Popup>
+                  {criterias.frost_resistance().map((item, index) => (
+                    <MenuItem key={index} onClick={() => handleChange({ target: { name: 'frostResistance', value: item.value } })}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Popup>
+              </td>
             </tr>
             <tr>
               <th>Recommendation/Рекомендації для посадки</th>
-              <td><input
-                type="text"
-                id="recommendation"
-                name="recommendation"
-                value={plant.recommendation || ''}
-                onChange={handleChange} /></td>
+              <td className="d-flex justify-content-between">
+                <div>{plant.recommendation} </div>
+                <Popup>
+                  {criterias.place_recommendation().map((item, index) => (
+                    <MenuItem key={index} onClick={() => handleChange({ target: { name: 'recommendation', value: item.value } })}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Popup>
+              </td>
             </tr>
             <tr>
               <th>Lighting/Освітлення</th>
-              <td><input
-                type="text"
-                id="lighting"
-                name="lighting"
-                value={plant.lighting || ''}
-                onChange={handleChange} /></td>
+              <td className="d-flex justify-content-between">
+                <div>{plant.lighting}</div>
+                <Popup>
+                  {criterias.lighting().map((item, index) => (
+                    <MenuItem key={index} onClick={() => handleChange({ target: { name: 'lighting', value: item.value } })}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Popup>
+              </td>
             </tr>
             <tr>
               <th>Evergreen/Вічнозелене</th>
-              <td><input
-                type="text"
-                id="evergreen"
-                name="evergreen"
-                value={plant.evergreen || ''}
-                onChange={handleChange} /></td>
+              <td className="d-flex justify-content-between">
+              <div>{plant.evergreen}</div>
+                <Popup>
+                  {criterias.evergreen().map((item, index) => (
+                    <MenuItem key={index} onClick={() => handleChange({ target: { name: 'evergreen', value: item.value } })}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Popup>
+              </td>
             </tr>
             <tr>
               <th>Flowering Period/Період цвітіння</th>
-              <td><input
-                type="text"
-                id="floweringPeriod"
-                name="floweringPeriod"
-                value={plant.floweringPeriod || ''}
-                onChange={handleChange} /></td>
+              <td className="d-flex justify-content-between">
+              <div>{plant.floweringPeriod}</div>
+                <Popup>
+                  {criterias.flowering_period().map((item, index) => (
+                    <MenuItem key={index} onClick={() => handleChange({ target: { name: 'floweringPeriod', value: item.value } })}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Popup>
+              </td>
             </tr>
             <tr>
               <th>Plant Type/Вид</th>
-              <td><input
-                type="text"
-                id="plantType"
-                name="plantType"
-                value={plant.plantType || ''}
-                onChange={handleChange} /></td>
+              <td className="d-flex justify-content-between">
+                <div>{plant.plantType}</div>
+                <Popup>
+                  {criterias.type().map((item, index) => (
+                    <MenuItem key={index} onClick={() => handleChange({ target: { name: 'plantType', value: item.value } })}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Popup>
+              </td>
             </tr>
             <tr>
               <th>Zoning/Зонування</th>
-              <td><input
-                type="text"
-                id="zoning"
-                name="zoning"
-                value={plant.zoning || ''}
-                onChange={handleChange} /></td>
-            </tr>
-            <tr>
-              <th>pH/Кислотність</th>
-              <td><input
-                type="text"
-                id="ph"
-                name="ph"
-                value={plant.ph || ''}
-                onChange={handleChange} /></td>
-            </tr>
-            <tr>
-              <th>Soil Moisture/Вологість грунту</th>
-              <td><input
-                type="text"
-                id="soilMoisture"
-                name="soilMoisture"
-                value={plant.soilMoisture || ''}
-                onChange={handleChange} /></td>
+              <td className="d-flex justify-content-between">
+                <div>{plant.zoning}</div>
+                <Popup>
+                  {criterias.zoning().map((item, index) => (
+                    <MenuItem key={index} onClick={() => handleChange({ target: { name: 'zoning', value: item.value } })}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Popup>
+              </td>
             </tr>
             <tr>
               <th>Hardy/Витривалість</th>
-              <td><input
-                type="text"
-                id="hardy"
-                name="hardy"
-                value={plant.hardy || ''}
-                onChange={handleChange} /></td>
+              <td className="d-flex justify-content-between">
+                <div>{plant.hardy}</div>
+                <Popup>
+                  {criterias.hardy().map((item, index) => (
+                    <MenuItem key={index} onClick={() => handleChange({ target: { name: 'hardy', value: item.value } })}>
+                      {item.label}
+                    </MenuItem>
+                  ))}
+                </Popup>
+              </td>
             </tr>
             <tr>
+              <th>pH/Кислотність</th>
+              <td className="d-flex justify-content-between">
+                <input
+                  type="text"
+                  id="ph"
+                  name="ph"
+                  value={plant.ph || ''}
+                  onChange={handleChange} />
+
+                <Popup>
+                  {criterias.ph().map((item, index) => (
+                    <FormControlLabel
+                      key={index}
+                      value={item.value}
+                      control={<Checkbox />}
+                      label={item.label}
+                      checked={plant?.ph?.includes(item.value)}
+                      onChange={() => handleCheckboxChange('ph', item.value)}
+                    />
+                  ))}
+                </Popup>
+              </td>
+            </tr>
+            <tr>
+              <th>Soil Moisture/Вологість грунту</th>
+              <td className="d-flex justify-content-between">
+                <input
+                  type="text"
+                  id="soilMoisture"
+                  name="soilMoisture"
+                  value={plant.soilMoisture || ''}
+                  onChange={handleChange} />
+
+                <Popup>
+                  {criterias.soil_moisture().map((item, index) => (
+                    <FormControlLabel
+                      key={index}
+                      value={item.value}
+                      control={<Checkbox />}
+                      label={item.label}
+                      checked={plant?.soilMoisture?.includes(item.value) || false}
+                      onChange={() => handleCheckboxChange('soilMoisture', item.value)}
+                    />
+                  ))}
+                </Popup>
+              </td>
+            </tr>
+
+            <tr>
               <th>Nutrition/Живлення</th>
-              <td><input
-                type="text"
-                id="nutrition"
-                name="nutrition"
-                value={plant.nutrition || ''}
-                onChange={handleChange} /></td>
+              <td className="d-flex justify-content-between">
+                <input
+                  type="text"
+                  id="nutrition"
+                  name="nutrition"
+                  value={plant.nutrition || ''}
+                  onChange={handleChange} />
+
+                <Popup>
+                  {criterias.nutrition().map((item, index) => (
+                    <FormControlLabel
+                      key={index}
+                      value={item.value}
+                      control={<Checkbox />}
+                      label={item.label}
+                      checked={plant.nutrition?.includes(item.value) || false}
+                      onChange={() => handleCheckboxChange('nutrition', item.value)}
+                    />
+                  ))}
+                </Popup>
+              </td>
             </tr>
             <tr>
               <th>Sketch/Ескіз</th>

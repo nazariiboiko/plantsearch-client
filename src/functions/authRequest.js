@@ -45,11 +45,12 @@ export const activateAccount = (userData, code, lang) => {
             }
         })
         .then((response) => {
-            if (response.data.token) {
-                localStorage.setItem(
-                    'jwt-token',
-                    JSON.stringify(response.data.token)
-                );
+            if (response.data.access_token) {
+                console.info(response.data.access_token);
+                localStorage.setItem('jwt-token', JSON.stringify(response.data.access_token));
+            }
+            if (response.data.refresh_token) {
+                localStorage.setItem('refresh_token', JSON.stringify(response.data.refresh_token));
             }
             return response.data;
         });

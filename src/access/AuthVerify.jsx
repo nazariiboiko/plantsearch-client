@@ -12,12 +12,14 @@ const AuthVerify = (props) => {
         if (localStorage.getItem('jwt-token')) {
             const decodedJwt = jwt_decode(localStorage.getItem('jwt-token'));
             if (decodedJwt.exp * 1000 < Date.now()) {
-                if (renewAccessToken() === null) {
+                renewAccessToken()
+                .catch(() => {
                     logout();
                     navigate('/');
                     localStorage.removeItem('jwt-token');
                     localStorage.removeItem('refresh_token');
-                }
+                })    
+                
             }
         }
     }, [location, navigate]);

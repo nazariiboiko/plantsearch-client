@@ -2,16 +2,37 @@ import { useState, useEffect } from "react";
 import * as request from "../../functions/supplierRequests";
 import './SupplierCatalog.css';
 import { ApartmentOutlined } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
+import { Box, CircularProgress } from "@mui/material";
 
 const SupplierCatalog = () => {
 
     const [suppliers, setSuppliers] = useState();
-    const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(true);
+    //const navigate = useNavigate();
 
     useEffect(() => {
-        request.getAllSuppliers().then((res) => setSuppliers(res))
+        request.getAllSuppliers()
+        .then((res) => setSuppliers(res))
+        .finally(() => {
+            setIsLoading(false);
+         });
     }, []);
+
+    if (isLoading) {
+        return (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '100%',
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        );
+      };
 
     return (
         <div className="container filter-container">

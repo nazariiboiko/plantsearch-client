@@ -208,7 +208,7 @@ const Supplier = ({ id, back, deleteSup }) => {
                                                 </Fab>
                                             </Tooltip>
                                             <Tooltip title="Переглянути" placement="top">
-                                                <Fab color="warning" onClick={() => navigate(`/plant/${id}`)}>
+                                                <Fab color="warning" onClick={() => navigate(`/plant/${plant.id}`)}>
                                                     <RemoveRedEye />
                                                 </Fab>
                                             </Tooltip>

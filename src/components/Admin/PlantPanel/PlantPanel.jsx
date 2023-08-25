@@ -4,17 +4,17 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from '@mui/material/Pagination';
 import { styled } from '@mui/material/styles';
-import { Button, Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, tableCellClasses } from "@mui/material";
+import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, tableCellClasses } from "@mui/material";
 import { image_store } from "../../../utils/constants";
 import AddIcon from '@mui/icons-material/Add';
-import { Delete, LocationSearching, MoreHoriz } from "@mui/icons-material";
+import { Delete, MoreHoriz } from "@mui/icons-material";
 import { useSnackbar } from "../../../context/SnackbarContext";
 
 const PlantPanel = ({ onInputChange }) => {
 
   let searchTimeout;
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize] = useState(50);
+  const [pageSize] = useState(20);
   const [response, setResponse] = useState();
   const [keyword, setKeyword] = useState('');
   const { handleClick } = useSnackbar();
@@ -148,7 +148,7 @@ const PlantPanel = ({ onInputChange }) => {
                 <StyledTableCell align="center">ID</StyledTableCell>
                 <StyledTableCell align="center">Назва</StyledTableCell>
                 <StyledTableCell align="center">Латина</StyledTableCell>
-                <StyledTableCell align="center">Тип</StyledTableCell>
+                <StyledTableCell align="center">Зображення</StyledTableCell>
                 <StyledTableCell align="center">Ескіз</StyledTableCell>
                 <StyledTableCell align="center" style={{ width: '200px' }}>Дії</StyledTableCell>
               </TableRow>
@@ -161,9 +161,20 @@ const PlantPanel = ({ onInputChange }) => {
                     {plant.name}
                   </StyledTableCell>
                   <StyledTableCell align="center">{plant.latinName}</StyledTableCell>
-                  <StyledTableCell align="center">{plant.plantType}</StyledTableCell>
-                  <StyledTableCell align="center"><img src={`${image_store}/sketches/${plant.sketch}`} alt="sketch" style={{ width: '100px', height: '100px' }}></img></StyledTableCell>
                   <StyledTableCell align="center">
+                    <img
+                      src={`${image_store}/images/${plant.image || 'no_image.png'}`}
+                      alt="sketch"
+                      className="table-image"
+                    />
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <img
+                      src={`${image_store}/sketches/${plant.sketch || 'no_image.png'}`}
+                      alt="sketch"
+                      style={{ width: '100px', objectFit: 'contain' }}
+                    />
+                  </StyledTableCell><StyledTableCell align="center">
                     {/* <Link to={`plant/${plant.id}`}>
                       <Button variant="contained" className="admin-controll-button right-border">Детальніше</Button>
                     </Link> */}

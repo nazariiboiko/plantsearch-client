@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Plant.css';
 import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, styled } from '@mui/material';
 import { image_store } from '../../utils/constants';
 import { QuestionMark } from '@mui/icons-material';
 
 const PlantList = ({ response, title, text, showOrder }) => {
+
+  const navigate = useNavigate();
 
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
@@ -24,20 +26,19 @@ const PlantList = ({ response, title, text, showOrder }) => {
       </div>
 
       {showOrder === 'grid' && (
-        response?.data?.map((plant) => {
-          return (
-            <div className='plant-list'>
-              <div className="plant-card" key={plant.id}>
-                <Link to={`/plant/${plant.id}`}>
-                  <img className='d-block show-image' src={`${image_store}/images/${plant.image}`} alt="plant" />
-                  <p className='text-center'>{plant?.name?.length > 21 ? plant.name.slice(0, 21) + '...' : plant.name}</p>
-                  <div className="overlay"></div>
-                </Link>
+        <div className="plant-container container">
+          <div className="plant-list">
+            {response?.data?.map(plant => (
+              <div key={plant.id} className="plant-card" onClick={() => navigate(`/plant/${plant.id}`)}>
+                <img src={`${image_store}/images/${plant.image || 'no_image.png'}`} alt={plant.name} className="plant-image" />
+                <h2 className="plant-name">{plant?.name?.length > 28 ? plant.name.slice(0, 28) + '...' : plant.name}</h2>
+                <p className="latin-name">{plant.latinName}</p>
               </div>
-            </div>
-          )
-        })
-      )}
+            ))}
+          </div>
+        </div>
+      )
+      }
       {showOrder === 'list' && (
         <Paper>
           <TableContainer>
@@ -49,7 +50,7 @@ const PlantList = ({ response, title, text, showOrder }) => {
                   <StyledTableRow key={plant.id}>
                     <TableCell align="center">{plant.name}</TableCell>
                     <TableCell align="center">{plant.latinName}</TableCell>
-                    <TableCell align="center"><img src={`${image_store}/sketches/${plant.sketch}`} alt="sketch" style={{ width: '100px', height: '100px' }}></img></TableCell>
+                    <TableCell align="center"><img src={`${image_store}/sketches/${plant.sketch || 'no_image.png'}`} alt="sketch" style={{ width: '100px', height: '100px' }}></img></TableCell>
                     <TableCell align='center'>
                       <Tooltip title="Переглянути" placement="top">
                         <Link to={`/plant/${plant.id}`}>

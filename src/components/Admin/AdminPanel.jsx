@@ -12,7 +12,7 @@ import { getUpdateNumber } from '../../utils/changelog';
 
 const AdminPanel = () => {
 
-    const [currentWindow, setCurrentWindow] = useState(window.location.hash);
+    const [currentWindow, setCurrentWindow] = useState(window.location.hash || '#plants');
     const updateNumber = getUpdateNumber();
     const badgeClicked = localStorage.getItem('badgeClicked');
 

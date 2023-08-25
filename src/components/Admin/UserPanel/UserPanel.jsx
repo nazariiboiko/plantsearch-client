@@ -5,14 +5,13 @@ import './UserPanel.css';
 import { Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, styled, TableRow, TextField, tableCellClasses, Button, List, ListItem, ListItemText, ListItemButton, Tooltip, Fab } from "@mui/material";
 import './User.css';
 import Modal from "../../ui/Modal/Modal";
-import { Block, Undo } from "@mui/icons-material";
+import { Block, People, Undo } from "@mui/icons-material";
 
 const UserPanel = () => {
 
   const [users, setUsers] = useState();
   const [currentUser, setCurrentUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
 
   useEffect(() => {
     getAllUsers(1, 20).then((res) => { setUsers(res); console.info(res) });
@@ -45,6 +44,20 @@ const UserPanel = () => {
     '&:last-child td, &:last-child th': {
       border: 0,
     },
+  }));
+
+  const StyledList = styled(List)(({ theme }) => ({
+    width: "100%",
+    maxWidth: "100%",
+    backgroundColor: theme.palette.background.paper,
+    position: "relative",
+    overflow: "auto",
+    maxHeight: 500,
+    "& ul": { padding: 0 },
+  }));
+
+  const StyledListItem = styled(ListItem)(({ theme }) => ({
+    borderBottom: `1px solid ${theme.palette.divider}`,
   }));
 
   return (
@@ -93,7 +106,7 @@ const UserPanel = () => {
                     <StyledTableCell scope="row" align="center">{user.id}</StyledTableCell>
                     <StyledTableCell align="center">{user.login}</StyledTableCell>
                     <StyledTableCell align="center">{user.email}</StyledTableCell>
-                    <StyledTableCell align="center">{user.status}</StyledTableCell>
+                    <StyledTableCell align="center">{user.status === "ACTIVE" ? 'Активний' : 'Заблокований'}</StyledTableCell>
                     <StyledTableCell align="center">
                       <Button variant="contained" className="admin-controll-button right-border" onClick={() => handleShowModal(user)}>Детальніше</Button>
                     </StyledTableCell>
@@ -104,56 +117,57 @@ const UserPanel = () => {
           </TableContainer>
 
           {showModal && (
-            <Modal activeObj={{ active: showModal, setActive: setShowModal }} title={'Перегляд користувача'}>
-              <List
-                sx={{
-                  width: '100%',
-                  maxWidth: '100%',
-                  bgcolor: 'background.paper',
-                  position: 'relative',
-                  overflow: 'auto',
-                  maxHeight: 500,
-                  '& ul': { padding: 0 },
-                }}
-                subheader={<li />}
-              >
-                <ListItem>
+            <Modal activeObj={{ active: showModal, setActive: setShowModal }} title={`Перегляд користувача`}>
+              <StyledList>
+                <StyledListItem>
                   <ListItemText primary={`ID: ${currentUser.id}`} />
-                </ListItem>
-                <ListItem>
+                </StyledListItem>
+                <StyledListItem>
                   <ListItemText primary={`Логін: ${currentUser.login}`} />
-                </ListItem>
-                <ListItem>
+                </StyledListItem>
+                <StyledListItem>
                   <ListItemText primary={`Пошта: ${currentUser.email}`} />
-                </ListItem>
-                <ListItem>
+                </StyledListItem>
+                <StyledListItem>
                   <ListItemText primary={`Роль: ${currentUser.role}`} />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary={`Статус: ${currentUser.status}`} />
-                </ListItem>
-                <ListItem>
+                </StyledListItem>
+                <StyledListItem>
                   <ListItemText primary={`Зареєстрований: ${currentUser.registrationDate}`} />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary={`Останнє відвідування: ${currentUser.lastLogin}`} />
-                </ListItem>
-              </List>
-              {currentUser.status !== 'NOT_ACTIVE' && (
-                <Tooltip title="Заблокувати" placement="bottom">
-                  <Fab color="error" aria-label="add" onClick={() => handleBlock(currentUser.id, 'NOT_ACTIVE')}>
-                    <Block />
-                  </Fab>
-                </Tooltip>
-              )}
-              {currentUser.status !== 'ACTIVE' && (
-                <Tooltip title="Розблокувати" placement="bottom">
-                  <Fab color="error" aria-label="add" onClick={() => handleBlock(currentUser.id, 'ACTIVE')}>
-                    <Undo />
-                  </Fab>
-                </Tooltip>
-              )}
-
+                </StyledListItem>
+                <StyledListItem>
+                  <ListItemText
+                    primary={`Останій вхід: ${currentUser.lastLogin.slice(0, 19).split("T")
+                      }`}
+                  />
+                </StyledListItem>
+                <StyledListItem>
+                  <ListItemText>
+                    <div> {currentUser.status === "ACTIVE" ?
+                      <div className="d-flex justify-content-between">
+                        <div>
+                          Статус: Активований <div className="badge-green badge">active</div>
+                        </div>
+                        <Tooltip title="Заблокувати" placement="bottom">
+                          <Fab color="error" aria-label="add" onClick={() => handleBlock(currentUser.id, 'NOT_ACTIVE')}>
+                            <Block />
+                          </Fab>
+                        </Tooltip>
+                      </div>
+                      :
+                      <div className="d-flex justify-content-between">
+                        <div>
+                          Статус: Заблокований <div className="badge-red badge">banned</div>
+                        </div>
+                        <Tooltip title="Розблокувати" placement="bottom">
+                          <Fab color="primary" aria-label="add" onClick={() => handleBlock(currentUser.id, 'ACTIVE')}>
+                            <Undo />
+                          </Fab>
+                        </Tooltip>
+                      </div>}
+                    </div>
+                  </ListItemText>
+                </StyledListItem>
+              </StyledList>
             </Modal>)}
         </Paper>
       </div>

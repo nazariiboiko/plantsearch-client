@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import './UserPanel.css';
 import { getUserById, updateUser } from "../../../functions/userRequests";
 
+//deprecated
 const User = () => {
 
   const { id } = useParams();

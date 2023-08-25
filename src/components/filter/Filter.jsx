@@ -6,7 +6,7 @@ import Pagination from '@mui/material/Pagination';
 import * as criteria from '../../utils/filter_criterias';
 import { getPlantsByCriterias } from '../../functions/plantRequests';
 import './Filter.css';
-import { Button, Stack } from "@mui/material";
+import { Box, Button, CircularProgress, Stack } from "@mui/material";
 import { Reorder, ViewModule } from "@mui/icons-material";
 
 const Filter = () => {
@@ -16,8 +16,9 @@ const Filter = () => {
   const [selectedValues, setSelectedValues] = useState([]);
   const [response, setResponse] = useState();
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSize] = useState(48);
-  const [showOrder, setShowOrder] = useState('list');
+  const [pageSize] = useState(45);
+  const [showOrder, setShowOrder] = useState(window.location.hash.replace("#","") || 'grid');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (keyword === undefined) {
@@ -30,11 +31,17 @@ const Filter = () => {
         setInput(storedInputString);
 
       getPlantsByCriterias(storedValuesString, storedInputString, pageNumber, pageSize)
-        .then((res) => setResponse(res));
+        .then((res) => setResponse(res))
+        .finally(() => {
+          setIsLoading(false);
+        });
     } else {
       setInput(keyword);
       getPlantsByCriterias(selectedValues, String(keyword), pageNumber, pageSize)
-        .then((res) => setResponse(res));
+        .then((res) => setResponse(res))
+        .finally(() => {
+          setIsLoading(false);
+        });;
     }
   }, [keyword, pageNumber, pageSize, selectedValues]);
 
@@ -81,7 +88,27 @@ const Filter = () => {
 
     getPlantsByCriterias(selectedValues, input, 1, pageSize)
       .then((res) => setResponse(res));
+  };
+
+  const handleShowOrder = (name) => {
+    setShowOrder(name);
+    window.location.hash = name;
   }
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  };
 
   return (
     <div className='container filter-container mb-10'>
@@ -149,14 +176,14 @@ const Filter = () => {
           <Button
             disableRipple
             className={`mr-5 icon-type ${showOrder === 'grid' ? 'active' : ''}`}
-            onClick={() => setShowOrder('grid')}
+            onClick={() => handleShowOrder('grid')}
           >
             <ViewModule fontSize="large" />
           </Button>
           <Button
             disableRipple
             className={`icon-type ${showOrder === 'list' ? 'active' : ''}`}
-            onClick={() => setShowOrder('list')}
+            onClick={() => handleShowOrder('list')}
           >
             <Reorder fontSize="large" />
           </Button>

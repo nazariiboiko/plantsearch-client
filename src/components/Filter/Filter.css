@@ -146,10 +146,6 @@
  }
 
  .active {
-    background-color: #111;
+    color: purple !important;
   }
-
-.active:hover {
-    background-color: #f0f0f0;
-}
 

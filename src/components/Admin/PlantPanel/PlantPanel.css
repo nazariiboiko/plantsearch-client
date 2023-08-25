@@ -31,3 +31,11 @@
 .mb-20 {
     margin-bottom: 20px;
 }
+
+.table-image {
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
