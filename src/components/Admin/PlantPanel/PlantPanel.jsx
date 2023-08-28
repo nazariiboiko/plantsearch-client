@@ -4,13 +4,13 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from '@mui/material/Pagination';
 import { styled } from '@mui/material/styles';
-import { Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, tableCellClasses } from "@mui/material";
+import { Box, CircularProgress, Fab, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, tableCellClasses } from "@mui/material";
 import { image_store } from "../../../utils/constants";
 import AddIcon from '@mui/icons-material/Add';
-import { Delete, MoreHoriz } from "@mui/icons-material";
+import { MoreHoriz } from "@mui/icons-material";
 import { useSnackbar } from "../../../context/SnackbarContext";
 
-const PlantPanel = ({ onInputChange }) => {
+const PlantPanel = () => {
 
   let searchTimeout;
   const [pageNumber, setPageNumber] = useState(1);
@@ -19,6 +19,7 @@ const PlantPanel = ({ onInputChange }) => {
   const [keyword, setKeyword] = useState('');
   const { handleClick } = useSnackbar();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -40,7 +41,12 @@ const PlantPanel = ({ onInputChange }) => {
   }));
 
   useEffect(() => {
-    getAllPlants(pageNumber, pageSize).then((res) => setResponse(res));
+    getAllPlants(pageNumber, pageSize)
+    .then((res) => {
+      setResponse(res);
+      setIsLoading(false);
+      
+    });
   }, [pageNumber, pageSize]);
 
   const handleInputChange = (e) => {
@@ -111,6 +117,22 @@ const PlantPanel = ({ onInputChange }) => {
         })
     }
   }
+
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100%',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <div className="container">
       <div>
@@ -180,9 +202,6 @@ const PlantPanel = ({ onInputChange }) => {
                     </Link> */}
                     <Tooltip title="Детальніше" placement="right">
                       <Fab color="primary" style={{ boxShadow: 'none' }} onClick={() => navigate(`plant/${plant.id}`)}> <MoreHoriz /> </Fab>
-                    </Tooltip>
-                    <Tooltip title="Видалити" placement="right">
-                      <Fab color="error" style={{ boxShadow: 'none' }} onClick={() => handleDelete(plant.id)}> <Delete /> </Fab>
                     </Tooltip>
                   </StyledTableCell>
                 </StyledTableRow>

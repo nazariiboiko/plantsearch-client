@@ -5,11 +5,19 @@ import HeaderMenuEx from './HeaderMenuEx';
 
 const Header = () => {
     return (
-        <>
-            <HeaderMenuEx />
-            <Outlet />
-            <Footer/>
-        </>
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: '100vh',
+            }}
+        >
+            <div style={{ flex: '1 0 auto' }}>
+                <HeaderMenuEx />
+                <Outlet />
+            </div>
+            <Footer />
+        </div>
     );
 };
 

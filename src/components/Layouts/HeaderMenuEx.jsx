@@ -23,6 +23,7 @@ import ViewHeadlineSharpIcon from '@mui/icons-material/ViewHeadlineSharp';
 // import PersonSharpIcon from '@mui/icons-material/PersonSharp';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExitToAppSharpIcon from '@mui/icons-material/ExitToAppSharp';
+import { PersonSharp } from '@mui/icons-material';
 
 const HeaderMenuEx = () => {
     const isLogged = useAuth();
@@ -124,9 +125,9 @@ const HeaderMenuEx = () => {
                                                 <ViewHeadlineSharpIcon />
                                             </Button>
                                             <Menu {...bindMenu(popupState)} className='menu-item'>
-                                                {/* <Link to="/profile">
-                                                    <MenuItem onClick={popupState.close}> <PersonSharpIcon />Профіль</MenuItem>
-                                                </Link> */}
+                                                <Link to="/profile">
+                                                    <MenuItem onClick={popupState.close}> <PersonSharp />Профіль</MenuItem>
+                                                </Link>
                                                 <Link to="/favourite">
                                                     <MenuItem onClick={popupState.close}><FavoriteIcon />Улюблене</MenuItem>
                                                 </Link>

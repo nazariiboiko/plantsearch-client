@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_AUTHENTICATION } from '../utils/constants.js';
+import { getRefreshToken } from './authUtils.js';
 
 export const doLogin = (userData, lang) => {
     return axios.post(API_AUTHENTICATION + '/login', userData, {
@@ -57,7 +58,7 @@ export const activateAccount = (userData, code, lang) => {
 }
 
 export const renewAccessToken = () => {
-    const refreshToken = localStorage.getItem('refresh_token');
+    const refreshToken = getRefreshToken();
     if(refreshToken) {
         return axios
         .post(API_AUTHENTICATION + '/refresh', {refreshToken: refreshToken}, {})

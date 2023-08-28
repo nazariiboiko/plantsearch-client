@@ -2,19 +2,20 @@ import React, { useEffect, useState } from "react";
 import { getAllPlants, getPlantById, getPageablePlantByName } from "../../../functions/plantRequests";
 import { getSupplierByid, deleteJunction, createJunction } from "../../../functions/supplierRequests";
 import Modal from "../../ui/Modal/Modal";
-import { Fab, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, styled, tableCellClasses } from "@mui/material";
+import { Button, Fab, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, styled, tableCellClasses } from "@mui/material";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { ArrowBack, Delete, RemoveRedEye } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { image_store } from "../../../utils/constants";
 
-const Supplier = ({ id, back, deleteSup }) => {
+const Supplier = ({ id, back }) => {
     const [supplier, setSupplier] = useState([]);
     const [active, setActive] = useState(false);
     let searchTimeout;
     const [pageNumber, setPageNumber] = useState(1);
-    const [pageSize] = useState(10);
+    const [pageSize] = useState(9);
     const [response, setResponse] = useState();
     const [keyword, setKeyword] = useState('');
     const navigate = useNavigate();
@@ -144,9 +145,8 @@ const Supplier = ({ id, back, deleteSup }) => {
                     </h1>
                 </div>
                 <div className="col text-end">
-                    <button className="btn btn-primary" onClick={openModal}>Добавити новий зв'язок</button>
-                    <button className="btn btn-primary" onClick={deleteSup}>Видалити розсадника</button>
-
+                    <Button onClick={openModal} variant="contained" color="primary">Добавити новий зв'язок</Button>
+            
                 </div>
             </div>
             <div>
@@ -199,7 +199,7 @@ const Supplier = ({ id, back, deleteSup }) => {
                                         <StyledTableCell align="center">{plant.name}</StyledTableCell>
                                         <StyledTableCell align="center">{plant.latinName}</StyledTableCell>
                                         <StyledTableCell align="center">
-                                            <img src={`https://plantsearch.s3.eu-north-1.amazonaws.com/sketches/${plant.sketch}`} alt="sketch" style={{ width: '20%', height: '20%' }}></img>
+                                            <img src={`${image_store}/sketches/${plant.sketch || 'no_image.png'}`} alt="sketch" style={{ width: '20%', height: '20%' }}></img>
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
                                             <Tooltip title="Видалити" placement="top">

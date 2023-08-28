@@ -68,13 +68,13 @@ const AdminPanel = () => {
                         </li>
                         <li
                             className={`li-admin ${currentWindow === '#changelog' ? 'active-div' : ''}`}
-                            onClick={() => {handleCurrentWindow('#changelog'); handleBadgeClick() }}
+                            onClick={() => { handleCurrentWindow('#changelog'); handleBadgeClick() }}
                         >
                             <Restore />
                             {String(badgeClicked) === String(updateNumber) ?
                                 ('Список змін') :
                                 (
-                                        <>Список змін <div className="badge badge-green">new</div></>
+                                    <>Список змін <div className="badge badge-green">new</div></>
                                 )}
                         </li>
                     </ul>

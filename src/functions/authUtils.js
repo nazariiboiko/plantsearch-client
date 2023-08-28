@@ -12,6 +12,10 @@ export const getToken = () => {
     return 'Bearer ' + JSON.parse(localStorage.getItem('jwt-token'));
 };
 
+export const getRefreshToken = () => {
+    return JSON.parse(localStorage.getItem('refresh_token'));
+}
+
 export const useAuth = () => {
     return !!localStorage.getItem('jwt-token');
 };

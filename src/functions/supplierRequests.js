@@ -23,20 +23,20 @@ export const createSupplier = async (name) => {
             }
         })
         .then((response) => response.data);
-}
+};
 
+//Not avaliable anymore
+// export const deleteSupplier = async (id) => {
+//     const token = getToken();
+//     return await api
+//         .post(`${API_SUPPLIER}/delete?id=${id}`, {}, {
+//             headers: {
+//                 Authorization: token,
+//             }
+//         })
+//         .then((response) => response.data);
 
-export const deleteSupplier = async (id) => {
-    const token = getToken();
-    return await api
-        .post(`${API_SUPPLIER}/delete?id=${id}`, {}, {
-            headers: {
-                Authorization: token,
-            }
-        })
-        .then((response) => response.data);
-
-}
+// }
 
 export const getSupplierByPlant = async (plantId) => {
     return await api

@@ -136,7 +136,7 @@ const UserPanel = () => {
                 </StyledListItem>
                 <StyledListItem>
                   <ListItemText
-                    primary={`Останій вхід: ${currentUser.lastLogin.slice(0, 19).split("T")
+                    primary={`Останій вхід: ${currentUser.lastLogin.slice(0, 10) + ' ' + currentUser.lastLogin.slice(11,19) + ' GMT-0'
                       }`}
                   />
                 </StyledListItem>

@@ -62,21 +62,6 @@ const SupplierPanel = () => {
     setSelectedSupplierId(null);
   };
 
-  const handleDelete = () => {
-    const confirmed = window.confirm('Ви впевнені що хочете видалити?');
-    if (confirmed) {
-      request.deleteSupplier(selectedSupplierId)
-        .then(() => {
-          const updatedData = suppliers.data.filter(sup => String(sup.id) !== String(selectedSupplierId))
-          setSuppliers((prevSuppliers) => ({
-            ...prevSuppliers,
-            data: updatedData,
-          }));
-        });
-      handleBackClick();
-    }
-  }
-
   const handleInputChange = (obj) => {
     setSupplierName(obj.target.value);
   }
@@ -117,7 +102,7 @@ const SupplierPanel = () => {
 
   const renderDetailsComponent = () => {
     if (selectedSupplierId) {
-      return <Supplier id={selectedSupplierId} back={handleBackClick} deleteSup={handleDelete} />
+      return <Supplier id={selectedSupplierId} back={handleBackClick} />
     }
     return null;
   };
