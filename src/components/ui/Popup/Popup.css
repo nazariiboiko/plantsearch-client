@@ -1,0 +1,16 @@
+.popup-text {
+    text-transform: none;
+    font-size: 14px;
+}
+
+.between {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .popup-text {
+        font-size: 12px;
+    }
+
+}

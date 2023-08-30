@@ -1,25 +1,40 @@
-import { React, useState, Fragment } from 'react';
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import MenuIcon from '@mui/icons-material/Menu';
+import { getRole, useAuth } from '../../functions/authUtils';
+import { useState } from 'react';
+import GrassIcon from '@mui/icons-material/Grass';
+import ConstructionIcon from '@mui/icons-material/Construction';
+import { Button, Container, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, MenuItem, ThemeProvider, createTheme } from '@mui/material';
+import SearchBarEx from '../SearchBar/SearchBar';
+import './Header.css';
 import { Link, useNavigate } from 'react-router-dom';
-import SearchBar from '../SearchBar/SearchBar';
+import { ApartmentOutlined, ArrowForward, ExitToApp, Favorite, Home, Search } from '@mui/icons-material';
 import ModalLoginForm from '../Auth/ModalLoginForm';
 import ModalSignUpForm from '../Auth/ModalSignUpForm';
-import { useAuth, getRole, } from '../../functions/authUtils';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
-import { logout } from '../../functions/authRequest'
-import './Header.css';
+import { logout } from '../../functions/authRequest';
+import Popup from '../ui/Popup/Popup';
+// Other imports...
 
 const HeaderMenu = () => {
-
     const isLogged = useAuth();
     const role = getRole();
     const navigate = useNavigate();
-
-
     const [activeSignIn, setActiveSignIn] = useState(false);
     const [activeSignUp, setActiveSignUp] = useState(false);
+
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    const handleMobileMenuOpen = () => {
+        setMobileMenuOpen(true);
+    };
+
+    const handleMobileMenuClose = () => {
+        setMobileMenuOpen(false);
+    };
 
     const handleOpenLoginModal = () => {
         setActiveSignIn(true);
@@ -29,76 +44,182 @@ const HeaderMenu = () => {
         logout()
         window.location.reload();
         navigate('/');
-    }
+    };
+
+    const whiteTheme = createTheme({
+        palette: {
+            primary: {
+                main: '#fff',
+            },
+        },
+    });
+
+    // ... Other code ...
 
     return (
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
+        <ThemeProvider theme={whiteTheme}>
+            <AppBar position="static" className='header-menu' style={{ boxShadow: '0 0 8px #ddd' }}>
+                <Container maxWidth="xl">
+                    <Toolbar disableGutters className='d-flex justify-content-between'>
+                        {/* ... Logo and Search Bar ... */}
+                        <Link to={'/'}>
+                            <GrassIcon sx={{ display: { md: 'flex', color: 'green', }, mr: 1 }} />
+                        </Link>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="a"
+                            href="/"
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'none', md: 'flex' },
+                                fontFamily: 'monospace',
+                                fontWeight: 700,
+                                letterSpacing: '.3rem',
+                                color: 'green',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            plantsearch
+                        </Typography>
+                        <SearchBarEx />
+                        {/* Mobile Menu Toggle */}
+                        <Box sx={{ display: { md: 'none' }, marginLeft: '15px' }}>
+                            <IconButton
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="menu"
+                                onClick={handleMobileMenuOpen}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                        </Box>
 
-                <Link to="/" class="navbar-brand">
-                    <img src={process.env.PUBLIC_URL + '/logo.jpg'} alt="" width="271" height="45" />
-                </Link>
+                        {/* Desktop Menu */}
+                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', }, marginLeft: '20px', justifyContent: 'space-between' }}>
+                            <nav class="d-flex justify-content-between navbar navbar-expand-lg navbar-light bg-light">
+                                <div class="d-flex container-fluid">
+                                    <div class="collapse navbar-collapse" id="navbarNav">
+                                        <ul class="navbar-nav">
+                                            <li>
+                                                <Link to="/filter" className='nav-link'>
+                                                    <div className='text-nav'>Пошук</div>
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link to="/supplier" className='nav-link'>
+                                                    <div className='text-nav'>Розсадники</div>
+                                                </Link>
+                                            </li>
+                                            {isLogged && role === "ADMIN" && (
+                                                <li>
+                                                    <Link to="/admin#plants" className='nav-link'>
+                                                        <div className='text-nav'>Керування</div>
+                                                    </Link>
+                                                </li>
+                                            )}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </nav>
+                            <div style={{ marginTop: '10px' }}>
+                                {isLogged ?
+                                    (<Popup color="success" icon={<MenuIcon />}>
+                                        {/* <Link to="/profile">
+                                                    <MenuItem onClick={popupState.close}> <PersonSharp />Профіль</MenuItem>
+                                                </Link> */}
+                                        <Link to="/favourite">
+                                            <MenuItem><Favorite />Улюблене</MenuItem>
+                                        </Link>
+                                        <Link to="/">
+                                            <MenuItem onClick={() => handleLogout()}> <ExitToApp />Вихід</MenuItem>
+                                        </Link>
+                                    </Popup>) :
+                                    (
+                                        <div>
+                                            <Button variant='contained' onClick={handleOpenLoginModal}>Увійти<ArrowForward /></Button>
+                                            <ModalLoginForm activeObj={{ activeSignIn, setActiveSignIn }}
+                                                showSignUpModal={setActiveSignUp} />
+                                            <ModalSignUpForm activeObj={{ activeSignUp, setActiveSignUp }}
+                                                showSignInModal={setActiveSignIn}
+                                            />
+                                        </div>
+                                    )}
+                            </div>
+                        </Box>
 
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li>
-                            <SearchBar />
-                        </li>
-                        <li>
-                            <Link to="/filter" className='nav-link'>
-                                <div className='text-nav'>Пошук</div>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/supplier" className='nav-link'>
-                                <div className='text-nav'>Розсадники</div>
-                            </Link>
-                        </li>
-                        {isLogged && role === "ADMIN" && (
-                            <li>
-                                <Link to="/admin" className='nav-link'>
-                                    <div className='text-nav'>Керування</div>
+                        {/* Mobile Menu */}
+                        <Drawer
+                            variant='contained'
+                            anchor="right"
+                            open={mobileMenuOpen}
+                            onClose={handleMobileMenuClose}
+                        >
+                            <List>
+                                <Link to="/" className='nav-link'>
+                                    <ListItemButton>
+                                        <ListItemIcon><Home /></ListItemIcon>
+                                        <ListItemText>Головна сторінка</ListItemText>
+                                    </ListItemButton>
                                 </Link>
-                            </li>
-                        )}
-                    </ul>
-                </div>
-
-                {!isLogged && (
-                    <div>
-                        <button className="btn btn-primary ms-auto" onClick={handleOpenLoginModal}>Sign In <i class="fa-solid fa-arrow-right"></i></button>
-                        <ModalLoginForm activeObj={{ activeSignIn, setActiveSignIn }}
-                            showSignUpModal={setActiveSignUp} />
-
-                        <ModalSignUpForm activeObj={{ activeSignUp, setActiveSignUp }}
-                            showSignInModal={setActiveSignIn}
-                        />
-                    </div>
-                )}
-                {isLogged && (
-                    <PopupState variant="popover" popupId="demo-popup-menu">
-                        {(popupState) => (
-                            <Fragment>
-                                <Button variant="contained" {...bindTrigger(popupState)}>
-                                    <i class="fas fa-bars"></i>
-                                </Button>
-                                <Menu {...bindMenu(popupState)} className='menu-item'>
-                                    <Link to="/profile">
-                                        <MenuItem onClick={popupState.close}> <i class="fa-solid fa-user menu-icon"></i>Профіль</MenuItem>
-                                    </Link>
-                                    <Link to="/favourite">
-                                        <MenuItem onClick={popupState.close}><i class="fa-sharp fa-solid fa-heart menu-icon"> </i>Улюблене</MenuItem>
-                                    </Link>
-                                    <Link to="/">
-                                        <MenuItem onClick={() => handleLogout()}> <i class="fa-sharp fa-solid fa-right-from-bracket menu-icon"></i>Вихід</MenuItem>
-                                    </Link>
-                                </Menu>
-                            </Fragment>
-                        )}
-                    </PopupState>
-                )}
-            </div>
-        </nav>
+                                <Link to="/filter" className='nav-link'>
+                                    <ListItemButton>
+                                        <ListItemIcon><Search /></ListItemIcon>
+                                        <ListItemText>Пошук</ListItemText>
+                                    </ListItemButton>
+                                </Link>
+                                <Link to="/supplier" className='nav-link'>
+                                    <ListItemButton>
+                                        <ListItemIcon><ApartmentOutlined /></ListItemIcon>
+                                        <ListItemText>Розсадники</ListItemText>
+                                    </ListItemButton>
+                                </Link>
+                                {isLogged ?
+                                    (<>
+                                        {role === "ADMIN" && (
+                                            <Link to="/admin#plants" className='nav-link'>
+                                                <ListItemButton>
+                                                    <ListItemIcon><ConstructionIcon /></ListItemIcon>
+                                                    <ListItemText>Керування</ListItemText>
+                                                </ListItemButton>
+                                            </Link>
+                                        )}
+                                        <Link to="/favourite" className='nav-link'>
+                                            <ListItemButton>
+                                                <ListItemIcon><Favorite /></ListItemIcon>
+                                                <ListItemText>Улюблене</ListItemText>
+                                            </ListItemButton>
+                                        </Link>
+                                        <Divider component="li" />
+                                        <Link to="/" className='nav-link'>
+                                            <ListItemButton onClick={() => handleLogout()}>
+                                                <ListItemIcon><ExitToApp /></ListItemIcon>
+                                                <ListItemText>Вихід</ListItemText>
+                                            </ListItemButton>
+                                        </Link>
+                                    </>
+                                    ) :
+                                    (
+                                        <>
+                                            <Divider component="li" />
+                                            <ListItemButton onClick={handleOpenLoginModal}>
+                                                <ListItemIcon><ArrowForward /></ListItemIcon>
+                                                <ListItemText>Увійти</ListItemText>
+                                            </ListItemButton>
+                                            <ModalLoginForm activeObj={{ activeSignIn, setActiveSignIn }}
+                                                showSignUpModal={setActiveSignUp} />
+                                            <ModalSignUpForm activeObj={{ activeSignUp, setActiveSignUp }}
+                                                showSignInModal={setActiveSignIn}
+                                            />
+                                        </>
+                                    )}
+                            </List>
+                        </Drawer>
+                    </Toolbar>
+                </Container>
+            </AppBar >
+        </ThemeProvider >
     );
 };
 

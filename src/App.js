@@ -19,6 +19,7 @@ import ChangeLog from './components/ChangeLog/ChangeLog';
 import AddPlant from './components/Admin/PlantPanel/AddPlant';
 import UpdatePlant from './components/Admin/PlantPanel/UpdatePlant';
 import Supplier from './components/Supplier/Supplier';
+import FilterEx from './components/Filter/FilterEx';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" element={<Home />} ></Route>
           <Route path="/plant/:id" element={<Plant />} ></Route>
           <Route path="/filter" element={<Filter />} ></Route>
+          <Route path="/filterr" element={<FilterEx />}></Route>
           <Route path="/filter/:keyword" element={<Filter />} ></Route>
           <Route path="/supplier" element={<SupplierCatalog />} ></Route>
           <Route path="/supplier/:id" element={<Supplier />} ></Route>

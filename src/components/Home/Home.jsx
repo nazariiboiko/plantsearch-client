@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { getRandomPlants } from '../../functions/plantRequests';
 import './Home.css';
 import { image_store } from '../../utils/constants';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Container } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import RecentlyViewedList from '../RecentlyViewed/RecentlyViewed';
 
@@ -14,7 +14,9 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getRandomPlants(12)
+    const isMobile = window.innerWidth <= 768; 
+    const numberOfPlants = isMobile ? 9 : 10;
+    getRandomPlants(numberOfPlants)
       .then((res) => setPlants([...res]))
       .finally(() => {
         setIsLoading(false);
@@ -28,7 +30,7 @@ const Home = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          height: '100%',
+          height: '70%',
         }}
       >
         <CircularProgress />
@@ -37,21 +39,23 @@ const Home = () => {
   }
 
   return (
-    <div className="home-homepage container">
+    <Container sx={{ maxWidth: '100%' }}>
       <div>
         <RecentlyViewedList></RecentlyViewedList>
       </div>
-      <h1 className="home-header">Можливо вам сподобається</h1>
+      <h1>Можливо вам сподобається</h1>
       <div className="home-plant-list mb-20">
         {plants.map(plant => (
-          <div key={plant.id} className="home-plant-card" onClick={() => navigate(`/plant/${plant.id}`)}>
+          <div key={plant.id} className="home-plant-card justify-content-center" onClick={() => navigate(`/plant/${plant.id}`)}>
             <img src={`${image_store}/images/${plant.image || 'no_image.png'}`} alt={plant.name} className="home-plant-image" />
-            <h2 className="home-plant-name">{plant.name}</h2>
-            <p className="home-latin-name">{plant.latinName}</p>
+            <div className='home-plant-title'>
+              <h2 className="home-plant-name">{plant.name}</h2>
+              <h6 className="home-latin-name">{plant.latinName}</h6>
+            </div>
           </div>
         ))}
       </div>
-    </div>
+    </Container >
   );
 };
 

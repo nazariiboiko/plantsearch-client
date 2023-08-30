@@ -26,16 +26,16 @@ const PlantList = ({ response, title, text, showOrder }) => {
       </div>
 
       {showOrder === 'grid' && (
-        <div className="plant-container container">
-          <div className="plant-list">
-            {response?.data?.map(plant => (
-              <div key={plant.id} className="plant-card" onClick={() => navigate(`/plant/${plant.id}`)}>
-                <img src={`${image_store}/images/${plant.image || 'no_image.png'}`} alt={plant.name} className="plant-image" />
-                <h2 className="plant-name">{plant?.name?.length > 28 ? plant.name.slice(0, 28) + '...' : plant.name}</h2>
-                <p className="latin-name">{plant.latinName}</p>
+        <div className="home-plant-list mb-20">
+          {response?.data?.map(plant => (
+            <div key={plant.id} className="home-plant-card justify-content-center" onClick={() => navigate(`/plant/${plant.id}`)}>
+              <img src={`${image_store}/images/${plant.image || 'no_image.png'}`} alt={plant.name} className="home-plant-image" />
+              <div className='home-plant-title'>
+                <h2 className="home-plant-name">{plant.name}</h2>
+                <h6 className="home-latin-name">{plant.latinName}</h6>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       )
       }

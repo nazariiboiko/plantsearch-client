@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import * as request from "../../../functions/supplierRequests";
 import { useState } from "react";
 import './SupplierPanel.css';
-import { Alert, CircularProgress, Fab, Grid, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, styled, tableCellClasses } from "@mui/material";
+import { Alert, Box, CircularProgress, Fab, Grid, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, styled, tableCellClasses } from "@mui/material";
 import Supplier from "./Supplier";
 import { Add, Check, Save } from "@mui/icons-material";
 import Modal from "../../ui/Modal/Modal";
@@ -15,6 +15,7 @@ const SupplierPanel = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  const [isLoading, setIsLoading] = useState(true);
 
   //Modal
   const [loading, setLoading] = useState(false);
@@ -23,7 +24,11 @@ const SupplierPanel = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
-    request.getAllSuppliers(pageNumber, pageSize).then((res) => setSuppliers(res));
+    request.getAllSuppliers(pageNumber, pageSize)
+      .then((res) => {
+        setSuppliers(res);
+        setIsLoading(false);
+      });
   }, []);
 
   const buttonSx = {
@@ -107,6 +112,21 @@ const SupplierPanel = () => {
     return null;
   };
 
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '70%',
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  };
+
   return (
     <div className="container">
       {selectedSupplierId === null && (
@@ -148,9 +168,9 @@ const SupplierPanel = () => {
                         <CircularProgress
                           size={68}
                           sx={{
-                            position: 'absolute', 
-                            top: 74, 
-                            left: 10, 
+                            position: 'absolute',
+                            top: 74,
+                            left: 10,
                             color: green[500],
                           }}
                         />

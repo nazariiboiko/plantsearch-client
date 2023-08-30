@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllPlants, getPlantById, getPageablePlantByName } from "../../../functions/plantRequests";
+import { getAllPlants, getPlantById, getPageablePlantByName, updatePlant } from "../../../functions/plantRequests";
 import { getSupplierByid, deleteJunction, createJunction } from "../../../functions/supplierRequests";
 import Modal from "../../ui/Modal/Modal";
 import { Button, Fab, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, styled, tableCellClasses } from "@mui/material";
@@ -19,6 +19,9 @@ const Supplier = ({ id, back }) => {
     const [response, setResponse] = useState();
     const [keyword, setKeyword] = useState('');
     const navigate = useNavigate();
+
+    const [supplierPageNumber, setSupplierPageNumber] = useState(1);
+    const [supplierPageSize, setSupplierPageSize] = useState(20);
 
 
     const style = {
@@ -53,11 +56,13 @@ const Supplier = ({ id, back }) => {
     const handleDeleteJunction = (plantId, indexToRemove) => {
         deleteJunction(id, plantId)
             .then(() => {
-                const updatedPlants = supplier.avaliablePlants.slice();
+                const updatedPlants = supplier.avaliablePlants.data.slice();
                 updatedPlants.splice(indexToRemove, 1);
+                console.info(updatedPlants);
                 setSupplier((prevSupplier) => ({
                     ...prevSupplier,
-                    avaliablePlants: updatedPlants,
+                    avaliablePlants: { 
+                        data: updatedPlants },
                 }));
             })
             .catch((error) => {
@@ -117,7 +122,11 @@ const Supplier = ({ id, back }) => {
         } else {
             getAllPlants(value, pageSize).then((res) => setResponse(res));
         }
-        console.info(response);
+    };
+
+    const handleSupplierPageChange = (event, value) => {
+        setSupplierPageNumber(value);
+        getSupplierByid(id, value, supplierPageSize).then((res) => setSupplier(res));
     };
 
     const handleButtonClick = (plant) => {
@@ -125,7 +134,10 @@ const Supplier = ({ id, back }) => {
             .then(() => {
                 setSupplier((prevSupplier) => ({
                     ...prevSupplier,
-                    avaliablePlants: [...prevSupplier.avaliablePlants, plant],
+                    avaliablePlants: {
+                        ...prevSupplier.avaliablePlants,
+                        data: [...prevSupplier.avaliablePlants.data, plant],
+                    },
                 }));
             })
             .catch((error) => {
@@ -136,17 +148,24 @@ const Supplier = ({ id, back }) => {
     return (
         <div className="container">
             <div className="row">
-                <div className="col text-start">
-                    <h1 className="text-decoration-underline">
+                <div className="d-flex justify-content-between">
+                    <div className="d-flex">
                         <Fab color="error" aria-label="back" size="small" onClick={() => back()} >
                             <ArrowBack />
                         </Fab>
-                        {supplier?.name}
-                    </h1>
-                </div>
-                <div className="col text-end">
+                        <h1 className="text-decoration-underline">
+                            {supplier?.name}
+                        </h1>
+                    </div>
+                    <Pagination
+                        variant="outlined"
+                        shape="rounded"
+                        count={Math.ceil(supplier?.avaliablePlants?.totalSize / supplier?.avaliablePlants?.pageSize)}
+                        page={supplierPageNumber}
+                        onChange={handleSupplierPageChange}
+                    />
                     <Button onClick={openModal} variant="contained" color="primary">Добавити новий зв'язок</Button>
-            
+
                 </div>
             </div>
             <div>
@@ -193,7 +212,7 @@ const Supplier = ({ id, back }) => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {supplier?.avaliablePlants?.map((plant, index) => (
+                                {supplier?.avaliablePlants?.data.map((plant, index) => (
                                     <StyledTableRow key={index}>
                                         <StyledTableCell component="th" scope="row" align="center">{plant.id}</StyledTableCell>
                                         <StyledTableCell align="center">{plant.name}</StyledTableCell>

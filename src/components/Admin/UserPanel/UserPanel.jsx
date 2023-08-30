@@ -2,19 +2,22 @@ import { useEffect } from "react";
 import { getAllUsers, blockUser } from "../../../functions/userRequests";
 import { useState } from "react";
 import './UserPanel.css';
-import { Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, styled, TableRow, TextField, tableCellClasses, Button, List, ListItem, ListItemText, ListItemButton, Tooltip, Fab } from "@mui/material";
+import { Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, styled, TableRow, tableCellClasses, Button, List, ListItem, ListItemText, Tooltip, Fab } from "@mui/material";
 import './User.css';
 import Modal from "../../ui/Modal/Modal";
-import { Block, People, Undo } from "@mui/icons-material";
+import { Block, Undo } from "@mui/icons-material";
 
 const UserPanel = () => {
 
   const [users, setUsers] = useState();
   const [currentUser, setCurrentUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  
+  const [pageNumber, setPageNumber] = useState(1);
+  const [pageSize, setPageSize] = useState(20);
 
   useEffect(() => {
-    getAllUsers(1, 20).then((res) => { setUsers(res); console.info(res) });
+    getAllUsers(pageNumber, pageSize).then((res) => setUsers(res));
   }, []);
 
   const handleShowModal = (user) => {
@@ -60,6 +63,11 @@ const UserPanel = () => {
     borderBottom: `1px solid ${theme.palette.divider}`,
   }));
 
+  const handlePageChange = (event, value) => {
+    setPageNumber(value);
+    getAllUsers(value, pageSize).then((res) => setUsers(res));
+  }
+
   return (
     <div className="container">
       <div>
@@ -75,8 +83,8 @@ const UserPanel = () => {
               variant="outlined"
               shape="rounded"
               count={Math.ceil(users?.totalSize / users?.pageSize)}
-            //={pageNumber}
-            //onChange={handlePageChange}
+              page={pageNumber}
+              onChange={handlePageChange}
             />
           </div>
           <div></div>

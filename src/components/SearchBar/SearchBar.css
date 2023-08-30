@@ -60,7 +60,7 @@
 }
 
 .search-bar-item:hover {
-    background-color: #ddd;
+    color: purple;
 }
 
 .filter-icon {

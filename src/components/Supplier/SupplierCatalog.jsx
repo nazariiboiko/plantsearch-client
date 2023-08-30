@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import * as request from "../../functions/supplierRequests";
 import './SupplierCatalog.css';
 import { ApartmentOutlined } from "@mui/icons-material";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 
 const SupplierCatalog = () => {
 
     const [suppliers, setSuppliers] = useState();
     const [isLoading, setIsLoading] = useState(true);
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         request.getAllSuppliers()
@@ -26,7 +26,7 @@ const SupplierCatalog = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              height: '100%',
+              height: '70%',
             }}
           >
             <CircularProgress />
@@ -42,8 +42,7 @@ const SupplierCatalog = () => {
             </div>
             <div className="supplier-list">
                 {suppliers?.data?.map((supplier) => (
-                    <button key={supplier.id} className="supplier-card" >
-                        {/* onClick={() => navigate(`${supplier.id}`)} */}
+                    <button key={supplier.id} className="supplier-card" onClick={() => navigate(`${supplier.id}`)}>
                         <h5 className="supplier-name">{supplier.name}</h5>
                         <p className="supplier-details">{supplier.details}</p>
                     </button>

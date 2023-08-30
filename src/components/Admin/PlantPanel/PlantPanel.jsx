@@ -134,7 +134,7 @@ const PlantPanel = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container mb-5">
       <div>
         <hr />
         <div className="d-flex justify-content-between">

@@ -66,7 +66,7 @@ if (isLoading) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '100%',
+        height: '70%',
       }}
     >
       <CircularProgress />

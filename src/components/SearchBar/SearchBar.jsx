@@ -72,7 +72,7 @@ const SearchBarEx = () => {
               <Link to={`/plant/${plant.id}`} key={plant.id}>
                 <Card variant='outlined' className='search-bar-item'>
                   <div className='text-container'>
-                    <p className='h5'>{plant.name}</p>
+                    <p className='h5 ml-10'>{plant.name}</p>
                   </div>
                   <div className='image-card-container'>
                     <img

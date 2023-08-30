@@ -8,9 +8,9 @@ export const getAllSuppliers = async (page = 1, size = 20) => {
         .then((response) => response.data);
 };
 
-export const getSupplierByid = async (id) => {
+export const getSupplierByid = async (id, page = 1, size = 20) => {
     return await api
-        .get(`${API_SUPPLIER}/${id}`, {})
+        .get(`${API_SUPPLIER}/${id}?page=${page}&size=${size}`, {})
         .then((response) => response.data);
 };
 

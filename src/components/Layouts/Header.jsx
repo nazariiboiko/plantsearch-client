@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router';
 import Footer from './Footer';
-import HeaderMenuEx from './HeaderMenuEx';
+import HeaderMenu from './HeaderMenu';
 
 const Header = () => {
     return (
@@ -13,7 +13,7 @@ const Header = () => {
             }}
         >
             <div style={{ flex: '1 0 auto' }}>
-                <HeaderMenuEx />
+                <HeaderMenu />
                 <Outlet />
             </div>
             <Footer />
