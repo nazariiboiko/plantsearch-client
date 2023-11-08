@@ -1,26 +1,51 @@
-import React from 'react';
-import './Modal.css';
+import * as React from 'react';
+import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import Typography from '@mui/material/Typography';
 
-const Modal = ({ activeObj, title, children }) => {
-    const { setActive } = activeObj;
+const style = {
+    position: 'absolute',
+    top: '40%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    borderRadius: "15px",
+};
 
+const ModalTransition = ({ open, handleOpen, handleClose, children, title }) => {
     return (
-        <div className="modal fade show" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style={{ display: 'block' }}>
-            <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                    <div className="modal-header text-center">
-                        <h4 className="modal-title w-100 font-weight-bold">{title}</h4>
-                        <button type="button" className="btn-close" onClick={() => setActive(false)} aria-label="Close">
-                            <span aria-hidden="true"></span>
-                        </button>
-                    </div>
-                    <div className="modal-body mx-3">
+        <div>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                slots={{ backdrop: Backdrop }}
+                slotProps={{
+                    backdrop: {
+                        timeout: 500,
+                    },
+                }}
+            >
+                <Fade in={open}>
+                    <Box sx={style}>
+                        {title &&
+                            (<>
+                                <Typography variant="h4" color="primary" sx={{ padding: "12px 0 0", display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                    {title}
+                                </Typography>
+                                < hr />
+                            </>)}
                         {children}
-                    </div>
-                </div>
-            </div>
+                    </Box>
+                </Fade>
+            </Modal>
         </div>
     );
 }
 
-export default Modal;
+export default ModalTransition;

@@ -1,0 +1,22 @@
+.plant-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .plant-table th, .plant-table td {
+    padding: 8px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+  
+  .plant-table th {
+    font-weight: bold;
+  }
+  
+  .plant-table input[type="text"] {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid inherit;
+    border-radius: 4px;
+  }
+  

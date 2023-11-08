@@ -1,20 +1,45 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from "react";
 import './Admin.css';
-import { Badge, Box, Grid } from '@mui/material';
-import { ApartmentOutlined, GrassOutlined, GroupOutlined, Restore } from '@mui/icons-material';
-import PlantPanel from './PlantPanel/PlantPanel';
-import SupplierPanel from './SupplierPanel/SupplierPanel';
-import UserPanel from './UserPanel/UserPanel';
-import { useEffect } from 'react';
-import ChangeLog from '../ChangeLog/ChangeLog';
-import { getUpdateNumber } from '../../utils/changelog';
-
+import { Box, Grid } from '@mui/material';
+import { ApartmentOutlined, GrassOutlined, GroupOutlined, Home, Restore } from '@mui/icons-material';
+import { useTheme } from "../../utils/themeProvider";
+import PlantPanel from "./Plant/PlantPanel";
+import UserPanel from "./User/UserPanel";
+import SupplierPanel from "./Supplier/SupplierPanel";
+// import PlantPanel from './PlantPanel/PlantPanel';
+// import SupplierPanel from './SupplierPanel/SupplierPanel';
+// import UserPanel from './UserPanel/UserPanel';
 
 const AdminPanel = () => {
 
     const [currentWindow, setCurrentWindow] = useState(window.location.hash || '#plants');
-    const updateNumber = getUpdateNumber();
-    const badgeClicked = localStorage.getItem('badgeClicked');
+    const { theme } = useTheme();
+
+    const styles = {
+        ulAdmin: {
+            listStyleType: 'none',
+            padding: 0,
+            margin: 0,
+        },
+        liAdmin: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textDecoration: 'none',
+            borderRadius: '0 20px 20px 0',
+            paddingTop: '5px',
+            paddingBottom: '5px',
+            color: theme.palette.text.primary, // Use text color from the theme
+            cursor: 'pointer',
+        },
+        liAdminHover: {
+            backgroundColor: theme.palette.action.hover, // Use hover background color from the theme
+            cursor: 'pointer',
+        },
+        activeDiv: {
+            backgroundColor: theme.palette.action.selected, // Use selected (active) background color from the theme
+        },
+    };
 
     useEffect(() => {
         const handleHashChange = () => {
@@ -39,51 +64,46 @@ const AdminPanel = () => {
         window.location.hash = value;
     };
 
-    const handleBadgeClick = () => {
-        localStorage.setItem('badgeClicked', String(updateNumber));
-    }
-
     return (
         <Box>
             <Grid container spacing={2}>
-                <Grid item xs={2}>
-                    <ul className='ul-admin'>
+                <Grid item xs={1}>
+                    <ul style={styles.ulAdmin}>
                         <li
-                            className={`li-admin ${currentWindow === '#plants' ? 'active-div' : ''}`}
+                            style={{
+                                ...styles.liAdmin,
+                                ...(currentWindow === '#plants' ? styles.activeDiv : {}),
+                            }}
                             onClick={() => handleCurrentWindow('#plants')}
                         >
                             <GrassOutlined /> Розсада
                         </li>
+
                         <li
-                            className={`li-admin ${currentWindow === '#suppliers' ? 'active-div' : ''}`}
-                            onClick={() => handleCurrentWindow('#suppliers')}
-                        >
-                            <ApartmentOutlined /> Розсадники
-                        </li>
-                        <li
-                            className={`li-admin ${currentWindow === '#users' ? 'active-div' : ''}`}
+                            style={{
+                                ...styles.liAdmin,
+                                ...(currentWindow === '#users' ? styles.activeDiv : {}),
+                            }}
                             onClick={() => handleCurrentWindow('#users')}
                         >
                             <GroupOutlined /> Користувачі
                         </li>
                         <li
-                            className={`li-admin ${currentWindow === '#changelog' ? 'active-div' : ''}`}
-                            onClick={() => { handleCurrentWindow('#changelog'); handleBadgeClick() }}
+                            style={{
+                                ...styles.liAdmin,
+                                ...(currentWindow === '#users' ? styles.activeDiv : {}),
+                            }}
+                            onClick={() => handleCurrentWindow('#suppliers')}
                         >
-                            <Restore />
-                            {String(badgeClicked) === String(updateNumber) ?
-                                ('Список змін') :
-                                (
-                                    <>Список змін <div className="badge badge-green">new</div></>
-                                )}
+                            <Home /> Розсадники
                         </li>
                     </ul>
                 </Grid>
-                <Grid item xs={10}>
+                <Grid item xs={11}>
                     {currentWindow === '#plants' && (<PlantPanel></PlantPanel>)}
                     {currentWindow === '#suppliers' && (<SupplierPanel></SupplierPanel>)}
                     {currentWindow === '#users' && (<UserPanel></UserPanel>)}
-                    {currentWindow === '#changelog' && (<ChangeLog />)}
+                    {/* {currentWindow === '#changelog' && (<ChangeLog />)} */}
                 </Grid>
             </Grid>
         </Box>

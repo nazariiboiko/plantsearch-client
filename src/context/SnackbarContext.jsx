@@ -26,4 +26,4 @@ export const SnackbarProvider = ({ children }) => {
     );
 };
 
-export default SnackbarContext;
+export default SnackbarProvider;

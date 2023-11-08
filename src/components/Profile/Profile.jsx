@@ -1,11 +1,9 @@
-import Debug from "../Debug/Debug";
 
 const Profile = () => {
-    return (
-        <div className="container">
-            <Debug></Debug>
-        </div>
-    )
+
+    return(
+        <></>
+    );
 }
 
 export default Profile;

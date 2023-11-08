@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getSupplierByid } from "../../functions/supplierRequests";
+import { getSupplierById } from "../../functions/supplierRequest";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Box, Button, CircularProgress, Paper, Typography } from "@mui/material";
@@ -14,12 +14,12 @@ const Supplier = () => {
     const [showOrder, setShowOrder] = useState('grid');
 
     useEffect(() => {
-        getSupplierByid(id)
+        getSupplierById(id)
             .then((res) => {
                 setSupplier(res);
                 setIsLoading(false);
             });
-    });
+    }, []);
 
     if (isLoading) {
         return (
@@ -40,7 +40,7 @@ const Supplier = () => {
 
 
     return (
-        <Box sx={{ width: '90%', height: '100%', marginLeft: '5%' }}>
+        <Box sx={{ width: '90%', height: '100%', marginLeft: '5%', marginTop: '1%' }}>
             <Paper elevation={3}>
                 <div className="d-flex justify-content-between">
                     <h2 style={{ margin: '10px' }}>{supplier.name}</h2>
@@ -63,8 +63,8 @@ const Supplier = () => {
                 </div>
             </Paper>
 
-            <PlantList response={{ data: supplier.avaliablePlants.data }} showOrder={showOrder}></PlantList>
-            {supplier.avaliablePlants.data.length === 0 && (
+            <PlantList response={ supplier.availablePlants } showOrder={showOrder}></PlantList>
+            {supplier.avaliablePlants?.content.length === 0 && (
                 <Box sx={{ width: '100%', height: '100%' }}>
                     <Typography variant="h3" style={{ textAlign: 'center' }}>
                         Наразі тут немає жодної розсади.

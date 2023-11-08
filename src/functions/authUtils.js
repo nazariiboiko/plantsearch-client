@@ -1,31 +1,31 @@
 import jwt_decode from 'jwt-decode';
 
 export const getRole = () => {
-    if (localStorage.getItem('jwt-token')) {
-        const decodedJwt = jwt_decode(localStorage.getItem('jwt-token'));
+    if (localStorage.getItem('access_token')) {
+        const decodedJwt = jwt_decode(localStorage.getItem('access_token'));
         return decodedJwt.role;
     }
     return null;
 };
 
 export const getToken = () => {
-    return 'Bearer ' + JSON.parse(localStorage.getItem('jwt-token'));
+    return 'Bearer ' + localStorage.getItem('access_token');
 };
 
-export const getRefreshToken = () => {
-    return JSON.parse(localStorage.getItem('refresh_token'));
-}
-
 export const useAuth = () => {
-    return !!localStorage.getItem('jwt-token');
+    return !!localStorage.getItem('access_token');
 };
 
 export const isToken = () => {
-    return !!localStorage.getItem('jwt-token');
+    return !!localStorage.getItem('access_token');
 };
 
 export const getName = () => {
-    if(isToken())
-        return jwt_decode(localStorage.getItem('jwt-token')).sub;
+    if (isToken())
+        return jwt_decode(localStorage.getItem('access_token')).sub;
     else return null;
+}
+
+export const logout = () => {
+    localStorage.removeItem('access_token');
 }

@@ -1,0 +1,8 @@
+.between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu-item {
+    width: 300px;
+}

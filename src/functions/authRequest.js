@@ -1,76 +1,34 @@
 import axios from 'axios';
-import { API_AUTHENTICATION } from '../utils/constants.js';
-import { getRefreshToken } from './authUtils.js';
+import { API_AUTHENTICATION } from '../utils/constants';
 
-export const doLogin = (userData, lang) => {
-    return axios.post(API_AUTHENTICATION + '/login', userData, {
-        params: {
-            lang: lang || 'en',
-        },
-    })
-        .then((response) => {
-            if (response.data.access_token) {
-                console.info(response.data.access_token);
-                localStorage.setItem('jwt-token', JSON.stringify(response.data.access_token));
-            }
-            if (response.data.refresh_token) {
-                localStorage.setItem('refresh_token', JSON.stringify(response.data.refresh_token));
-            }
-            return response.data;
-        });
+export const login = (authData) => {
+    const headers = {
+        'Accept-Language': 'en',
+    };
+
+    return axios.post(
+        `${API_AUTHENTICATION}/login`,
+        authData,
+        { headers }
+    ).then((response) => {
+        if (response.data.access_token) {
+            localStorage.setItem('access_token', response.data.access_token);
+        }
+    });
 };
 
-export const logout = () => {
-    localStorage.removeItem('jwt-token');
-    localStorage.removeItem('refresh_token');
+export const register = (authData) => {
+    const headers = {
+        'Accept-Language': 'en',
+    };
+
+    return axios.post(
+        `${API_AUTHENTICATION}/register`,
+        authData,
+        { headers }
+    ).then((response) => {
+        if (response.data.access_token) {
+            localStorage.setItem('access_token', response.data.access_token);
+        }
+    });
 };
-
-export const doSignup = (userData, lang) => {
-    return axios
-        .post(API_AUTHENTICATION + '/register', userData, {
-            params: {
-                lang: lang || 'en',
-            },
-        })
-        .then((response) => {
-            return response.data;
-        });
-};
-
-export const activateAccount = (userData, code, lang) => {
-    return axios
-        .post(API_AUTHENTICATION + '/activate', userData, {
-            params: {
-                code: code,
-                lang: lang || 'en',
-            }
-        })
-        .then((response) => {
-            if (response.data.access_token) {
-                console.info(response.data.access_token);
-                localStorage.setItem('jwt-token', JSON.stringify(response.data.access_token));
-            }
-            if (response.data.refresh_token) {
-                localStorage.setItem('refresh_token', JSON.stringify(response.data.refresh_token));
-            }
-            return response.data;
-        });
-}
-
-export const renewAccessToken = () => {
-    const refreshToken = getRefreshToken();
-    if(refreshToken) {
-        return axios
-        .post(API_AUTHENTICATION + '/refresh', {refreshToken: refreshToken}, {})
-        .then((response) => {
-            if (response.data.access_token) {
-                localStorage.setItem('jwt-token', JSON.stringify(response.data.access_token));
-            }
-            if (response.data.refresh_token) {
-                localStorage.setItem('refresh_token', JSON.stringify(response.data.refresh_token));
-            }
-            return response.data;
-        })
-    }
-    return null;
-}
