@@ -14,7 +14,6 @@ import AdminPanel from './components/Admin/AdminPanel';
 import PlantCreateForm from './components/Admin/Plant/PlantCreateForm/PlantCreateForm';
 import SupplierList from './components/Supplier/SupplierList';
 import Supplier from './components/Supplier/Supplier';
-import PinterestBoardEmbed from './components/PinterestBoardEmbed/PinterestBoardEmbed';
 
 function App() {
   return (
@@ -26,7 +25,6 @@ function App() {
           <Route path="/filter" element={<Filter />}></Route>
           <Route path='/supplier' element={<SupplierList></SupplierList>}></Route>
           <Route path='/supplier/:id' element={<Supplier></Supplier>}></Route>
-          <Route path='/board' element={<PinterestBoardEmbed />}></Route>
 
           <Route element={<ProtectedRoutes />}>
             <Route path='/profile' element={<Profile />} />

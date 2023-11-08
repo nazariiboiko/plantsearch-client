@@ -92,7 +92,7 @@ const Supplier = ({ id, back }) => {
 
         if (!isNaN(+q) && q >= 1) {
             plantRequest.getPlantById(q)
-                .then((res) => setResponse(res))
+                .then((res) => setResponse( res ))
                 .catch((error) => {
                     setResponse([]);
                 });
@@ -153,24 +153,22 @@ const Supplier = ({ id, back }) => {
             <div className="row">
                 <div className="d-flex justify-content-between">
                     <div className="d-flex">
-                    <h1 className="text-decoration-underline">
                         <Fab color="error" aria-label="back" size="small" onClick={() => back()} >
                             <ArrowBack />
                         </Fab>
-                       
+                        <h1 className="text-decoration-underline">
                             {supplier?.name}
                         </h1>
                     </div>
-                    {/* <Pagination
+                    <Pagination
                         variant="outlined"
                         shape="rounded"
                         count={Math.ceil(supplier?.availablePlants?.totalSize / supplier?.availablePlants?.pageSize)}
                         page={supplierPageNumber}
                         onChange={handleSupplierPageChange}
-                    /> */}
-                    <h1>
-                        <Button onClick={openModal} variant="contained" color="inherit">Добавити новий зв'язок</Button>
-                    </h1>
+                    />
+                    <Button onClick={openModal} variant="contained" color="primary">Добавити новий зв'язок</Button>
+
                 </div>
             </div>
             <div>
@@ -181,7 +179,7 @@ const Supplier = ({ id, back }) => {
                             <input
                                 placeholder='Знайти Назва, латинь, ID'
                                 onChange={handleInputChange}
-                                style={{ width: "95%", height: "100%", outline: 'none' }}
+                                style={{width: "95%", height: "100%", outline: 'none'}}
                             />
                         </div>
 

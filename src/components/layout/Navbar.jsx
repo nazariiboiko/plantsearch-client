@@ -82,11 +82,6 @@ const Header = () => {
                                         <div className='navbar-text'>Розсадники</div>
                                     </Link>
                                 </li>
-                                <li>
-                                    <Link to="/board" className='navbar-link'>
-                                        <div className='navbar-text'>Дошка</div>
-                                    </Link>
-                                </li>
                                 {role === ROLE_ADMIN && (
                                     <li>
                                         <Link to="/admin#plants" className='navbar-link'>
@@ -102,10 +97,10 @@ const Header = () => {
                         <Box sx={{ display: { xs: 'none', md: 'flex', }, marginLeft: '20px' }}>
                             {isLogged == true ? (
                                 <Dropdown icon={<Menu />}>
-                                    {/* <Link to="/profile" className='menu-link'>
+                                    <Link to="/profile" className='menu-link'>
                                         <MenuItem onClick={PopupState.close}> <PersonSharp />Профіль</MenuItem>
                                     </Link>
-                                    <Divider /> */}
+                                    <Divider />
                                     <Link to="/favourite" className='menu-link'>
                                         <MenuItem><Favorite />Улюблене</MenuItem>
                                     </Link>

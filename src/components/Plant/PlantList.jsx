@@ -27,7 +27,7 @@ const PlantList = ({ response, title, text, showOrder }) => {
 
       {showOrder === 'grid' && (
         <div className="home-plant-list mb-20">
-          {response?.data?.map(plant => (
+          {response?.content?.map(plant => (
             <div key={plant.id} className="home-plant-card justify-content-center" onClick={() => navigate(`/plant/${plant.id}`)}>
               <img src={`${image_store}/images/${plant.image || 'no_image.png'}`} alt={plant.name} className="home-plant-image" />
               <div className='home-plant-title'>
@@ -46,7 +46,8 @@ const PlantList = ({ response, title, text, showOrder }) => {
               <TableHead>
               </TableHead>
               <TableBody>
-                {response?.data?.map((plant) => (
+                {console.info(response)}
+                {response?.content?.map((plant) => (
                   <StyledTableRow key={plant.id}>
                     <TableCell align="center">{plant.name}</TableCell>
                     <TableCell align="center">{plant.latinName}</TableCell>

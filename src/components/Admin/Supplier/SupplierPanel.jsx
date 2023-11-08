@@ -142,13 +142,13 @@ const SupplierPanel = () => {
                         <div style={{ display: 'flex', justifyContent: 'space-between', padding: 2 }}>
                             <div></div>
                             <div class="d-flex">
-                                {/* <Pagination
+                                <Pagination
                                     variant="outlined"
                                     shape="rounded"
                                     count={Math.ceil(suppliers?.totalSize / suppliers?.pageSize)}
                                     page={pageNumber}
                                     onChange={handlePageChange}
-                                /> */}
+                                />
                             </div>
                             <div>
                                 <Tooltip title="Добавити" placement="top" className="mr-5">
