@@ -1,9 +1,8 @@
 import { useState } from "react";
 import ModalTransition from "../ui/modal/Modal";
-import { Alert, Box, Button, FormControl, Paper, Snackbar, TextField, Typography } from "@mui/material";
-import * as auth from "../../functions/AuthRequest";
+import { Alert, Box, Button} from "@mui/material";
+import * as auth from "../../functions/AuthRequests";
 import { useSnackbar } from "../../context/SnackbarContext";
-import { Link } from "react-router-dom";
 import './AuthModal.css';
 import { Lock, Mail, Person } from "@mui/icons-material";
 import { useTheme } from "../../utils/themeProvider";

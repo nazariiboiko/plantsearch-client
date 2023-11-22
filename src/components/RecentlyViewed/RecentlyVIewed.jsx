@@ -1,5 +1,5 @@
 import React from 'react';
-import { getRecentlyViewed } from '../../functions/recentlyViewed.js';
+import { getRecentlyViewed } from '../../functions/RecentlyViewed.js';
 import { useNavigate } from 'react-router-dom';
 import { image_store } from '../../utils/constants';
 import { Splide, SplideSlide } from '@splidejs/react-splide';

@@ -1,0 +1,37 @@
+.wrap-content {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.version-num {
+    font-weight: 500;
+}
+.datetime {
+    margin-left: 5px;
+    font-style: italic;
+    color: gray;
+}
+
+.badge {
+    border: 1px solid transparent;
+    color: black;
+    border-radius: 20px;
+    background-color: gray;
+    width: 7%;
+}
+
+.badge-green {
+    background-color: green;
+}
+
+.badge-purple {
+    background-color: purple;
+}
+
+.badge-orange {
+    background-color: orange;
+}
+
+.badge-red {
+    background-color: red;
+}

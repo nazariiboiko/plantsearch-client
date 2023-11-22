@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getToken } from "./authUtils";
+import { getToken } from "./AuthUtils";
 import { API_USERS } from "../utils/constants";
 
 export const getAllUsers = async (page = 0, size = 20, sort = 'id') => {

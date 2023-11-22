@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { API_FAVOURITE } from '../utils/constants';
-import { getToken } from './authUtils';
+import { getToken } from './AuthUtils';
 
 export const getFavourites = async () => {
     const token = getToken();

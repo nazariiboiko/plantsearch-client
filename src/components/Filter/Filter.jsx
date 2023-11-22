@@ -3,7 +3,7 @@ import './Filter.css';
 import { useEffect, useState } from "react";
 import { KeyboardArrowDown, Reorder, ViewModule } from "@mui/icons-material";
 import { useParams } from "react-router-dom";
-import { getPlantsByCriteria } from "../../functions/PlantRequest";
+import { getPlantsByCriteria } from "../../functions/PlantRequests";
 import { allCriterias } from "../../utils/filter_criterias";
 import Dropdown from "../ui/Dropdown/Dropdown";
 import { purple } from "@mui/material/colors";

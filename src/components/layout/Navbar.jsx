@@ -1,14 +1,14 @@
-import { AppBar, Box, Button, Container, Divider, Drawer, List, ListItemButton, ListItemIcon, ListItemText, MenuItem, Toolbar, Typography } from "@mui/material"
+import { AppBar, Box, Container, Divider, Drawer, List, ListItemButton, ListItemIcon, ListItemText, MenuItem, Toolbar, Typography } from "@mui/material"
 import IconButton from '@mui/material/IconButton';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import { useTheme } from "../../utils/themeProvider";
 import { Link, useNavigate } from "react-router-dom";
-import { ApartmentOutlined, Brightness7, ExitToApp, Favorite, Grass, Home, Menu, PersonSharp, Search } from "@mui/icons-material";
+import { Brightness7, ExitToApp, Favorite, Grass, Home, Menu, PersonSharp, Search } from "@mui/icons-material";
 import "./Navbar.css";
 import { useState } from "react";
-import SearchBarEx from "../searchbar/Searchbar";
+import SearchBarEx from "../Searchbar/Searchbar";
 import AuthModal from "../Auth/AuthModal";
-import * as auth from "../../functions/authUtils";
+import * as auth from "../../functions/AuthUtils";
 import { ROLE_ADMIN } from "../../utils/constants";
 import Dropdown from "../ui/Dropdown/Dropdown";
 import PopupState from "material-ui-popup-state";

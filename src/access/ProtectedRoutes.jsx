@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router';
-import { useAuth } from '../functions/authUtils';
+import { useAuth } from '../functions/AuthUtils';
 import { Navigate } from 'react-router-dom';
 
 const ProtectedRoutes = () => {

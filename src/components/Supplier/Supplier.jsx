@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getSupplierById } from "../../functions/supplierRequest";
+import { getSupplierById } from "../../functions/SupplierRequests";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { Box, Button, CircularProgress, Paper, Typography } from "@mui/material";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import * as plantRequest from "../../../functions/PlantRequest";
-import * as supplierRequest from "../../../functions/supplierRequest";
+import * as plantRequest from "../../../functions/PlantRequests";
+import * as supplierRequest from "../../../functions/SupplierRequests";
 import ModalTransition from "../../ui/modal/Modal";
 import { Button, Fab, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, styled, tableCellClasses } from "@mui/material";
 import List from '@mui/material/List';

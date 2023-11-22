@@ -1,16 +1,16 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getPlantById } from "../../functions/PlantRequest";
+import { getPlantById } from "../../functions/PlantRequests";
 import './Plant.css';
-import { useAuth, getRole } from "../../functions/authUtils";
+import { useAuth, getRole } from "../../functions/AuthUtils";
 
 import { Check, Close, Favorite, FavoriteBorder } from "@mui/icons-material";
 import { Box, Checkbox, CircularProgress, Container, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography, styled } from "@mui/material";
 import { image_store } from "../../utils/constants";
-import { updateRecentlyViewed } from "../../functions/recentlyViewed";
-import { getFavourites, isLikedByUser, doLike } from "../../functions/FavouriteRequest";
-import { findSuppliersByPlantId } from "../../functions/supplierRequest";
+import { updateRecentlyViewed } from "../../functions/RecentlyViewed";
+import { getFavourites, isLikedByUser, doLike } from "../../functions/FavouriteRequests";
+import { findSuppliersByPlantId } from "../../functions/SupplierRequests";
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#ddd',
@@ -62,6 +62,9 @@ const Plant = () => {
                 if (isAuth) {
                     isLikedByUser(id)
                         .then((res) => setLike(res.data));
+                    if(like === null) {
+                        setLike(false);
+                    }
                 };
             });
         findSuppliersByPlantId(id)
@@ -134,7 +137,7 @@ const Plant = () => {
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <Typography variant="h5">Наявність</Typography>
-                        {suppliers.content.length == 0 && (<Item>Не наявно</Item>)}
+                        {suppliers?.content.length == 0 && (<Item>Не наявно</Item>)}
                         {suppliers?.content?.map((supplier) => (
                             <Item> {supplier.name} </Item>
                         ))}

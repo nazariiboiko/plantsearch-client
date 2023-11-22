@@ -2,10 +2,11 @@ import { Box, CircularProgress, Container, Paper, Typography } from "@mui/materi
 import { useTheme } from "../../utils/themeProvider";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getRandomPlants } from "../../functions/PlantRequest";
+import { getRandomPlants } from "../../functions/PlantRequests";
 import { image_store } from "../../utils/constants";
 import './Home.css';
 import RecentlyViewedSlider from "../RecentlyViewed/RecentlyVIewed";
+import BoxTest from "./Box";
 
 const Home = () => {
 
@@ -40,6 +41,7 @@ const Home = () => {
     return (
         <Container>
             <Paper sx={{ marginTop: "20px", paddingTop: "8px", paddingBottom: "8px" }} elevation={3}>
+                <BoxTest />
                 <RecentlyViewedSlider></RecentlyViewedSlider>
                 <Typography variant="h3" color="primary">
                     Можливо вам сподобається

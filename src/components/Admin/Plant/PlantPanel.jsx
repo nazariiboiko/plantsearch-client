@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import * as plantRequest from "../../../functions/PlantRequest";
+import * as plantRequest from "../../../functions/PlantRequests";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Pagination from '@mui/material/Pagination';

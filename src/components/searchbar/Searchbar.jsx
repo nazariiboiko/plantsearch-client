@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useRef, useEffect } from 'react';
-import { getAutocompleteByName } from '../../functions/PlantRequest.js';
+import { getAutocompleteByName } from '../../functions/PlantRequests.js';
 import { Link } from 'react-router-dom';
 import './Searchbar.css';
 import { Card } from '@mui/material';
@@ -16,14 +16,6 @@ const SearchBarEx = () => {
     const [showResult, setShowResult] = useState(false);
     const { theme } = useTheme();
 
-    const themeInputStyle = {
-        backgroundColor: theme.palette.mode === 'light' ? 'white' : '#303030', 
-        color: theme.palette.text.primary,
-        fontSize: '1.0rem',
-        width: '100%',
-        border: theme.palette.mode === 'light' ? '' : 'none',
-
-    };
     const searchBarStyles = {
         searchBarBody: {
           marginLeft: '10px',

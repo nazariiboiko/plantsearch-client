@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import * as request from "../../functions/supplierRequest";
+import * as request from "../../functions/SupplierRequests";
 import './SupplierList.css';
 import { ApartmentOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";

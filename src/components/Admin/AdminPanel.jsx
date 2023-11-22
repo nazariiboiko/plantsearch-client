@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import './Admin.css';
 import { Box, Grid } from '@mui/material';
-import { ApartmentOutlined, GrassOutlined, GroupOutlined, Home, Restore } from '@mui/icons-material';
+import { ApartmentOutlined, ChangeHistory, GrassOutlined, GroupOutlined, History, Home, Restore } from '@mui/icons-material';
 import { useTheme } from "../../utils/themeProvider";
 import PlantPanel from "./Plant/PlantPanel";
 import UserPanel from "./User/UserPanel";
 import SupplierPanel from "./Supplier/SupplierPanel";
+import ChangeLog from "../ChangeLog/ChangeLog";
 // import PlantPanel from './PlantPanel/PlantPanel';
 // import SupplierPanel from './SupplierPanel/SupplierPanel';
 // import UserPanel from './UserPanel/UserPanel';
@@ -91,11 +92,20 @@ const AdminPanel = () => {
                         <li
                             style={{
                                 ...styles.liAdmin,
-                                ...(currentWindow === '#users' ? styles.activeDiv : {}),
+                                ...(currentWindow === '#suppliers' ? styles.activeDiv : {}),
                             }}
                             onClick={() => handleCurrentWindow('#suppliers')}
                         >
                             <Home /> Розсадники
+                        </li>
+                        <li
+                            style={{
+                                ...styles.liAdmin,
+                                ...(currentWindow === '#changelog' ? styles.activeDiv : {}),
+                            }}
+                            onClick={() => handleCurrentWindow('#changelog')}
+                        >
+                            <History /> Зміни
                         </li>
                     </ul>
                 </Grid>
@@ -103,7 +113,7 @@ const AdminPanel = () => {
                     {currentWindow === '#plants' && (<PlantPanel></PlantPanel>)}
                     {currentWindow === '#suppliers' && (<SupplierPanel></SupplierPanel>)}
                     {currentWindow === '#users' && (<UserPanel></UserPanel>)}
-                    {/* {currentWindow === '#changelog' && (<ChangeLog />)} */}
+                    {currentWindow === '#changelog' && (<ChangeLog />)}
                 </Grid>
             </Grid>
         </Box>

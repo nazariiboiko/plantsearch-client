@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getFavourites } from "../../functions/FavouriteRequest";
+import { getFavourites } from "../../functions/FavouriteRequests";
 import PlantList from "../Plant/PlantList";
 import { Box, Button, CircularProgress, Paper, Typography } from "@mui/material";
 import { Reorder, ViewModule } from "@mui/icons-material";

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { withRouter } from "../functions/withRouter";
 import jwt_decode from "jwt-decode";
-import { logout } from '../functions/authUtils';
+import { logout } from '../functions/AuthUtils';
 import { useNavigate } from "react-router-dom";
 
 const AuthVerify = (props) => {

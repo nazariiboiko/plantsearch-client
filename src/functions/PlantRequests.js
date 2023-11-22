@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API_PLANTS } from '../utils/constants';
 import { allCriterias } from '../utils/filter_criterias';
-import { getToken } from './authUtils';
+import { getToken } from './AuthUtils';
 
 export const getAllPlants = async (page = 0, size = 20, sort = 'id') => {
     return await axios

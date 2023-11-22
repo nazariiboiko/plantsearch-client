@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import * as request from "../../../functions/supplierRequest";
+import * as request from "../../../functions/SupplierRequests";
 import { useState } from "react";
 import './SupplierPanel.css';
 import { Alert, Box, Button, CircularProgress, Fab, Grid, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, styled, tableCellClasses } from "@mui/material";

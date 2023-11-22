@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { createPlant, deletePlant, getPlantById, updatePlant } from "../../../../functions/PlantRequest";
+import { createPlant, deletePlant, getPlantById, updatePlant } from "../../../../functions/PlantRequests";
 import './PlantCreateForm.css';
 import { Box, CircularProgress, Container, Fab, FormControlLabel, MenuItem, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Tooltip } from "@mui/material";
 import { Cancel, Delete, RemoveRedEye, Save } from "@mui/icons-material";

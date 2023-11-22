@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, styled, TableRow, tableCellClasses, Button, List, ListItem, ListItemText, Tooltip, Fab } from "@mui/material";
 import ModalTransition from "../../ui/modal/Modal";
 import { Block, Undo } from "@mui/icons-material";
-import { getAllUsers } from "../../../functions/userRequest";
+import { getAllUsers } from "../../../functions/UserRequests";
 
 const UserPanel = () => {
 
