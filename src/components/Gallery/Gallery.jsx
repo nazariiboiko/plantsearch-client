@@ -1,6 +1,5 @@
 import { Box, Container, Grid, ImageList, ImageListItem, Paper, Stack, Typography } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
-import ImageMapper from 'react-image-mapper';
 import './Gallery.css';
 import ModalTransition from '../ui/modal/Modal';
 import { image_store } from '../../utils/constants';
