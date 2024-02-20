@@ -15,13 +15,6 @@ export const getAllUsers = async (page = 0, size = 20, sort = 'id') => {
     }
     catch (error) {
         console.error('Error parsing JWT:', error);
-        // Handle the error gracefully, e.g., display an error message to the user
     }
 
 }
-
-// export const getAllPlants = async (page = 0, size = 20, sort = 'id') => {
-//     return await axios
-//         .get(`${API_PLANTS}?page=${page}&size=${size}`)
-//         .then((response) => response.data);
-// }

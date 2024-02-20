@@ -15,7 +15,7 @@ const ChangeLogEntry = ({ props }) => {
                 {props.new_feature && (
                     <div>
                         <div className="badge badge-green">new</div>
-                        <ul>
+                        <ul className='changelog-ul'>
                             {props.new_feature.map((item, index) => (
                                 <li key={index}>{item}</li>
                             ))}
@@ -25,7 +25,7 @@ const ChangeLogEntry = ({ props }) => {
                 {props.update && (
                     <div>
                         <div className="badge badge-orange">update</div>
-                        <ul>
+                        <ul className='changelog-ul'>
                             {props.update.map((item, index) => (
                                 <li key={index}>{item}</li>
                             ))}
@@ -35,7 +35,7 @@ const ChangeLogEntry = ({ props }) => {
                 {props.fixed && (
                     <div>
                         <div className="badge badge-purple">fixed</div>
-                        <ul>
+                        <ul className='changelog-ul'>
                             {props.fixed.map((item, index) => (
                                 <li key={index}>{item}</li>
                             ))}
@@ -46,7 +46,7 @@ const ChangeLogEntry = ({ props }) => {
                 {props.deleted && (
                     <div>
                         <div className="badge badge-red">deleted</div>
-                        <ul>
+                        <ul className='changelog-ul'>
                             {props.deleted.map((item, index) => (
                                 <li key={index}>{item}</li>
                             ))}

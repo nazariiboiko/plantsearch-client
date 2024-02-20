@@ -5,17 +5,21 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 
-const style = {
-    position: 'absolute',
-    top: '40%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    borderRadius: "15px",
-};
+const ModalTransition = ({ open, handleOpen, handleClose, children, title, width }) => {
 
-const ModalTransition = ({ open, handleOpen, handleClose, children, title }) => {
+    const defaultStyle = {
+        position: 'absolute',
+        top: '40%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        borderRadius: "15px",
+    };
+
+    const conditionalStyle = width ? { ...defaultStyle, width } : defaultStyle;
+
+
     return (
         <div>
             <Modal
@@ -32,7 +36,7 @@ const ModalTransition = ({ open, handleOpen, handleClose, children, title }) => 
                 }}
             >
                 <Fade in={open}>
-                    <Box sx={style}>
+                    <Box sx={conditionalStyle}>
                         {title &&
                             (<>
                                 <Typography variant="h4" color="primary" sx={{ padding: "12px 0 0", display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

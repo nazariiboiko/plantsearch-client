@@ -14,6 +14,7 @@ import AdminPanel from './components/Admin/AdminPanel';
 import PlantCreateForm from './components/Admin/Plant/PlantCreateForm/PlantCreateForm';
 import SupplierList from './components/Supplier/SupplierList';
 import Supplier from './components/Supplier/Supplier';
+import Gallery from './components/Gallery/Gallery';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/filter" element={<Filter />}></Route>
             <Route path='/supplier' element={<SupplierList></SupplierList>}></Route>
             <Route path='/supplier/:id' element={<Supplier></Supplier>}></Route>
+            <Route path='/gallery' element={<Gallery />} ></Route>
 
             <Route element={<ProtectedRoutes />}>
               <Route path='/profile' element={<Profile />} />

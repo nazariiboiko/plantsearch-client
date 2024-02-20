@@ -1,3 +1,4 @@
+import { Alert, Snackbar } from '@mui/material';
 import React, { createContext, useState, useContext } from 'react';
 
 const SnackbarContext = createContext();
@@ -21,6 +22,15 @@ export const SnackbarProvider = ({ children }) => {
 
     return (
         <SnackbarContext.Provider value={{ open, handleClose, handleClick, snackbarType, snackbarMessage }}>
+            <Snackbar
+                open={open}
+                autoHideDuration={6000}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                onClose={handleClose}>
+                <Alert onClose={handleClose} severity={snackbarType}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
             {children}
         </SnackbarContext.Provider>
     );

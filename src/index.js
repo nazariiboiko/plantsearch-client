@@ -11,14 +11,16 @@ import SnackbarProvider from './context/SnackbarContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
+  <SnackbarProvider >
     <ThemeProvider>
       <CssBaseline />
-      <SnackbarProvider >
+      
         <Routes>
           <Route path="/*" element={<App />} />
         </Routes>
-      </SnackbarProvider>
+      
     </ThemeProvider>
+    </SnackbarProvider>
   </BrowserRouter>
 );
 

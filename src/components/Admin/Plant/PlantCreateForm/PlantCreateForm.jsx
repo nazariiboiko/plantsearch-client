@@ -19,7 +19,7 @@ const PlantExtend = () => {
     const [selectedSketch, setSelectedSketch] = useState(null);
     const navigate = useNavigate();
     const { handleClick } = useSnackbar();
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const { theme } = useTheme();
 
     const themeInputStyle = {
@@ -38,6 +38,8 @@ const PlantExtend = () => {
                 .finally(() => {
                     setIsLoading(false);
                 });;
+        } else {
+            setIsLoading(false);
         }
     }, [id]);
 

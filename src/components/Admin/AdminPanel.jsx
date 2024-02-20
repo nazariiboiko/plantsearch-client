@@ -7,6 +7,8 @@ import PlantPanel from "./Plant/PlantPanel";
 import UserPanel from "./User/UserPanel";
 import SupplierPanel from "./Supplier/SupplierPanel";
 import ChangeLog from "../ChangeLog/ChangeLog";
+import ImageSearchIcon from '@mui/icons-material/ImageSearch';
+import Marker from "./Gallery/MarkerPanel";
 // import PlantPanel from './PlantPanel/PlantPanel';
 // import SupplierPanel from './SupplierPanel/SupplierPanel';
 // import UserPanel from './UserPanel/UserPanel';
@@ -101,6 +103,14 @@ const AdminPanel = () => {
                         <li
                             style={{
                                 ...styles.liAdmin,
+                                ...(currentWindow === '#gallery' ? styles.activeDiv : {}),
+                            }}
+                            onClick={() => handleCurrentWindow('#gallery')}>
+                            <ImageSearchIcon /> Галерея
+                        </li>
+                        <li
+                            style={{
+                                ...styles.liAdmin,
                                 ...(currentWindow === '#changelog' ? styles.activeDiv : {}),
                             }}
                             onClick={() => handleCurrentWindow('#changelog')}
@@ -113,6 +123,7 @@ const AdminPanel = () => {
                     {currentWindow === '#plants' && (<PlantPanel></PlantPanel>)}
                     {currentWindow === '#suppliers' && (<SupplierPanel></SupplierPanel>)}
                     {currentWindow === '#users' && (<UserPanel></UserPanel>)}
+                    {currentWindow === '#gallery' && (<Marker />)}
                     {currentWindow === '#changelog' && (<ChangeLog />)}
                 </Grid>
             </Grid>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as plantRequest from "../../../functions/PlantRequests";
 import * as supplierRequest from "../../../functions/SupplierRequests";
 import ModalTransition from "../../ui/modal/Modal";
-import { Button, Fab, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, styled, tableCellClasses } from "@mui/material";
+import { Box, Button, Fab, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip, Typography, styled, tableCellClasses } from "@mui/material";
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -14,7 +14,7 @@ const Supplier = ({ id, back }) => {
     const [supplier, setSupplier] = useState([]);
     const [active, setActive] = useState(false);
     let searchTimeout;
-    const [pageNumber, setPageNumber] = useState(1);
+    const [pageNumber, setPageNumber] = useState(0);
     const [pageSize] = useState(9);
     const [response, setResponse] = useState();
     const [keyword, setKeyword] = useState('');
@@ -52,7 +52,7 @@ const Supplier = ({ id, back }) => {
 
     useEffect(() => {
         supplierRequest.getSupplierById(id).then((res) => setSupplier(res));
-        plantRequest.getAllPlants(1, pageSize).then((res) => setResponse(res));
+        plantRequest.getAllPlants(0, pageSize).then((res) => setResponse(res));
     }, []);
 
     const handleDeleteJunction = (plantId, indexToRemove) => {
@@ -80,7 +80,7 @@ const Supplier = ({ id, back }) => {
     const handleInputChange = (e) => {
         const q = e.target.value;
         setKeyword(q);
-        setPageNumber(1);
+        setPageNumber(0);
         handleRequest(q);
     };
 
@@ -92,15 +92,15 @@ const Supplier = ({ id, back }) => {
 
         if (!isNaN(+q) && q >= 1) {
             plantRequest.getPlantById(q)
-                .then((res) => setResponse( res ))
+                .then((res) => setResponse({ "content": [res] }))
                 .catch((error) => {
-                    setResponse([]);
+                    setResponse();
                 });
         }
 
         else if (q.length > 2) {
             searchTimeout = setTimeout(() => {
-                plantRequest.findPlantByKeyword(q, 1, pageSize, 'id')
+                plantRequest.findPlantByKeyword(q, 0, pageSize, 'id')
                     .then((res) => setResponse(res))
                     .catch((error) => {
                         setResponse();
@@ -108,11 +108,11 @@ const Supplier = ({ id, back }) => {
             }, 800);
         }
 
-        if (q.length === 0) {
-            setPageNumber(1);
-            plantRequest.getAllPlants(1, pageSize).then((res) => setResponse(res));
+        else if (q.length === 0) {
+            setPageNumber(0);
+            plantRequest.getAllPlants(0, pageSize).then((res) => setResponse(res));
         }
-    }
+    };
 
     const handlePageChange = (event, value) => {
         setPageNumber(value);
@@ -151,15 +151,15 @@ const Supplier = ({ id, back }) => {
     return (
         <div className="container">
             <div className="row">
-                <div className="d-flex justify-content-between">
-                    <div className="d-flex">
-                        <Fab color="error" aria-label="back" size="small" onClick={() => back()} >
+                <Box display="flex" justifyContent="space-between" alignItems="center" height={50}>
+                    <Box display="flex" alignItems="center">
+                        <Fab color="error" aria-label="back" size="small" onClick={() => back()}>
                             <ArrowBack />
                         </Fab>
-                        <h1 className="text-decoration-underline">
+                        <Typography variant="h6" sx={{ textDecoration: 'underline', ml: 1 }}>
                             {supplier?.name}
-                        </h1>
-                    </div>
+                        </Typography>
+                    </Box>
                     <Pagination
                         variant="outlined"
                         shape="rounded"
@@ -168,8 +168,7 @@ const Supplier = ({ id, back }) => {
                         onChange={handleSupplierPageChange}
                     />
                     <Button onClick={openModal} variant="contained" color="primary">Добавити новий зв'язок</Button>
-
-                </div>
+                </Box>
             </div>
             <div>
 
@@ -179,7 +178,7 @@ const Supplier = ({ id, back }) => {
                             <input
                                 placeholder='Знайти Назва, латинь, ID'
                                 onChange={handleInputChange}
-                                style={{width: "95%", height: "100%", outline: 'none'}}
+                                style={{ width: "95%", height: "100%", outline: 'none' }}
                             />
                         </div>
 

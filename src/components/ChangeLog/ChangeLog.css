@@ -14,10 +14,10 @@
 
 .badge {
     border: 1px solid transparent;
-    color: black;
+    color: inherit;
     border-radius: 20px;
     background-color: gray;
-    width: 7%;
+    width: 4%;
 }
 
 .badge-green {
@@ -34,4 +34,8 @@
 
 .badge-red {
     background-color: red;
+}
+
+.changelog-ul {
+    text-align: left;
 }

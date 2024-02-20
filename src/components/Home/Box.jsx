@@ -11,7 +11,7 @@ const BoxTest = () => {
             id: 1,
             image: 'image1.jpg',
             text: 'Шукаю натхнення',
-            link: 'https://www.pinterest.com/mikitanazar5/%D0%BE%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5/',
+            link: '/inspiration',
         },
         {
             id: 2,
@@ -32,11 +32,7 @@ const BoxTest = () => {
     };
 
     const handleSectionClick = (section) => {
-        if (section.id == 1) {
-            window.location.href = "https://www.pinterest.com/mikitanazar5/%D0%BE%D0%B7%D0%B5%D0%BB%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5";
-        } else {
-            navigate(section.link);
-        }
+        navigate(section.link);
     }
 
     return (

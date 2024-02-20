@@ -33,7 +33,7 @@ const SupplierPanel = () => {
             .then((res) => {
                 setSuppliers(res);
                 setResponse(res);
-                console.info(res);
+                // console.info(res);
                 setIsLoading(false);
             });
     }, []);
@@ -113,7 +113,7 @@ const SupplierPanel = () => {
 
     const renderDetailsComponent = () => {
         if (selectedSupplierId) {
-              return <Supplier id={selectedSupplierId} back={handleBackClick} />
+            return <Supplier id={selectedSupplierId} back={handleBackClick} />
         }
         return null;
     };
@@ -157,11 +157,13 @@ const SupplierPanel = () => {
                                     </Fab>
                                 </Tooltip>
                                 <ModalTransition open={showCreateModal} handleOpen={handleCreateModalOpen} handleClose={handleCreateModalClose} title={'Створити'}>
-                                    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-                                        <Grid item xs={6} md={8}>
+                                    <Grid container rowSpacing={1}>
+                                        <Grid item xs={1}></Grid>
+                                        <Grid item xs={5} md={5}>
                                             <TextField id="outlined-basic" label="Назва розсадника" variant="outlined" onChange={handleInputChange} />
                                         </Grid>
-                                        <Grid item xs={6}>
+                                        <Grid item xs={3}></Grid>
+                                        <Grid item xs={1}>
                                             <Fab
                                                 aria-label="save"
                                                 color="primary"
@@ -183,8 +185,7 @@ const SupplierPanel = () => {
                                             )}
                                         </Grid>
                                         <Grid item xs={12}>
-                                            {errorMsg && <Alert severity="error">{errorMsg}</Alert>}
-                                        </Grid>
+                                            {errorMsg && <Alert severity="error">{JSON.stringify(errorMsg)}</Alert>}</Grid>
                                     </Grid>
                                 </ModalTransition>
                             </div>
