@@ -10,6 +10,7 @@ import * as criterias from "../../../../utils/filter_criterias";
 import Checkbox from '@mui/material/Checkbox';
 import Dropdown from "../../../ui/Dropdown/Dropdown";
 import { useTheme } from "../../../../utils/themeProvider";
+import { useTranslation } from "react-i18next";
 
 const PlantExtend = () => {
 
@@ -21,6 +22,7 @@ const PlantExtend = () => {
     const { handleClick } = useSnackbar();
     const [isLoading, setIsLoading] = useState(true);
     const { theme } = useTheme();
+    const { t } = useTranslation();
 
     const themeInputStyle = {
         backgroundColor: theme.palette.mode === 'light' ? 'white' : '#303030', 
@@ -54,29 +56,29 @@ const PlantExtend = () => {
         if (id > 0) {
             getPlantById(id).then((res) =>
                 setPlant(res));
-            handleClick('warning', 'Скасовано усі зміни!');
+            handleClick('warning', t('alerts.allCanceled'));
         }
     }
 
     const handleSubmit = () => {
         if (id > 0) {
             updatePlant(plant, selectedImage, selectedSketch);
-            handleClick('success', 'Успішно обновлено!')
+            handleClick('success', t('alerts.allUpdated'));
         } else {
             createPlant(plant, selectedImage, selectedSketch)
                 .then((id) =>
                     navigate(`/admin/plant/${id}`));
-            handleClick('success', 'Успішно створено!');
+            handleClick('success', t('alerts.allAdded'));
         };
     }
 
     const handleDelete = () => {
         if (id > 0) {
-            const confirmed = window.confirm('Ви впевнені що хочете видалити?');
+            const confirmed = window.confirm(t('confirm.delete'));
             if (confirmed) {
                 deletePlant(id);
                 navigate(`/admin#plants`);
-                handleClick('success', 'Успішно видалено!')
+                handleClick('success', t('alerts.allDeleted'));
             }
         }
     }
@@ -132,12 +134,12 @@ const PlantExtend = () => {
     return (
         <Container>
             <form>
-                <h1>Редагування розсади | ID: {plant.id}</h1>
+                <h1>{t('actions.edit')} | ID: {plant.id}</h1>
 
                 <table className="plant-table">
                     <tbody>
                         <tr>
-                            <th>Name/Назва</th>
+                            <th>{t('plant.name')}</th>
                             <td>
                                 <input
                                     type="text"
@@ -149,7 +151,7 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>Latin Name/Латинь</th>
+                            <th>{t('plant.latinName')}</th>
                             <td><input
                                 type="text"
                                 id="latinName"
@@ -159,7 +161,7 @@ const PlantExtend = () => {
                                 style={themeInputStyle}/></td>
                         </tr>
                         <tr>
-                            <th>Height/Висота</th>
+                            <th>{t('plant.height')}</th>
                             <td><input
                                 type="text"
                                 id="height"
@@ -169,7 +171,7 @@ const PlantExtend = () => {
                                 style={themeInputStyle}/></td>
                         </tr>
                         <tr>
-                            <th>Color/Забарвлення</th>
+                            <th>{t('filter.name.color')}</th>
                             <td><input
                                 type="text"
                                 id="color"
@@ -179,7 +181,7 @@ const PlantExtend = () => {
                                 style={themeInputStyle}/></td>
                         </tr>
                         <tr>
-                            <th>Summer Color/Літнє Забарвлення</th>
+                            <th>{t('filter.name.summerColor')}</th>
                             <td><input
                                 type="text"
                                 id="summerColor"
@@ -189,7 +191,7 @@ const PlantExtend = () => {
                                 style={themeInputStyle}/></td>
                         </tr>
                         <tr>
-                            <th>Autumn Color/Осіннє забарвлення</th>
+                            <th>{t('filter.name.autumnColor')}</th>
                             <td><input
                                 type="text"
                                 id="autumnColor"
@@ -199,7 +201,7 @@ const PlantExtend = () => {
                                 style={themeInputStyle}/></td>
                         </tr>
                         <tr>
-                            <th>Flowering Color/Колір цвітіння</th>
+                            <th>{t('filter.name.floweringColor')}</th>
                             <td><input
                                 type="text"
                                 id="floweringColor"
@@ -210,7 +212,7 @@ const PlantExtend = () => {
                         </tr>
 
                         <tr>
-                            <th>Habitus/Габітус</th>
+                            <th>{t('filter.name.habitus')}</th>
                             <td className="d-flex justify-content-between">
                                 <div>{plant.habitus}</div>
 
@@ -224,12 +226,12 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>Growth Rate/Темп росту</th>
+                            <th>{t('filter.name.growthRate')}</th>
                             <td className="d-flex justify-content-between">
                                 <div>{plant.growthRate}</div>
 
                                 <Dropdown>
-                                    {criterias.growth_rate().map((item, index) => (
+                                    {criterias.growthRate().map((item, index) => (
                                         <MenuItem key={index} onClick={() => handleChange({ target: { name: 'growthRate', value: item.value } })}>
                                             {item.label}
                                         </MenuItem>
@@ -238,11 +240,11 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>Frost Resistance/Морозостійкість</th>
+                            <th>{t('filter.name.frostResistance')}</th>
                             <td className="d-flex justify-content-between">
                                 <div>{plant.frostResistance}</div>
                                 <Dropdown>
-                                    {criterias.frost_resistance().map((item, index) => (
+                                    {criterias.frostResistance().map((item, index) => (
                                         <MenuItem key={index} onClick={() => handleChange({ target: { name: 'frostResistance', value: item.value } })}>
                                             {item.label}
                                         </MenuItem>
@@ -251,11 +253,11 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>Recommendation/Рекомендації для посадки</th>
+                            <th>{t('filter.name.recommendation')}</th>
                             <td className="d-flex justify-content-between">
                                 <div>{plant.recommendation} </div>
                                 <Dropdown>
-                                    {criterias.place_recommendation().map((item, index) => (
+                                    {criterias.placeRecommendation().map((item, index) => (
                                         <MenuItem key={index} onClick={() => handleChange({ target: { name: 'recommendation', value: item.value } })}>
                                             {item.label}
                                         </MenuItem>
@@ -264,7 +266,7 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>Lighting/Освітлення</th>
+                            <th>{t('filter.name.lighting')}</th>
                             <td className="d-flex justify-content-between">
                                 <div>{plant.lighting}</div>
                                 <Dropdown>
@@ -277,7 +279,7 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>Evergreen/Вічнозелене</th>
+                            <th>{t('filter.name.evergreen')}</th>
                             <td className="d-flex justify-content-between">
                                 <div>{plant.evergreen}</div>
                                 <Dropdown>
@@ -290,11 +292,11 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>Flowering Period/Період цвітіння</th>
+                            <th>{t('filter.name.floweringPeriod')}</th>
                             <td className="d-flex justify-content-between">
                                 <div>{plant.floweringPeriod}</div>
                                 <Dropdown>
-                                    {criterias.flowering_period().map((item, index) => (
+                                    {criterias.floweringPeriod().map((item, index) => (
                                         <MenuItem key={index} onClick={() => handleChange({ target: { name: 'floweringPeriod', value: item.value } })}>
                                             {item.label}
                                         </MenuItem>
@@ -303,7 +305,7 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>Plant Type/Вид</th>
+                            <th>{t('filter.name.plantType')}</th>
                             <td className="d-flex justify-content-between">
                                 <div>{plant.plantType}</div>
                                 <Dropdown>
@@ -316,7 +318,7 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>Zoning/Зонування</th>
+                            <th>{t('filter.name.zoning')}</th>
                             <td className="d-flex justify-content-between">
                                 <div>{plant.zoning}</div>
                                 <Dropdown>
@@ -329,7 +331,7 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>Hardy/Витривалість</th>
+                            <th>{t('filter.name.hardy')}</th>
                             <td className="d-flex justify-content-between">
                                 <div>{plant.hardy}</div>
                                 <Dropdown>
@@ -342,7 +344,7 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>pH/Кислотність</th>
+                            <th>{t('filter.name.ph')}</th>
                             <td className="d-flex justify-content-between">
                                 <input
                                     type="text"
@@ -367,7 +369,7 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>Soil Moisture/Вологість грунту</th>
+                            <th>{t('filter.name.soilMoisture')}</th>
                             <td className="d-flex justify-content-between">
                                 <input
                                     type="text"
@@ -378,7 +380,7 @@ const PlantExtend = () => {
                                     style={themeInputStyle}/>
 
                                 <Dropdown>
-                                    {criterias.soil_moisture().map((item, index) => (
+                                    {criterias.soilMoisture().map((item, index) => (
                                         <FormControlLabel
                                             key={index}
                                             value={item.value}
@@ -393,7 +395,7 @@ const PlantExtend = () => {
                         </tr>
 
                         <tr>
-                            <th>Nutrition/Живлення</th>
+                            <th>{t('filter.name.nutrition')}</th>
                             <td className="d-flex justify-content-between">
                                 <input
                                     type="text"
@@ -418,7 +420,7 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>Sketch/Ескіз</th>
+                            <th>{t('plant.sketch')}</th>
                             <td>
                                 <input type="file" required
                                     onChange={(e) => handleSketchChange(e.target.files[0])} />
@@ -428,7 +430,7 @@ const PlantExtend = () => {
                             </td>
                         </tr>
                         <tr>
-                            <th>Image/Фото</th>
+                            <th>{t('plant.image')}</th>
                             <td>
                                 <input type="file" required
                                     onChange={(e) => handleImageChange(e.target.files[0])} />
@@ -441,22 +443,22 @@ const PlantExtend = () => {
                 </table>
             </form>
             <Box display="flex" justifyContent="space-around" sx={{ marginTop: '30px', marginBottom: '30px' }}>
-                <Tooltip title="Зберегти" placement="top">
+                <Tooltip title={t('actions.save')}  placement="top">
                     <Fab color="success" aria-label="add" onClick={handleSubmit}>
                         <Save />
                     </Fab>
                 </Tooltip>
-                <Tooltip title="Скасувати усі зміни" placement="top">
+                <Tooltip title={t('actions.cancel')} placement="top">
                     <Fab color="warning" aria-label="add" onClick={handleCancel}>
                         <Cancel />
                     </Fab>
                 </Tooltip>
-                <Tooltip title="Переглянути" placement="top">
+                <Tooltip title={t('actions.watch')} placement="top">
                     <Fab color="warning" aria-label="add" onClick={() => navigate(`/plant/${id}`)}>
                         <RemoveRedEye />
                     </Fab>
                 </Tooltip>
-                <Tooltip title="Видалити" placement="top">
+                <Tooltip title={t('actions.delete')} placement="top">
                     <Fab color="error" aria-label="add" onClick={handleDelete}>
                         <Delete />
                     </Fab>

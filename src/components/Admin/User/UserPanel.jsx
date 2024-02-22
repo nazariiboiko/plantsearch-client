@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, styled, TableRow, tableCellClasses, Button, List, ListItem, ListItemText, Tooltip, Fab } from "@mui/material";
+import { Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, styled, TableRow, tableCellClasses, Button, List, ListItem, ListItemText, Tooltip, Fab, Typography, Box } from "@mui/material";
 import ModalTransition from "../../ui/modal/Modal";
 import { Block, Undo } from "@mui/icons-material";
 import { getAllUsers } from "../../../functions/UserRequests";
+import { useTranslation } from "react-i18next";
 
 const UserPanel = () => {
 
@@ -14,6 +15,8 @@ const UserPanel = () => {
 
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(20);
+
+  const { t } = useTranslation();
 
   const handleOpen = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
@@ -34,21 +37,21 @@ const UserPanel = () => {
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.mode === 'light' ? '#ddd' : '#505050',
+      backgroundColor: theme.palette.mode === 'light' ? '#ddd' : '#505050',
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
+      fontSize: 14,
     },
-}));
+  }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
+      backgroundColor: theme.palette.action.hover,
     },
     '&:last-child td, &:last-child th': {
-        border: 0,
+      border: 0,
     },
-}));
+  }));
 
   const StyledList = styled(List)(({ theme }) => ({
     width: "100%",
@@ -90,11 +93,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
           </div>
           <div></div>
           <div></div>
-          {/* <Tooltip title="Добавити" placement="top" className="mr-10">
-            <Fab color="success" aria-label="add">
-              <Add />
-            </Fab>
-          </Tooltip> */}
         </div>
         <hr />
         <Paper>
@@ -102,11 +100,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
               <TableHead>
                 <TableRow>
-                  <StyledTableCell align="center">ID</StyledTableCell>
-                  <StyledTableCell align="center">Логін</StyledTableCell>
-                  <StyledTableCell align="center">Пошта</StyledTableCell>
-                  <StyledTableCell align="center">Статус</StyledTableCell>
-                  <StyledTableCell align="center">Дії</StyledTableCell>
+                  <StyledTableCell align="center">{t('user.id')}</StyledTableCell>
+                  <StyledTableCell align="center">{t('user.login')}</StyledTableCell>
+                  <StyledTableCell align="center">{t('user.email')}</StyledTableCell>
+                  <StyledTableCell align="center">{t('user.status.label')}</StyledTableCell>
+                  <StyledTableCell align="center">{t('actions.label')}</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -116,57 +114,59 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
                     <StyledTableCell scope="row" align="center">{user.id}</StyledTableCell>
                     <StyledTableCell align="center">{user.login}</StyledTableCell>
                     <StyledTableCell align="center">{user.email}</StyledTableCell>
-                    <StyledTableCell align="center">{user.status === "ACTIVE" ? 'Активний' : 'Заблокований'}</StyledTableCell>
+                    <StyledTableCell align="center">{user.status === "ACTIVE" ? t('user.status.active') : t('user.status.blocked')}</StyledTableCell>
                     <StyledTableCell align="center">
-                      <Button variant="contained" className="admin-controll-button right-border" onClick={() => handleShowModal(user)}>Детальніше</Button>
+                      <Button variant="contained" className="admin-controll-button right-border" onClick={() => handleShowModal(user)}>{t('actions.details')}</Button>
                     </StyledTableCell>
                   </StyledTableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
-          <ModalTransition open={showModal} handleOpen={handleOpen} handleClose={handleClose} title={`Перегляд користувача`}>
+          <ModalTransition open={showModal} handleOpen={handleOpen} handleClose={handleClose} title={`${t('labels.userDetails')}`}>
             <StyledList>
               <StyledListItem>
-                <ListItemText primary={`ID: ${currentUser?.id}`} />
+                <ListItemText primary={`${t('user.id')}: ${currentUser?.id}`} />
               </StyledListItem>
               <StyledListItem>
-                <ListItemText primary={`Логін: ${currentUser?.login}`} />
+                <ListItemText primary={`${t('user.login')}: ${currentUser?.login}`} />
               </StyledListItem>
               <StyledListItem>
-                <ListItemText primary={`Пошта: ${currentUser?.email}`} />
+                <ListItemText primary={`${t('user.email')}: ${currentUser?.email}`} />
               </StyledListItem>
               <StyledListItem>
-                <ListItemText primary={`Роль: ${currentUser?.role}`} />
+                <ListItemText primary={`${t('user.role')}: ${currentUser?.role}`} />
               </StyledListItem>
               <StyledListItem>
-                <ListItemText primary={`Зареєстрований: ${currentUser?.registrationDate}`} />
+                <ListItemText primary={`${t('user.registrationDate')}: ${currentUser?.registrationDate}`} />
               </StyledListItem>
               <StyledListItem>
                 <ListItemText
-                  primary={`Останій вхід: ${currentUser?.lastLogin?.slice(0, 10) + ' ' + currentUser?.lastLogin?.slice(11, 19) + ' GMT-0'
+                  primary={`${t('user.lastLoginDate')}: ${currentUser?.lastLogin?.slice(0, 10) + ' ' + currentUser?.lastLogin?.slice(11, 19) + ' GMT-0'
                     }`}
                 />
               </StyledListItem>
               <StyledListItem>
                 <ListItemText>
                   <div> {currentUser?.status === "ACTIVE" ?
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        Статус: Активований <div className="badge-green badge">active</div>
+                    <Box sx={{alignItems: 'center'}} className="d-flex justify-content-between">
+                      <div className="d-flex">
+                        <Typography> {t('user.status.label')}: {t('user.status.active')} </Typography>
+                        <Box sx={{marginLeft: '10px', paddingLeft: '10px', paddingRight: '50px', backgroundColor: 'green', border: '1px solid transparent', borderRadius: '20px', width: '45px'}}>active</Box>
                       </div>
-                      <Tooltip title="Заблокувати" placement="bottom">
+                      <Tooltip title={t('actions.block')} placement="bottom">
                         <Fab color="error" aria-label="add" onClick={() => handleBlock(currentUser?.id, 'NOT_ACTIVE')}>
                           <Block />
                         </Fab>
                       </Tooltip>
-                    </div>
+                    </Box>
                     :
                     <div className="d-flex justify-content-between">
-                      <div>
-                        Статус: Заблокований <div className="badge-red badge">banned</div>
-                      </div>
-                      <Tooltip title="Розблокувати" placement="bottom">
+                      <Box sx={{alignItems: 'center'}} className="d-flex">
+                        {t('user.status.label')}: {t('user.status.blocked')} 
+                        <Box sx={{marginLeft: '10px', paddingLeft: '10px', paddingRight: '65px', backgroundColor: 'red', border: '1px solid transparent', borderRadius: '20px', width: '45px'}}>banned</Box>
+                      </Box>
+                      <Tooltip title={t('actions.unblock')} placement="bottom">
                         <Fab color="primary" aria-label="add" onClick={() => handleBlock(currentUser.id, 'ACTIVE')}>
                           <Undo />
                         </Fab>

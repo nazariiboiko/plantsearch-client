@@ -9,9 +9,11 @@ import styled from "@emotion/styled";
 import { image_store } from "../../../utils/constants.js";
 import { Link } from "react-router-dom";
 import { useSnackbar } from "../../../context/SnackbarContext.jsx";
+import { useTranslation } from "react-i18next";
 
 const Marker = () => {
 
+    const { t } = useTranslation();
     const [pageNumber, setPageNumber] = useState(0);
     const [pageSize, setPageSize] = useState(5);
     const [isLoading, setIsLoading] = useState(false);
@@ -260,13 +262,13 @@ const Marker = () => {
                     />
                 </div>
                 <div>
-                    <Tooltip title="Добавити" placement="top" className="mr-5">
+                    <Tooltip title={t('actions.add')} placement="top" className="mr-5">
                         <Fab color="success" aria-label="add" onClick={handleCreateClick}>
                             <Add />
                         </Fab>
                         {/* </Link> */}
                     </Tooltip>
-                    <ModalTransition open={showCreateModal} handleOpen={handleCreateModalOpen} handleClose={handleCreateModalClose} title={'Створити маркування'} width={800}>
+                    <ModalTransition open={showCreateModal} handleOpen={handleCreateModalOpen} handleClose={handleCreateModalClose} title={t('labels.createGallery')} width={800}>
                         <Grid container spacing={0}>
                             <Grid item xs={6}>
 
@@ -277,7 +279,7 @@ const Marker = () => {
                                             <image href={URL.createObjectURL(selectedImage)} alt="Selected Image" height={400} />
                                         )}
                                         {group.id != -1 && (
-                                            <image href={`${image_store}/markers/${group.src}`} alt="Selected Image" height={400} />
+                                            <image href={`${image_store}/markers/${group.src}`} alt="Selected sketch" height={400} />
                                         )}
                                         {group.src && (group.markers?.map((marker, index) => (
                                             <g key={index}>
@@ -306,7 +308,7 @@ const Marker = () => {
                                                     <Button
                                                         onClick={() => handleOpenSelectPlant(index)}
                                                         variant="contained"
-                                                    >Обрати розсаду</Button>
+                                                    >{t('labels.choosePlant')}</Button>
                                                     <Fab
                                                         color="secondary"
                                                         size="small"
@@ -335,10 +337,10 @@ const Marker = () => {
 
                         </Grid>
                     </ModalTransition>
-                    <ModalTransition open={active} handleOpen={handleActiveOpen} handleClose={handleActiveClose} title={'Обрати розсаду'}>
+                    <ModalTransition open={active} handleOpen={handleActiveOpen} handleClose={handleActiveClose} title={t('labels.choosePlant')}>
                         <div className="admin-input">
                             <input
-                                placeholder='Знайти Назва, латинь, ID'
+                                placeholder={t('searchByAll')}
                                 onChange={handleInputChange}
                                 style={{ width: "95%", height: "100%", outline: 'none' }}
                             />
@@ -369,9 +371,9 @@ const Marker = () => {
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell align="center">ID</StyledTableCell>
-                            <StyledTableCell align="center">Фото</StyledTableCell>
-                            <StyledTableCell align="center">Дії</StyledTableCell>
+                            <StyledTableCell align="center">{t('plant.id')}</StyledTableCell>
+                            <StyledTableCell align="center">{t('plant.image')}</StyledTableCell>
+                            <StyledTableCell align="center">{t('actions.label')}</StyledTableCell>
                             <StyledTableCell align="center"></StyledTableCell>
                         </TableRow>
                     </TableHead>
@@ -392,7 +394,7 @@ const Marker = () => {
                                         color="inherit"
                                         onClick={() => handleShowSelectedGroup(group)}
                                     >
-                                        Детальніше
+                                        {t('actions.details')}
                                     </Button>
                                 </StyledTableCell>
                                 <StyledTableCell align="center">

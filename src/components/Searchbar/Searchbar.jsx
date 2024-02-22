@@ -7,6 +7,8 @@ import { Card } from '@mui/material';
 import { Search } from "@mui/icons-material";
 import { useTheme } from "../../utils/themeProvider.js";
 
+import { useTranslation } from 'react-i18next';
+
 const SearchBarEx = () => {
 
     let searchTimeout;
@@ -15,22 +17,23 @@ const SearchBarEx = () => {
     const [result, setResult] = useState([]);
     const [showResult, setShowResult] = useState(false);
     const { theme } = useTheme();
+    const { t } = useTranslation();
 
     const searchBarStyles = {
         searchBarBody: {
-          marginLeft: '10px',
-          backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#101010', 
-          borderRadius: '20px',
-          width: '300px',
-          position: 'relative',
-          zIndex: 999,
+            marginLeft: '10px',
+            backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#101010',
+            borderRadius: '20px',
+            width: '300px',
+            position: 'relative',
+            zIndex: 999,
         },
         searchBarBodyActive: {
-          marginLeft: '10px',
-          backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#101010', 
-          borderRadius: '20px 20px 0 0',
-          width: '300px',
-          position: 'relative',
+            marginLeft: '10px',
+            backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#101010',
+            borderRadius: '20px 20px 0 0',
+            width: '300px',
+            position: 'relative',
         },
         searchBarInput: {
             border: 'none',
@@ -40,7 +43,7 @@ const SearchBarEx = () => {
             fontSize: '1.0rem',
             outline: 'none',
         },
-      };
+    };
 
     useEffect(() => {
         document.addEventListener('click', handleClickOutside);
@@ -79,13 +82,13 @@ const SearchBarEx = () => {
 
     return (
         <div style={showResult === false ? searchBarStyles.searchBarBody : searchBarStyles.searchBarBodyActive} >
-            <div className='search-bar-input-wrapper d-flex'  ref={searchBarRef}>
+            <div className='search-bar-input-wrapper d-flex' ref={searchBarRef}>
                 <input
-                    placeholder='Пошук...'
+                    placeholder={`${t('search')}...`}
                     onChange={handleInputChange}
                     style={searchBarStyles.searchBarInput}
                 />
-                <Link to={`/filter/${query}`} style={{ paddingTop: '7px'}}>
+                <Link to={`/filter/${query}`} style={{ paddingTop: '7px' }}>
                     <Search />
                 </Link>
             </div>

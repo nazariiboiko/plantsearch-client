@@ -1,11 +1,12 @@
-import { Box, Container, Grid, ImageList, ImageListItem, Paper, Stack, Typography } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import { Box, Container, Grid, Paper, Stack, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import './Gallery.css';
 import ModalTransition from '../ui/modal/Modal';
 import { image_store } from '../../utils/constants';
 import styled from '@emotion/styled';
 import * as groupRequest from "../../functions/PlantMarkersRequest";
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const PlantMarkers = () => {
 
@@ -15,6 +16,7 @@ const PlantMarkers = () => {
 
   const [selectedPlant, setSelectedPlant] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
+  const { t } = useTranslation();
 
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const PlantMarkers = () => {
     <Container>
       <Paper sx={{ marginTop: "20px", paddingTop: "8px", paddingBottom: "8px" }} elevation={3}>
         <Typography variant="h4" color="primary">
-          Шукаю натхнення
+          {t('gallery')}
         </Typography>
 
         <Box sx={{ width: "90%", marginLeft: "5%", display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 2fr))", gridGap: "10px", maxHeight: '100vh', overflowY: 'auto', paddingRight: '1rem' }}>

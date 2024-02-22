@@ -5,6 +5,8 @@ import { ApartmentOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, CircularProgress, Container, Paper } from "@mui/material";
 import { useTheme } from "../../utils/themeProvider";
+import { useTranslation } from 'react-i18next';
+
 
 const SupplierList = () => {
 
@@ -12,6 +14,7 @@ const SupplierList = () => {
     const [isLoading, setIsLoading] = useState(true);
     const { theme } = useTheme();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const SupplierStyles = {
         searchBarBody: {
@@ -60,7 +63,7 @@ const SupplierList = () => {
         <Container>
             <Paper sx={{ padding: 2, marginTop: "15px" }} elevation={3}>
                 <div className="filter-header">
-                    <h4 className="w-100 font-weight-bold filter-title d-flex"><ApartmentOutlined /> Розсадники</h4>
+                    <h4 className="w-100 font-weight-bold filter-title d-flex"><ApartmentOutlined /> {t('suppliers')}</h4>
                     <hr />
                 </div>
                 <div className="supplier-list">

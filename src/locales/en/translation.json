@@ -1,0 +1,309 @@
+{
+    "search": "Search",
+    "suppliers": "Suppliers",
+    "gallery": "Gallery",
+    "control": "Control",
+    "favourite": "Favourite",
+    "changeTheme": "Change Theme",
+    "exit": "Exit",
+    "mainPage": "Main Page",
+    "youMightLike": "You might like",
+    "findInspiration": "Find inspiration",
+    "findPlants": "Find plants",
+    "findProfessional": "Find Professional",
+    "recentlyViewed": "Recently Viewed",
+    "clear": "Clear",
+    "save": "Save",
+    "objects": "Objects",
+    "plants": "Plants",
+    "users": "Users",
+    "changelog": "Changelog",
+    "searchByAll": "Search by name/latin/ID",
+    "confirm": {
+        "delete": "Are you sure you want to delete this?"
+    },
+    "alerts": {
+        "AllCanceled": "All changes have canceled",
+        "AllSaved": "All changes have been saved",
+        "AllUpdated": "All changes have been updated",
+        "AllDeleted": "Deleted successfully",
+        "auth": {
+            "success": "Successfuly log in",
+            "registration": "Registration successful"
+        }
+    },
+    "labels": {
+        "userDetails" : "Users details",
+        "choosePlant": "Choose plant",
+        "createGallery": "Create gallery",
+        "login": "Log in"
+    },
+    "actions": {
+        "label": "Actions",
+        "add": "Add",
+        "update": "Update",
+        "delete": "Delete",
+        "save": "Save",
+        "clear": "Clear",
+        "cancel": "Cancel",
+        "watch": "Watch",
+        "details": "Details",
+        "edit": "Edit",
+        "block": "Block",
+        "unblock": "unblock",
+        "addNewJunction": "Add New Junction",
+        "create": "Create"
+    },
+    "auth": {
+        "login": "Sign in",
+        "usernameOrEmail": "Username or Email",
+        "username": "Username",
+        "email": "Email",
+        "password": "Password",
+        "submit": "Submit",
+        "dontHaveAnAccount": "Don't have an account?",
+        "register": "Register",
+        "signUp": "Sign Up",
+        "goBack": "Go Back"
+    },
+    "plant": {
+        "id": "ID",
+        "name": "UA name",
+        "latinName": "Latin name",
+        "image": "Image",
+        "sketch": "Sketch",
+        "height": "Height"
+    },
+    "user": {
+        "id": "ID",
+        "login": "Login",
+        "email": "Email",
+        "password": "Password",
+        "role": "Role",
+        "registrationDate": "Registration Date",
+        "lastLoginDate": "Last Login Date",
+        "status": {
+            "label": "Status",
+            "active": "Active",
+            "blocked": "Blocked"
+        }
+    },
+    "supplier": {
+        "id": "ID",
+        "name": "Name"
+    },
+    "filter": {
+        "label": "Filter",
+        "name": {
+            "plantType": "Plant Type",
+            "habitus": "Habitus",
+            "color": "Color",
+            "summerColor": "Summer color",
+            "autumnColor": "Autumn color",
+            "floweringColor": "Flowering color",
+            "floweringPeriod": "Flowering period",
+            "lighting": "Lighting",
+            "frostResistance": "Frost resistance",
+            "soilMoisture": "Soil Moisture",
+            "nutrition": "Nutrition",
+            "ph": "PH",
+            "hardy": "Hardy",
+            "recommendation": "Recommendation",
+            "zoning": "Zoning",
+            "evergreen": "Evergreen",
+            "growthRate": "Growth rate"
+        },
+        "plantType": {
+            "Tree": "Tree",
+            "SmallTree": "Small Tree",
+            "Shrub": "Shrub",
+            "Semi-shrub": "Semi-shrub",
+            "Perennial": "Perennial",
+            "Climber": "Climber"
+        },
+        "habitus": {
+            "Delta-shaped": "Delta-shaped",
+            "Cushion": "Cushion",
+            "Columnar": "Columnar",
+            "Globose": "Globose",
+            "Globose-flattened": "Globose-flattened",
+            "Oval": "Oval",
+            "Pyramidal": "Pyramidal",
+            "Weeping": "Weeping",
+            "Prostrate": "Prostrate",
+            "Oblong": "Oblong"
+        },
+        "color": {
+            "Shades of Blue": "Shades of Blue",
+            "Shades of Yellow": "Shades of Yellow",
+            "Shades of Green": "Shades of Green",
+            "Shades of Purple": "Shades of Purple",
+            "Shades of Red": "Shades of Red"
+        },
+        "summerColor": {
+            "Burgundy": "Burgundy",
+            "Glossy": "Glossy",
+            "Blue": "Blue",
+            "Yellow": "Yellow",
+            "Green": "Green",
+            "Golden": "Golden",
+            "Brown": "Brown",
+            "Cream": "Cream",
+            "Lemon": "Lemon",
+            "Copper": "Copper",
+            "Olive": "Olive",
+            "Orange": "Orange",
+            "Purple": "Purple",
+            "Reddish": "Reddish",
+            "Pink": "Pink",
+            "Salmon": "Salmon",
+            "Gray": "Gray",
+            "Silver": "Silver",
+            "Dark": "Dark",
+            "Violet": "Violet",
+            "Red": "Red"
+        },
+        "autumnColor": {
+            "Crimson": "Crimson",
+            "White": "White",
+            "Burgundy": "Burgundy",
+            "Bronze": "Bronze",
+            "Blue": "Blue",
+            "Yellow": "Yellow",
+            "Green": "Green",
+            "Golden": "Golden",
+            "Carmine": "Carmine",
+            "Brown": "Brown",
+            "Copper": "Copper",
+            "Orange": "Orange",
+            "Purple": "Purple",
+            "Gray": "Gray",
+            "Dark": "Dark",
+            "Violet": "Violet",
+            "Red": "Red"
+        },
+        "lighting": {
+            "Sun": "Sun",
+            "Partial Sun": "Partial Sun",
+            "Shade": "Shade"
+        },
+        "frostResistance": {
+            "Frost-resistant": "Frost-resistant",
+            "Moderately Frost-resistant": "Moderately Frost-resistant",
+            "Not Frost-resistant": "Not Frost-resistant"
+        },
+        "floweringColor": {
+            "Crimson": "Crimson",
+            "Beige": "Beige",
+            "White": "White",
+            "Burgundy": "Burgundy",
+            "Cherry": "Cherry",
+            "Sky Blue": "Sky Blue",
+            "Yellow": "Yellow",
+            "Green": "Green",
+            "Gold": "Gold",
+            "Carmine": "Carmine",
+            "Brown": "Brown",
+            "Lavender": "Lavender",
+            "Lilac": "Lilac",
+            "Raspberry": "Raspberry",
+            "Orange": "Orange",
+            "Purple": "Purple",
+            "Pink": "Pink",
+            "Rose": "Rose",
+            "Ruby": "Ruby",
+            "Blue": "Blue",
+            "Violet": "Violet",
+            "Red": "Red",
+            "Chocolate": "Chocolate"
+        },
+        "floweringPeriod": {
+            "January": "January",
+            "February": "February",
+            "March": "March",
+            "April": "April",
+            "May": "May",
+            "June": "June",
+            "July": "July",
+            "August": "August",
+            "September": "September",
+            "October": "October",
+            "November": "November",
+            "December": "December"
+        },
+        "soilMoisture": {
+            "Hygrophyte": "Hygrophyte",
+            "Xerophyte": "Xerophyte",
+            "Mesohygrophite": "Mesohygrophite",
+            "Mesoxerophyte": "Mesoxerophyte",
+            "Mesophyte": "Mesophyte"
+        },
+        "nutrition": {
+            "Eutrophic": "Eutrophic",
+            "Mesotrophic": "Mesotrophic",
+            "Oligotrophic": "Oligotrophic"
+        },
+        "ph": {
+            "Acidic": "Acidic",
+            "Alkaline": "Alkaline",
+            "Neutral": "Neutral",
+            "Slightly acidic": "Slightly acidic",
+            "Slightly alkaline": "Slightly alkaline"
+        },
+        "hardy": {
+            "City conditions resistant": "City conditions resistant",
+            "Adult specimens damaged by snow": "Adult specimens damaged by snow",
+            "Support required": "Support required",
+            "Need to prune last year's growth": "Need to prune last year's growth",
+            "Pruning after flowering": "Pruning after flowering",
+            "Requires sheltered locations": "Requires sheltered locations",
+            "Requires winter cover": "Requires winter cover"
+        },
+        "recommendation": {
+            "Alley tree": "Alley tree",
+            "Alpine slides": "Alpine slides",
+            "Alpinarium": "Alpinarium",
+            "Border": "Border",
+            "Large gardens": "Large gardens",
+            "Heather gardens": "Heather gardens",
+            "Ground cover": "Ground cover",
+            "Hedge": "Hedge",
+            "Mixed compositions": "Mixed compositions",
+            "Flower bed": "Flower bed",
+            "Color compositions": "Color compositions",
+            "Container": "Container",
+            "Small gardens": "Small gardens",
+            "Single planting in the lawn": "Single planting in the lawn",
+            "Parks": "Parks",
+            "Rockery": "Rockery",
+            "Solitary planting": "Solitary planting",
+            "Slope reinforcement": "Slope reinforcement",
+            "Cemetery": "Cemetery",
+            "Espalier": "Espalier",
+            "Japanese gardens": "Japanese gardens"
+        },
+        "zoning": {
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "5A": "5A",
+            "5B": "5B",
+            "6A": "6A",
+            "6B": "6B",
+            "7A": "7A",
+            "7B": "7B",
+            "8": "8"
+        },
+        "evergreen": {
+            "Yes": "Yes",
+            "No": "No"
+        },
+        "growthRate": {
+            "Fast": "Fast",
+            "Medium": "Medium",
+            "Slow": "Slow"
+        }
+    }
+}

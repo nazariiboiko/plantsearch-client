@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Box, Button, CircularProgress, Paper, Typography } from "@mui/material";
 import PlantList from "../Plant/PlantList";
 import { Reorder, ViewModule } from "@mui/icons-material";
+import { useTranslation } from 'react-i18next';
 
 const Supplier = () => {
 
@@ -12,6 +13,7 @@ const Supplier = () => {
     const [supplier, setSupplier] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [showOrder, setShowOrder] = useState('grid');
+    const { t } = useTranslation();
 
     useEffect(() => {
         getSupplierById(id)
@@ -63,7 +65,7 @@ const Supplier = () => {
                 </div>
             </Paper>
 
-            <PlantList response={ supplier.availablePlants } showOrder={showOrder}></PlantList>
+            <PlantList response={supplier.availablePlants} showOrder={showOrder}></PlantList>
             {supplier.avaliablePlants?.content.length === 0 && (
                 <Box sx={{ width: '100%', height: '100%' }}>
                     <Typography variant="h3" style={{ textAlign: 'center' }}>

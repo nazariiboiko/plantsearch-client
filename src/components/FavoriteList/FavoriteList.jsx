@@ -3,12 +3,14 @@ import { getFavourites } from "../../functions/FavouriteRequests";
 import PlantList from "../Plant/PlantList";
 import { Box, Button, CircularProgress, Paper, Typography } from "@mui/material";
 import { Reorder, ViewModule } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
 
 const FavoriteList = () => {
 
   const [response, setResponse] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [showOrder, setShowOrder] = useState('grid');
+  const { t } = useTranslation()
 
   useEffect(() => {
     getFavourites()
@@ -47,7 +49,7 @@ const FavoriteList = () => {
     <Box sx={{ width: '90%', height: '100%', marginLeft: '5%', marginTop: '10px' }}>
       <Paper elevation={3}>
         <div className="d-flex justify-content-between">
-          <h2 style={{margin: '10px'}}>Улюблені:</h2>
+          <h2 style={{margin: '10px'}}>{t('favourite')}:</h2>
           <div style={{margin: '10px'}}>
             <Button
               disableRipple

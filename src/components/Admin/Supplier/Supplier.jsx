@@ -9,6 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { ArrowBack, Delete, RemoveRedEye } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { image_store } from "../../../utils/constants";
+import { useTranslation } from "react-i18next";
 
 const Supplier = ({ id, back }) => {
     const [supplier, setSupplier] = useState([]);
@@ -25,6 +26,8 @@ const Supplier = ({ id, back }) => {
 
     const handleActiveOpen = () => setActive(true);
     const handleActiveClose = () => setActive(false);
+
+    const { t } = useTranslation();
 
     const style = {
         width: '100%',
@@ -167,16 +170,16 @@ const Supplier = ({ id, back }) => {
                         page={supplierPageNumber}
                         onChange={handleSupplierPageChange}
                     />
-                    <Button onClick={openModal} variant="contained" color="primary">Добавити новий зв'язок</Button>
+                    <Button onClick={openModal} variant="contained" color="primary">{t('actions.addNewJunction')}</Button>
                 </Box>
             </div>
             <div>
 
                 {active && (
-                    <ModalTransition open={active} handleOpen={handleActiveOpen} handleClose={handleActiveClose} title={'Обрати розсаду'}>
+                    <ModalTransition open={active} handleOpen={handleActiveOpen} handleClose={handleActiveClose} title={t('labels.choosePlant')}>
                         <div className="admin-input">
                             <input
-                                placeholder='Знайти Назва, латинь, ID'
+                                placeholder={t('searchByAll')}
                                 onChange={handleInputChange}
                                 style={{ width: "95%", height: "100%", outline: 'none' }}
                             />
@@ -207,11 +210,11 @@ const Supplier = ({ id, back }) => {
                         <Table sx={{ minWidth: 700 }} aria-label="customized table">
                             <TableHead>
                                 <TableRow>
-                                    <StyledTableCell align="center">ID</StyledTableCell>
-                                    <StyledTableCell align="center">Назва</StyledTableCell>
-                                    <StyledTableCell align="center">Латина</StyledTableCell>
-                                    <StyledTableCell align="center">Ескіз</StyledTableCell>
-                                    <StyledTableCell align="center">Дії</StyledTableCell>
+                                    <StyledTableCell align="center">{t('plant.id')}</StyledTableCell>
+                                    <StyledTableCell align="center">{t('plant.name')}</StyledTableCell>
+                                    <StyledTableCell align="center">{t('plant.latinName')}</StyledTableCell>
+                                    <StyledTableCell align="center">{t('plant.sketch')}</StyledTableCell>
+                                    <StyledTableCell align="center">{t('actions.label')}</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -224,12 +227,12 @@ const Supplier = ({ id, back }) => {
                                             <img src={`${image_store}/sketches/${plant.sketch || 'no_image.png'}`} alt="sketch" style={{ width: '20%', height: '20%' }}></img>
                                         </StyledTableCell>
                                         <StyledTableCell align="center">
-                                            <Tooltip title="Видалити" placement="top">
+                                            <Tooltip title={t('actions.delete')} placement="top">
                                                 <Fab color="error" onClick={x => handleDeleteJunction(plant.id, index)}>
                                                     <Delete />
                                                 </Fab>
                                             </Tooltip>
-                                            <Tooltip title="Переглянути" placement="top">
+                                            <Tooltip title={t('actions.watch')} placement="top">
                                                 <Fab color="warning" onClick={() => navigate(`/plant/${plant.id}`)}>
                                                     <RemoveRedEye />
                                                 </Fab>

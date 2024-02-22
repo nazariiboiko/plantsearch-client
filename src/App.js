@@ -15,6 +15,8 @@ import PlantCreateForm from './components/Admin/Plant/PlantCreateForm/PlantCreat
 import SupplierList from './components/Supplier/SupplierList';
 import Supplier from './components/Supplier/Supplier';
 import Gallery from './components/Gallery/Gallery';
+import { Suspense } from 'react';
+import { useTranslation} from 'react-i18next';
 
 function App() {
   return (

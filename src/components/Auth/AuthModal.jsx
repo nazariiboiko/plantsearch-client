@@ -1,11 +1,12 @@
 import { useState } from "react";
 import ModalTransition from "../ui/modal/Modal";
-import { Alert, Box, Button} from "@mui/material";
+import { Alert, Box, Button } from "@mui/material";
 import * as auth from "../../functions/AuthRequests";
 import { useSnackbar } from "../../context/SnackbarContext";
 import './AuthModal.css';
 import { Lock, Mail, Person } from "@mui/icons-material";
 import { useTheme } from "../../utils/themeProvider";
+import { useTranslation } from "react-i18next";
 
 const AuthModal = () => {
     const [isLoginOpen, setLoginOpen] = useState(false);
@@ -17,6 +18,7 @@ const AuthModal = () => {
     const [email, setEmail] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const { handleClick } = useSnackbar();
+    const { t } = useTranslation();
 
 
     const handleLoginOpen = () => { setLoginOpen(true); setRegistryOpen(false); }
@@ -40,7 +42,7 @@ const AuthModal = () => {
         if (isLoginOpen) {
             auth.login({ login, password }, 'uk')
                 .then(() => {
-                    handleClick('success', 'Успішний вхід');
+                    handleClick('success', t('alerts.auth.success'));
                     handleLoginClose();
                     setErrorMsg('');
                     window.location.reload();
@@ -52,7 +54,7 @@ const AuthModal = () => {
         if (isRegistryOpen) {
             auth.register({ login, email, password }, 'uk')
                 .then(() => {
-                    handleClick('success', 'Успішна реєстрація');
+                    handleClick('success', t('alerts.auth.regstration'));
                     handleRegistryClose();
                     setErrorMsg('');
                     window.location.reload();
@@ -101,9 +103,9 @@ const AuthModal = () => {
     return (
         <>
             <Button variant="contained" color="secondary" onClick={() => handleLoginOpen(true)}>
-                Увійти
+                {t('auth.login')}
             </Button>
-            <ModalTransition open={isLoginOpen} handleOpen={handleLoginOpen} handleClose={handleLoginClose} title={'Увійти'}>
+            <ModalTransition open={isLoginOpen} handleOpen={handleLoginOpen} handleClose={handleLoginClose} title={t('labels.login')}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <form className="authmodal">
                         <div style={authModalFieldStyles}>
@@ -115,7 +117,7 @@ const AuthModal = () => {
                                 id="login"
                                 value={login}
                                 onChange={handleInputChange}
-                                placeholder="Ім'я користувача чи пошта"
+                                placeholder={t('auth.usernameOrEmail')}
 
                             ></input>
                         </div>
@@ -129,7 +131,7 @@ const AuthModal = () => {
                                 name="password"
                                 value={password}
                                 onChange={handleInputChange}
-                                placeholder="Пароль"
+                                placeholder={t('auth.password')}
                             >
 
                             </input>
@@ -137,13 +139,13 @@ const AuthModal = () => {
                         {errorMsg && (
                             <Alert severity="error" sx={{ width: "100%" }}>{errorMsg}</Alert>
                         )}
-                        <Button variant="contained" color="secondary" onClick={handleSubmit} sx={{ marginTop: "10px" }} fullWidth>Підтвердити</Button>
+                        <Button variant="contained" color="secondary" onClick={handleSubmit} sx={{ marginTop: "10px" }} fullWidth>{t('auth.submit')}</Button>
                     </form>
                     <hr style={{ width: "100%" }} />
-                    <small style={{ margin: 5 }}>Не створений акаунт?? <button onClick={handleRegistryOpen}>Зареєструватись</button></small>
+                    <small style={{ margin: 5 }}>{t('auth.dontHaveAnAccount')}<Button variant="text" onClick={handleRegistryOpen}>{t('auth.register')}</Button></small>
                 </Box>
             </ModalTransition>
-            <ModalTransition open={isRegistryOpen} handleOpen={handleRegistryOpen} handleClose={handleRegistryClose} title={'Реєстрація'}>
+            <ModalTransition open={isRegistryOpen} handleOpen={handleRegistryOpen} handleClose={handleRegistryClose} title={t('auth.register')}>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <form className="authmodal">
                         <div style={authModalFieldStyles}>
@@ -155,7 +157,7 @@ const AuthModal = () => {
                                 id="login"
                                 value={login}
                                 onChange={handleInputChange}
-                                placeholder="Ім'я користувача"
+                                placeholder={t('auth.username')}
                             ></input>
                         </div>
                         <div style={authModalFieldStyles}>
@@ -167,7 +169,7 @@ const AuthModal = () => {
                                 id="email"
                                 value={email}
                                 onChange={handleInputChange}
-                                placeholder="Пошта"
+                                placeholder={t('auth.email')}
                             ></input>
                         </div>
                         <div style={authModalFieldStyles}>
@@ -180,7 +182,7 @@ const AuthModal = () => {
                                 name="password"
                                 value={password}
                                 onChange={handleInputChange}
-                                placeholder="Пароль"
+                                placeholder={t('auth.password')}
                             >
 
                             </input>
@@ -188,10 +190,10 @@ const AuthModal = () => {
                         {errorMsg && (
                             <Alert severity="error" sx={{ width: "100%" }}>{errorMsg}</Alert>
                         )}
-                        <Button variant="contained" color="secondary" onClick={handleSubmit} sx={{ marginTop: "10px" }} fullWidth>Зареєструватись</Button>
+                        <Button variant="contained" color="secondary" onClick={handleSubmit} sx={{ marginTop: "10px" }} fullWidth>{t('auth.signUp')}</Button>
                     </form>
                     <hr style={{ width: "100%" }} />
-                    <small style={{ margin: 5 }}><button onClick={handleLoginOpen}>Повернутись</button></small>
+                    <small style={{ margin: 5 }}><Button variant="text" onClick={handleLoginOpen}>{t('auth.goBack')}</Button></small>
                 </Box>
             </ModalTransition>
         </>

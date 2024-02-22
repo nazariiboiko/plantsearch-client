@@ -6,8 +6,8 @@ import { useParams } from "react-router-dom";
 import { getPlantsByCriteria } from "../../functions/PlantRequests";
 import { allCriterias } from "../../utils/filter_criterias";
 import Dropdown from "../ui/Dropdown/Dropdown";
-import { purple } from "@mui/material/colors";
 import PlantList from "../Plant/PlantList";
+import { useTranslation } from 'react-i18next';
 
 const StyledButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#474747' : '#E9E9E9',
@@ -18,8 +18,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const Filter = () => {
-
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
     const { keyword } = useParams();
     const [input, setInput] = useState('');
     const [selectedValues, setSelectedValues] = useState([]);
@@ -28,6 +26,7 @@ const Filter = () => {
     const [pageSize] = useState(45);
     const [showOrder, setShowOrder] = useState(window.location.hash.replace("#", "") || 'grid');
     const [isLoading, setIsLoading] = useState(true);
+    const { t } = useTranslation();
 
 
     useEffect(() => {
@@ -121,25 +120,25 @@ const Filter = () => {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
 
                     <Typography color="primary" variant="h4" sx={{ paddingLeft: "1em", paddingTop: "10px" }}>
-                        Пошук
+                        {t('filter.label')}
                     </Typography>
                     <ButtonGroup>
-                        <StyledButton variant="contained" onClick={handleClear}>Очистити</StyledButton>
-                        <StyledButton variant="contained" onClick={handleSubmit}>Зберегти</StyledButton>
+                        <StyledButton variant="contained" onClick={handleClear}>{t('clear')}</StyledButton>
+                        <StyledButton variant="contained" onClick={handleSubmit}>{t('save')}</StyledButton>
                     </ButtonGroup>
                 </div>
                 <hr />
                 <Box sx={{ marginLeft: '20px' }}>
                     <Box sx={{ display: { xs: 'flex', md: 'none', }, width: "100%", }}>
-                        <TextField id="filled-basic" label="Пошук..." variant="filled" size="small" sx={{ width: "100%", marginBottom: "15px" }} />
+                        <TextField id="filled-basic" label={`${t('search')}...`} variant="filled" size="small" sx={{ width: "100%", marginBottom: "15px" }} />
                     </Box>
                     <div className="filter-criteria-list">
                         <Box sx={{ display: { xs: 'none', md: 'flex', }, width: "100%", height: "10px" }}>
-                            <TextField id="filled-basic" label="Пошук за назвою..." variant="filled" size="small" fullWidth />
+                            <TextField id="filled-basic" label={`${t('search')}...`} variant="filled" size="small" fullWidth />
                         </Box>
 
                         {allCriterias().map((criterion, index) => (
-                            <Dropdown icon={<KeyboardArrowDown fontSize="small" />} label={criterion.label} key={index}>
+                            <Dropdown icon={<KeyboardArrowDown fontSize="small" />} label={`${t(`filter.name.` + criterion.id)}`} key={index}>
                                 <FormGroup style={{ display: 'flex', flexDirection: 'column' }}>
                                     {criterion.value.map((item, index) => (
                                         <>
@@ -150,7 +149,7 @@ const Filter = () => {
                                                     name={item.label}
                                                 />
                                             }
-                                                label={item.label}
+                                                label={t(`filter.${criterion.id}.${item.id}`)}
                                             />
                                             <Divider />
                                         </>
@@ -163,7 +162,7 @@ const Filter = () => {
                 <hr />
                 <Grid container>
                     <Grid item xs={4} md={4}>
-                        <p>{response?.totalElements} об'єктів</p>
+                        <p>{response?.totalElements} {t('objects')}</p>
                     </Grid>
                     <Grid item xs={4} md={4}>
                         <Stack alignItems="center" sx={{ paddingTop: "10px" }}>

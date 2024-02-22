@@ -10,6 +10,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { MoreHoriz } from "@mui/icons-material";
 import { useSnackbar } from "../../../context/SnackbarContext";
 import './PlantPanel.css';
+import { useTranslation } from "react-i18next";
 
 const PlantPanel = () => {
 
@@ -21,6 +22,7 @@ const PlantPanel = () => {
     const { handleClick } = useSnackbar();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(true);
+    const { t } = useTranslation();
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
@@ -102,44 +104,43 @@ const PlantPanel = () => {
 
     return (
         <div className="container mb-5">
-            <div>
+            <Box>
                 <hr />
-                <div className="d-flex justify-content-between">
+                <Box className="d-flex justify-content-between" sx={{ margin: 1, marginLeft: '2%', marginRight: '2%' }}>
                     <TextField id="outlined-basic"
-                        label="Знайти назва, латинь, ID"
+                        label={t('searchByAll')}
                         variant="outlined"
                         onChange={handleInputChange} />
-                    <div class="d-flex">
-                        <Pagination
-                            variant="outlined"
-                            shape="rounded"
-                            count={Math.ceil(response?.totalElements / response?.size)}
-                            page={(pageNumber + 1)}
-                            onChange={handlePageChange}
-                        />
-                    </div>
 
-                    <Tooltip title="Добавити" placement="top">
-                        <Link to={`plant/new`} className="mr-5">
-                            <Fab color="success" aria-label="add">
-                                <AddIcon />
-                            </Fab>
-                        </Link>
+                    <Pagination
+                        variant="outlined"
+                        shape="rounded"
+                        count={Math.ceil(response?.totalElements / response?.size)}
+                        page={(pageNumber + 1)}
+                        onChange={handlePageChange}
+                        sx={{paddingTop: 1}}
+                    />
+
+
+                    <Tooltip title={t('actions.add')} placement="top">
+                        <Fab color="success" aria-label="add" onClick={() => navigate('plant/new')}>
+                            <AddIcon />
+                        </Fab>
                     </Tooltip>
-                </div>
+                </Box>
                 <hr />
-            </div>
+            </Box>
             <Paper>
                 <TableContainer>
                     <Table sx={{ width: '100%' }} aria-label="customized table">
                         <TableHead>
                             <TableRow>
-                                <StyledTableCell align="center">ID</StyledTableCell>
-                                <StyledTableCell align="center">Назва</StyledTableCell>
-                                <StyledTableCell align="center">Латина</StyledTableCell>
-                                <StyledTableCell align="center">Зображення</StyledTableCell>
-                                <StyledTableCell align="center">Ескіз</StyledTableCell>
-                                <StyledTableCell align="center" style={{ width: '200px' }}>Дії</StyledTableCell>
+                                <StyledTableCell align="center">{t('plant.id')}</StyledTableCell>
+                                <StyledTableCell align="center">{t('plant.name')}</StyledTableCell>
+                                <StyledTableCell align="center">{t('plant.latinName')}</StyledTableCell>
+                                <StyledTableCell align="center">{t('plant.image')}</StyledTableCell>
+                                <StyledTableCell align="center">{t('plant.sketch')}</StyledTableCell>
+                                <StyledTableCell align="center" style={{ width: '200px' }}>{t('actions.label')}</StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -164,10 +165,7 @@ const PlantPanel = () => {
                                             style={{ width: '100px', objectFit: 'contain' }}
                                         />
                                     </StyledTableCell><StyledTableCell align="center">
-                                        {/* <Link to={`plant/${plant.id}`}>
-                      <Button variant="contained" className="admin-controll-button right-border">Детальніше</Button>
-                    </Link> */}
-                                        <Tooltip title="Детальніше" placement="right">
+                                        <Tooltip title={t('actions.details')} placement="right">
                                             <Fab color="primary" style={{ boxShadow: 'none' }} onClick={() => navigate(`plant/${plant.id}`)}> <MoreHoriz /> </Fab>
                                         </Tooltip>
                                     </StyledTableCell>

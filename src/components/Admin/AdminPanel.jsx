@@ -9,14 +9,13 @@ import SupplierPanel from "./Supplier/SupplierPanel";
 import ChangeLog from "../ChangeLog/ChangeLog";
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import Marker from "./Gallery/MarkerPanel";
-// import PlantPanel from './PlantPanel/PlantPanel';
-// import SupplierPanel from './SupplierPanel/SupplierPanel';
-// import UserPanel from './UserPanel/UserPanel';
+import { useTranslation } from "react-i18next";
 
 const AdminPanel = () => {
 
     const [currentWindow, setCurrentWindow] = useState(window.location.hash || '#plants');
     const { theme } = useTheme();
+    const { t } = useTranslation();
 
     const styles = {
         ulAdmin: {
@@ -32,15 +31,15 @@ const AdminPanel = () => {
             borderRadius: '0 20px 20px 0',
             paddingTop: '5px',
             paddingBottom: '5px',
-            color: theme.palette.text.primary, // Use text color from the theme
+            color: theme.palette.text.primary, 
             cursor: 'pointer',
         },
         liAdminHover: {
-            backgroundColor: theme.palette.action.hover, // Use hover background color from the theme
+            backgroundColor: theme.palette.action.hover, 
             cursor: 'pointer',
         },
         activeDiv: {
-            backgroundColor: theme.palette.action.selected, // Use selected (active) background color from the theme
+            backgroundColor: theme.palette.action.selected,
         },
     };
 
@@ -79,7 +78,7 @@ const AdminPanel = () => {
                             }}
                             onClick={() => handleCurrentWindow('#plants')}
                         >
-                            <GrassOutlined /> Розсада
+                            <GrassOutlined /> {t('plants')}
                         </li>
 
                         <li
@@ -89,7 +88,7 @@ const AdminPanel = () => {
                             }}
                             onClick={() => handleCurrentWindow('#users')}
                         >
-                            <GroupOutlined /> Користувачі
+                            <GroupOutlined /> {t('users')}
                         </li>
                         <li
                             style={{
@@ -98,7 +97,7 @@ const AdminPanel = () => {
                             }}
                             onClick={() => handleCurrentWindow('#suppliers')}
                         >
-                            <Home /> Розсадники
+                            <Home /> {t('suppliers')}
                         </li>
                         <li
                             style={{
@@ -106,7 +105,7 @@ const AdminPanel = () => {
                                 ...(currentWindow === '#gallery' ? styles.activeDiv : {}),
                             }}
                             onClick={() => handleCurrentWindow('#gallery')}>
-                            <ImageSearchIcon /> Галерея
+                            <ImageSearchIcon /> {t('gallery')}
                         </li>
                         <li
                             style={{
@@ -115,7 +114,7 @@ const AdminPanel = () => {
                             }}
                             onClick={() => handleCurrentWindow('#changelog')}
                         >
-                            <History /> Зміни
+                            <History /> {t('changelog')}
                         </li>
                     </ul>
                 </Grid>

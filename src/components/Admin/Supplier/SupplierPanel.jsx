@@ -3,11 +3,11 @@ import * as request from "../../../functions/SupplierRequests";
 import { useState } from "react";
 import './SupplierPanel.css';
 import { Alert, Box, Button, CircularProgress, Fab, Grid, Pagination, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Tooltip, styled, tableCellClasses } from "@mui/material";
-// import Supplier from "./Supplier";
 import { Add, Check, Save } from "@mui/icons-material";
 import { green } from "@mui/material/colors";
 import ModalTransition from "../../ui/modal/Modal";
 import Supplier from "./Supplier";
+import { useTranslation } from "react-i18next";
 
 const SupplierPanel = () => {
 
@@ -18,6 +18,7 @@ const SupplierPanel = () => {
     const [pageNumber, setPageNumber] = useState(0);
     const [pageSize, setPageSize] = useState(5);
     const [isLoading, setIsLoading] = useState(false);
+    const { t } = useTranslation();
 
     //Modal
     const [loading, setLoading] = useState(false);
@@ -151,16 +152,16 @@ const SupplierPanel = () => {
                                 />
                             </div>
                             <div>
-                                <Tooltip title="Добавити" placement="top" className="mr-5">
+                                <Tooltip title={t('actions.add')} placement="top" className="mr-5">
                                     <Fab color="success" aria-label="add" onClick={handleCreateButton}>
                                         <Add />
                                     </Fab>
                                 </Tooltip>
-                                <ModalTransition open={showCreateModal} handleOpen={handleCreateModalOpen} handleClose={handleCreateModalClose} title={'Створити'}>
+                                <ModalTransition open={showCreateModal} handleOpen={handleCreateModalOpen} handleClose={handleCreateModalClose} title={`${t('actions.create')}`}>
                                     <Grid container rowSpacing={1}>
                                         <Grid item xs={1}></Grid>
                                         <Grid item xs={5} md={5}>
-                                            <TextField id="outlined-basic" label="Назва розсадника" variant="outlined" onChange={handleInputChange} />
+                                            <TextField id="outlined-basic" label={t('supplier.name')} variant="outlined" onChange={handleInputChange} />
                                         </Grid>
                                         <Grid item xs={3}></Grid>
                                         <Grid item xs={1}>
@@ -198,9 +199,9 @@ const SupplierPanel = () => {
                         <Table sx={{ minWidth: 700 }} aria-label="customized table">
                             <TableHead>
                                 <TableRow>
-                                    <StyledTableCell align="center">ID</StyledTableCell>
-                                    <StyledTableCell align="center">Назва</StyledTableCell>
-                                    <StyledTableCell align="center">Дії</StyledTableCell>
+                                    <StyledTableCell align="center">{t('supplier.id')}</StyledTableCell>
+                                    <StyledTableCell align="center">{t('supplier.name')}</StyledTableCell>
+                                    <StyledTableCell align="center">{t('actions.label')}</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -214,7 +215,7 @@ const SupplierPanel = () => {
                                                 color="inherit"
                                                 onClick={() => handleDetailsClick(supplier.id)}
                                             >
-                                                Детальніше
+                                                {t('actions.details')}
                                             </Button>
                                         </StyledTableCell>
                                     </StyledTableRow>
